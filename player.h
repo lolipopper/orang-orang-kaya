@@ -34,6 +34,7 @@ typedef struct {
 //SELEKTOR
 #define First(L) (L).first
 #define Next(P) (P)->next
+#define Position(P) (P)->info.position
 #define PlayerId(P) (P)->info.playerId
 #define Money(P) (P)->info.money
 #define Kekayaan(P) (P)->info.kekayaan
@@ -42,6 +43,11 @@ typedef struct {
 #define CardProtect(P) (P)->info.nProtect
 #define CardOff(P) (P)->info.nOffLight
 
+//Constructor
+void ConsPlayer(Player *P,int position,long long money, int nFreeTax, int nFreePrison,int nOffLight,int nProtect,char playerId,int kekayaan);
+
+//Initialize
+void InitPlayer(Player *P,char playerId);
 #endif
 
 
