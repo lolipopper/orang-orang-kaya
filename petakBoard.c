@@ -1,4 +1,5 @@
 #include "petakBoard.h"
+#include "kota.h"
 
 boolean IsListEmpty (ListBoard L)
 /* Mengirim true jika ListBoard kosong */
@@ -335,7 +336,7 @@ void InversList (ListBoard *L)
         for (i=1;i<=nbelmt-1;i++)
         {
             DeleteAfter(L,&p,fixfirst);
-            printf("%d\n",Info(p));
+            //printf("%d\n",Info(p));
 
             InsertFirst(L,p);
         }
@@ -641,6 +642,7 @@ void initBoard(ListBoard *LB,TabKota *Kota)
             //printf("level: %d\n",Level(*Kota,i));
             fscanf(fiboard,"%d\n",&(Kota->TK[i].owner));
             //printf("owner: %d\n",Owner(*Kota,i));
+            fscanf(fiboard,"%d\n",&(Kota->TK[i].name.Length));
         }
         //fscanf(fiboard,"\n");
         i++;
@@ -648,4 +650,254 @@ void initBoard(ListBoard *LB,TabKota *Kota)
         fscanf(fiboard,"%d\n", &ipt.type);
     }
 	fclose(fiboard);
+}
+
+void PrintNamaPetak(TabKota Kota, Address P, int baris, int *length) {
+/*KAMUS*/
+    int i;
+/*ALGORITMA*/
+    if(Type(P) == 1) {
+        *length = NamaKota(Kota, Id(P)).Length;
+        for(i = 0; i < *length; i++) {
+            printf("%c", Kota.TK[Id(P)].name.TabKata[i]);
+        }
+    }
+    else if(Type(P) == 2) {
+        printf("START");
+        *length = 5;
+    }
+    else if(Type(P) == 3) {
+        printf("CHANCE");
+        *length = 6;
+    }
+    else if(Type(P) == 4) {
+        printf("BONUS");
+        *length = 5;
+    }
+    else if(Type(P) == 5) {
+        if(baris == 1) {
+            printf("DESERTED");
+            *length = 8;
+        }
+        else {
+            printf("ISLAND");
+            *length = 6;
+        }
+    }
+    else if(Type(P) == 6) {
+        if(baris == 1) {
+            printf("WORLD");
+            *length = 5;
+        }
+        else {
+            printf("CUP");
+            *length = 3;
+        }
+    }
+    else if(Type(P) == 7) {
+        if(baris == 1) {
+            printf("WORLD");
+            *length = 5;
+        }
+        else {
+            printf("TRAVEL");
+            *length = 6;
+        }
+    }
+    else if(Type(P) == 8) {
+        printf("TAX");
+        *length = 3;
+    }
+}
+
+void ShowBoard(ListBoard LB, TabKota Kota) {
+    /*KAMUS*/
+    Address PF, PL, Pt;
+    int i, j, m, n;
+    int npetak, x, y, M, N;
+    int length, harga, posnama;
+    ListBoard L1, L2;
+
+/*ALGORITMA*/
+    /*INISIALISASI*/
+    npetak = 9;//Jumlah Petak
+    x = 10 + 1; //Ukuran Petak
+    y = 5;     //Ukuran Petak
+    M = x*npetak; //Panjang Board
+    N = y*npetak; //Lebar Board
+    posnama = 1; //posisi baris nama dalam petak
+
+    CreateList(&L1);
+    CreateList(&L2);
+    PecahList(&L1, &L2, LB);
+    InversList(&L2);
+    PF = First(L1);
+    PL = First(L2);
+
+    for(i = 0; i <= N; i++){ //Perulangan Baris
+        j = 0;
+        while (j <= M) { //Perulangan Kolom
+            if(i == 0) printf("_");
+            else if(i == y || i == N) {
+                if((j%x)== 0) printf("|");
+                else printf("_");
+            }
+            else if(i%y == 0 && i != 0 && i != y && i != (N-y) && i != N) {
+                if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
+                else if((j > 0 && j < x) || (j > (M-x) && j < M)) printf("_");
+                else printf(" ");
+            }
+            else if(i > 0 && i < y) {
+                if(i == posnama) { //Posisi Nama
+					if((j%x) == 0) printf("|");
+                    else if((j%x) != 0){
+                        printf(" ");
+                        PrintNamaPetak(Kota, PF, 1, &length);
+                        for(m = 0; m < (x-(length+2)); m++) printf(" ");
+                        j += x-2;
+                        PF = Next(PF);
+                    }
+                }
+                else if(i == posnama+1) { //Posisi Harga
+                    if((j%x)== 0) printf("|");
+                    else {
+                        if(j > 0 && j < (M-x)) {
+                            if(Type(PF) == 1) {
+                                for(m = 0; m < 3; m++) printf(" ");
+                                harga = Price(Kota, Id(PF))/1000;
+                                printf("%dK", harga);
+                                if(harga < 100)
+                                    for(m = 0; m < x-3-4; m++) printf(" ");
+                                else
+                                    for(m = 0; m < x-4-4; m++) printf(" ");
+                            }
+                            else {
+                                for(m = 1; m < x; m++) printf(" ");
+                            }
+                        }
+                        else {
+                            for(m = 0; m < 2; m++) printf(" ");
+                            PrintNamaPetak(Kota, PF, 2, &length);
+                            for(m = 0; m < (x-length-3); m++) printf(" ");
+                        }
+                        j += x-2;
+                        PF = Next(PF);
+                    }
+                }
+                else {
+                    if((j%x)== 0) printf("|");
+                    else printf(" ");
+                }
+            }
+            else if(i > y && i < (N-y) && (i%y) != 0) {
+                if((i%y) == posnama) {
+                    if(j > 0 && j < x) {
+                        for(m = 0; m < 1; m++) printf(" ");
+                        PrintNamaPetak(Kota, PL, 1, &length);
+                        for(m = 0; m < (x-length-2); m++) printf(" ");
+                        j += x-2;
+                    }
+                    else if(j > (M-x) && j < M) {
+                        for(m = 0; m < 1; m++) printf(" ");
+                        PrintNamaPetak(Kota, PF, 1, &length);
+                        for(m = 0; m < (x-length-2); m++) printf(" ");
+                        j += x-2;
+                    }
+                    else if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
+                    else printf(" ");
+                }
+                else if((i%y) == posnama+1) {
+                    if(j > 0 && j < x) {
+                        if(Type(PL) == 1) {
+                            for(m = 0; m < 3; m++) printf(" ");
+                            harga = Price(Kota, Id(PL))/1000;
+                            printf("%dK", harga);
+                            if(harga < 100)
+                                for(m = 0; m < x-3-4; m++) printf(" ");
+                            else
+                                for(m = 0; m < x-4-4; m++) printf(" ");
+                        }
+                        else {
+                            for(m = 1; m < x; m++) printf(" ");
+                        }
+                        j += x-2;
+                        PL = Next(PL);
+                    }
+                    else if(j > (M-x) && j < M) {
+                        if(Type(PF) == 1) {
+                            for(m = 0; m < 3; m++) printf(" ");
+                            harga = Price(Kota, Id(PF))/1000;
+                            printf("%dK", harga);
+                            if(harga < 100)
+                                for(m = 0; m < x-3-4; m++) printf(" ");
+                            else
+                                for(m = 0; m < x-4-4; m++) printf(" ");
+                            }
+                            else {
+                                for(m = 1; m < x; m++) printf(" ");
+                            }
+                            j += x-2;
+                        PF = Next(PF);
+                    }
+                    else if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
+                    else printf(" ");
+                }
+                else {
+                    if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
+                    else printf(" ");
+                }
+            }
+            else if(i == (N-y)) {
+                Pt = PL;
+                if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
+                else printf("_");
+            }
+            else if(i > (N-y) && i < N) {
+                if(i == (N-y)+posnama) { //Posisi Nama
+					if((j%x)== 0) printf("|");
+                    else {
+                        printf("  ");
+                        PrintNamaPetak(Kota, PL, 1, &length);
+                        for(m = 1; m < (x-length-2); m++) printf(" ");
+                        j += x-2;
+                        PL = Next(PL);
+                    }
+                }
+                else if(i == (N-y)+posnama+1) { //Posisi Harga
+                    if((j%x)== 0) printf("|");
+                    else {
+                        if(j > x && j < (M-x)) {
+                            if(Type(PL) == 1) {
+                                for(m = 0; m < 3; m++) printf(" ");
+                                harga = Price(Kota, Id(PL))/1000;
+                                printf("%dK", harga);
+                                if(harga < 100)
+                                    for(m = 0; m < x-3-4; m++) printf(" ");
+                                else
+                                    for(m = 0; m < x-4-4; m++) printf(" ");
+                            }
+                            else {
+                                for(m = 1; m < x; m++) printf(" ");
+                            }
+                        }
+                        else {
+                            for(m = 0; m < 2; m++) printf(" ");
+                            PrintNamaPetak(Kota, PL, 2, &length);
+                            for(m = 1; m < (x-length-2); m++) printf(" ");
+                        }
+                        j += x-2;
+                        PL = Next(PL);
+                    }
+                }
+                else {
+                    if((j%x)== 0) printf("|");
+                    else printf(" ");
+                }
+            }
+            j++;
+        }
+        printf("\n");
+        if(i == posnama) PF = First(L1);
+        if(i == (N-y)+posnama) PL = Pt;
+    }
 }

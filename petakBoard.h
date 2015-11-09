@@ -221,5 +221,9 @@ void PrintInfoBoard(ListBoard LB, TabKota Kota);
 
 void initBoard(ListBoard *LB, TabKota *TK);
 
+void PrintNamaPetak(TabKota Kota, Address P, int baris, int *length);
+
+void ShowBoard(ListBoard LB, TabKota Kota);
+
 #endif
 

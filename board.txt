@@ -7,6 +7,7 @@ Beijing
 1
 1
 0
+7
 
 4
 
@@ -17,6 +18,7 @@ Jakarta
 1
 1
 0
+7
 
 1
 Ancol
@@ -25,6 +27,7 @@ Ancol
 0
 1
 0
+5
 
 1
 Taipei
@@ -33,6 +36,7 @@ Taipei
 1
 1
 0
+6
 
 1
 New Delhi
@@ -41,6 +45,7 @@ New Delhi
 2
 1
 0
+9
 
 1
 Seoul
@@ -49,6 +54,7 @@ Seoul
 2
 1
 0
+5
 
 5
 
@@ -59,6 +65,7 @@ Hawai
 0
 1
 0
+5
 
 1
 Tokyo
@@ -67,6 +74,7 @@ Tokyo
 2
 1
 0
+5
 
 1
 Sydney
@@ -75,6 +83,7 @@ Sydney
 3
 1
 0
+6
 
 3
 
@@ -85,6 +94,7 @@ Singapura
 3
 1
 0
+9
 
 1
 Senggigi
@@ -93,6 +103,7 @@ Senggigi
 0
 1
 0
+8
 
 1
 Sao Paulo
@@ -101,6 +112,7 @@ Sao Paulo
 3
 1
 0
+9
 
 6
 
@@ -111,6 +123,7 @@ Denmark
 4
 1
 0
+7
 
 1
 Bintan
@@ -119,6 +132,7 @@ Bintan
 0
 1
 0
+6
 
 1
 Berlin
@@ -127,6 +141,7 @@ Berlin
 4
 1
 0
+6
 
 3
 
@@ -137,6 +152,7 @@ Geneva
 4
 1
 0
+6
 
 1
 Moscow
@@ -145,6 +161,7 @@ Moscow
 5
 1
 0
+6
 
 1
 Rome
@@ -153,6 +170,7 @@ Rome
 5
 1
 0
+4
 
 7
 
@@ -163,6 +181,7 @@ Kuta
 0
 1
 0
+4
 
 1
 London
@@ -171,6 +190,7 @@ London
 5
 1
 0
+6
 
 1
 Paris
@@ -179,6 +199,7 @@ Paris
 6
 1
 0
+5
 
 3
 
@@ -189,6 +210,7 @@ New York
 6
 1
 0
+8
 
 8
 
@@ -199,5 +221,6 @@ Bangkok
 6
 1
 0
+7
 
 -999
