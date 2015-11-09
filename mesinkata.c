@@ -1,11 +1,3 @@
-/*
-*	NIM/Nama 	:
-*	Nama file 	:
-*	Topik 		:
-*	Tanggal 	:
-*	Deskripsi 	:
-*/
-
 #include "mesinkata.h"
 
 //primitif-primitif mesin kata

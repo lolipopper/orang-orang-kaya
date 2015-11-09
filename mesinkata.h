@@ -1,11 +1,3 @@
-/*
-*	NIM/Nama 	:
-*	Nama file 	:
-*	Topik 		:
-*	Tanggal 	:
-*	Deskripsi 	:
-*/
-
 #ifndef MESINKATA_H
 #define MESINKATA_H
 #define mark '.'

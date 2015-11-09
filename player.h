@@ -11,12 +11,13 @@
 typedef struct {
 	int position;
 	long long money;
-	int nFreeTax;
-	int nFreePrison;
-	int nOffLight;
-	int nProtect;
-	char playerId;
 	int kekayaan;
+	int nFreePrison;
+	int nFreeTax;
+	int nProtect;
+	int nOffLight;
+	char playerId;
+	boolean jail;
 } Player;
 
 typedef struct TElmtList *Address;
@@ -30,18 +31,17 @@ typedef struct {
 	Address		first;
 } ListPlayer;
 
-
 //SELEKTOR
 #define First(L) (L).first
 #define Next(P) (P)->next
-#define PlayerId(P) (P)->info.playerId
+#define Position(P) (P)->info.position
 #define Money(P) (P)->info.money
 #define Kekayaan(P) (P)->info.kekayaan
-#define CardFreeTax(P) (P)->info.nFreeTax
 #define CardFreePrison(P) (P)->info.nFreePrison
+#define CardFreeTax(P) (P)->info.nFreeTax
 #define CardProtect(P) (P)->info.nProtect
 #define CardOff(P) (P)->info.nOffLight
+#define PlayerId(P) (P)->info.playerId
+#define Jail(P) (P)->info.jail
 
 #endif
-
-

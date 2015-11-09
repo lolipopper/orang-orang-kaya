@@ -9,6 +9,7 @@
 #define IdxMax 32
 #define IdxMin 1
 
+//DEFINISI TIPE
 typedef int IdxType;
 typedef struct {
 	Kata name;
@@ -17,17 +18,20 @@ typedef struct {
 	int block;
 	int level;
 	char owner;
+	boolean LightOff;
 } ElType;
 
 typedef struct {
 	ElType TK[IdxMax+1];
 } TabKota;
 
-#define Price(Kota,i) (Kota).TK[(i)].price
+//SELEKTOR
 #define NamaKota(Kota,i) (Kota).TK[(i)].name
+#define Price(Kota,i) (Kota).TK[(i)].price
 #define isRekreasi(Kota,i) (Kota).TK[(i)].rekreasi
 #define Block(Kota,i) (Kota).TK[(i)].block
 #define Level(Kota,i) (Kota).TK[(i)].level
 #define Owner(Kota,i) (Kota).TK[(i)].owner
+#define LightOff(Kota,i) (Kota).TK[(i)].owner
 
 #endif

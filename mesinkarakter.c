@@ -1,11 +1,3 @@
-/*
-*	NIM/Nama	:
-*	Nama file	:
-*	Topik		:
-*	Tanggal		:
-*	Deskripsi 	:
-*/
-
 #include "mesinkarakter.h"
 
 extern void START(FILE *fi) {

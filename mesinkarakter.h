@@ -1,11 +1,3 @@
-/* 
-*	NIM/Nama	:
-*	Nama file	:
-*	Topik		:
-*	Tanggal		:
-*	Deskripsi 	:
-*/
- 
 #ifndef MESINKAR_H
 #define MESINKAR_H
 #include "boolean.h"
@@ -15,7 +7,7 @@
 /*
 	DESKRIPSI
 
-	Buatlah mesin karakter yang mengakuisisi input sampai ditemukan mark (end). 
+	Buatlah mesin karakter yang mengakuisisi input sampai ditemukan mark (end).
 	Input akan di-supply dari standard input-output dalam bahasa C (stdin), contoh input adalah
 	"praktikum if2110."
 	"   praktikum     if2110    ."
@@ -38,7 +30,7 @@ void START();
 void ADV();
 /*	I.S. CC!=mark
 	F.S. CC adalah karakter berikutnya yang dapat diakuisisi
-		 contoh untuk pita "IF", bila CC menunjuk 'I', maka CC berikutnya adalah 'F' 
+		 contoh untuk pita "IF", bila CC menunjuk 'I', maka CC berikutnya adalah 'F'
 		 Bila Kondisi EOP terpenuhi, nyalakan EOP
 */
 
@@ -46,4 +38,3 @@ boolean EOP();
 /*	true jika CC==mark */
 
 #endif
-

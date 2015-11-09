@@ -28,7 +28,6 @@ typedef struct {
 	Address		first;
 } ListBoard;
 
-
 //SELEKTOR
 #define First(L) (L).first
 #define Next(P) (P)->next

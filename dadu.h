@@ -22,5 +22,4 @@ int roll()
 	return Dice1(D)+Dice2(D);
 }
 
-
 #endif
