@@ -224,5 +224,7 @@ void PrintNamaPetak(TabKota Kota, Address P, int baris, int *length);
 
 void ShowBoard(ListBoard LB, TabKota Kota);
 
+Address SearchKota(ListBoard LB, TabKota Kota, Kata NamaKota);
+
 #endif
 

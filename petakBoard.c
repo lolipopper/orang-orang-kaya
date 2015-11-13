@@ -901,3 +901,32 @@ void ShowBoard(ListBoard LB, TabKota Kota) {
         if(i == (N-y)+posnama) PL = Pt;
     }
 }
+
+Address SearchKota(ListBoard LB, TabKota Kota, Kata NamaKota)
+{
+    Address p;
+    boolean found;
+
+    found = false;
+    p = First(LB);
+    while ((found == false) && (p != Last(LB))
+    {
+        if (Info(p).type == 1){
+            if((IsKataSama(Kota[Info(p).id], NamaKota) == true)){
+                found = true;
+            }
+        }
+        p = Next(p);
+    }
+
+    if (Info(p).type == 1){
+        if((IsKataSama(Kota[Info(p).id], NamaKota) == true)){
+            found = true;
+        }
+    }
+
+    if (found == true)
+        return p;
+    else
+        return Nil;
+}

@@ -25,12 +25,12 @@ boolean isDeckEmpty(card C)
     return kosong;
 }
 
-void randomCard(card *C, ElmtList *P)
+void randomCard(card *C, Player *P)
 {
     int i;
     int random;
 
-    if isDeckEmpty(*C) {
+    if (isDeckEmpty(*C)) {
         printf("Kartu chance telah habis.\n");
     }
     else {
@@ -62,13 +62,32 @@ void randomCard(card *C, ElmtList *P)
     }
 }
 
-void gotojail(ElmtList *P)
+void gotojail(Player *P)
 {
     Position(*P) = 9;
     Jail(*P) = true;
 }
 
-void freeme(ElmtList *P)
+void freetax(Player *P)
+{
+    char yn;
+
+   if (CardFreeTax(*P) != 0) {
+        printf("Anda memiliki kartu Free Tax. Apakah anda ingin menggunakan ? (Y/N)");
+        scanf("%c", &yn);
+        if (yn == 'Y') {
+            CardFreeTax(*P) -= 1;
+        }
+        else {
+            Money(*P) -= 100;
+        }
+   }
+   else {
+        Money(*P) -= 100;
+   }
+}
+
+void freeme(Player *P)
 {
     if (CardFreePrison(*P) != 0) {
         printf("Anda bebas dari penjara.\n");
@@ -80,12 +99,81 @@ void freeme(ElmtList *P)
     }
 }
 
-void freetax(ElmtList *P)
+void protect(ListBoard LB, Player *P, TabKota *Kota, Kata input);
 {
-   //belum jelas
+    Address adr;
+
+    if (CardProtect(*P) == 0) {
+        printf("Maaf, anda tidak memiliki kartu Protect.\n");
+    }
+    else {
+        adr = SearchKota(LB, *Kota, input);
+        if (adr == Nil) {
+            printf("Nama kota tidak terdefinisi.\n");
+        }
+        else {
+            if ((*Kota).TK[Id(adr)].LightOff = false) {
+                printf("Kota tersebut tidak berada dalam serangan.\n");
+            }
+            else {
+                (*Kota).TK[Id(adr)].LightOff = false;
+                CardProtect(*P) -= 1;
+            }
+        }
+    }
 }
 
-void protect(ElmtList *P, TabKota *Kota, )
+void off(ListBoard LB, Player *P, TabKota *Kota, Kata input)
 {
-    // masih bingung sama off
+    if (CardOff(*P) == 0) {
+        printf("Maaf, anda tidak memiliki kartu Off.\n");
+    }
+    else {
+        adr = SearchKota(LB, *Kota, input);
+        if (adr == Nil) {
+            printf("Nama kota tidak terdefinisi.\n");
+        }
+        else {
+            if ((*Kota).TK[Id(adr)].LightOff = true) {
+                printf("Sudah terjadi mati lampu di kota tersebut.\n");
+            }
+            else {
+                (*Kota).TK[Id(adr)].LightOff = true;
+                CardOff(*P) -= 1;
+            }
+        }
+    }
+}
+
+void leaderBoard(ListPlayer L, ListBoard LB)
+{
+    Address adrPlayer, adrBoard;
+    long long kekayaan[3];
+    TabKota Kota;
+
+    kekayaan[0] = 0;
+    kekayaan[1] = 0;
+    kekayaan[2] = 0;
+    kekayaan[3] = 0;
+    i = 0;
+    adrPlayer = First(L);
+    adrBoard = First(LB);
+    do {
+        kekayaan[i] = Info(Money(P));
+        while (adrBoard != Last(LB)) {
+            if (Info(adrBoard).type == 1) {
+                if (Kota[Info(adrBoard).id].owner = 'A') {
+                    kekayaan[i] = kekayaan[i] + Kota[Info(adrBoard).id].price;
+                    if (Kota[Info(adrBoard).id].level = 3) {
+                        kekayaan[i] = kekayaan[i] + (Kota[Info(adrBoard).id].price * 3) + (Kota[Info(adrBoard).id].price * 1.75)
+                    }
+                    else if  (Kota[Info(adrBoard).id].level = 2) {
+                        kekayaan[i] = kekayaan[i] + (Kota[Info(adrBoard).id].owner * 1.75);
+                    }
+                }
+            }
+            adrBoard = Next(adrBoard);
+        }
+
+    } while (i <= 3);
 }
