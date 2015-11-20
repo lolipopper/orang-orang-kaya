@@ -33,5 +33,6 @@ typedef struct {
 #define Level(Kota,i) (Kota).TK[(i)].level
 #define Owner(Kota,i) (Kota).TK[(i)].owner
 #define LightOff(Kota,i) (Kota).TK[(i)].owner
+#define LengthNama(Kota,i) (Kota).TK[(i)].name.Length
 
 #endif
