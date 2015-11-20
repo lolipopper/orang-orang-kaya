@@ -1,5 +1,4 @@
 #include "petakBoard.h"
-#include "kota.h"
 
 boolean IsListEmpty (ListBoard L)
 /* Mengirim true jika ListBoard kosong */
@@ -606,52 +605,6 @@ void PrintInfoBoard(ListBoard LB, TabKota Kota)
     }
 }
 
-void initBoard(ListBoard *LB,TabKota *Kota)
-{
-    FILE *fiboard;
-    Address p;
-    int i;
-	Infotype ipt;
-	int dummy;
-
-	i=1;
-    p = First(*LB);
-	fiboard = fopen("board.txt","r");
-	fscanf(fiboard,"%d\n", &ipt.type);
-	CreateList(LB);
-    while (ipt.type != ValUndef)
-    {
-        ipt.id = i;
-        InsVLast(LB,ipt);
-        //printf("\n");
-        //printf("First= %d\n",Info(First(*LB)).type);
-        //printf("IsEmpty = %d\n",IsListEmpty(*LB));
-        //printf("type: %d\n",ipt.type);
-        //printf("id  : %d\n",ipt.id);
-        if (ipt.type == 1){
-            //printf("masukn\n");
-            fgets(Kota->TK[i].name.TabKata, NMax, fiboard);
-            //printf("nama : %s",Kota->TK[i].name);
-            fscanf(fiboard,"%d\n",&(Kota->TK[i].price));
-            //printf("harga: %d\n",Kota->TK[i].price);
-            fscanf(fiboard,"%d\n",&(Kota->TK[i].rekreasi));
-            //printf("rekreasi: %d\n",Kota->TK[i].rekreasi);
-            fscanf(fiboard,"%d\n",&(Kota->TK[i].block));
-            //printf("block: %d\n",Kota->TK[i].block);
-            fscanf(fiboard,"%d\n",&(Kota->TK[i].level));
-            //printf("level: %d\n",Level(*Kota,i));
-            fscanf(fiboard,"%d\n",&(Kota->TK[i].owner));
-            //printf("owner: %d\n",Owner(*Kota,i));
-            fscanf(fiboard,"%d\n",&(Kota->TK[i].name.Length));
-        }
-        //fscanf(fiboard,"\n");
-        i++;
-        //scanf("%d",&dummy);
-        fscanf(fiboard,"%d\n", &ipt.type);
-    }
-	fclose(fiboard);
-}
-
 void PrintNamaPetak(TabKota Kota, Address P, int baris, int *length) {
 /*KAMUS*/
     int i;
@@ -909,10 +862,10 @@ Address SearchKota(ListBoard LB, TabKota Kota, Kata NamaKota)
 
     found = false;
     p = First(LB);
-    while ((found == false) && (p != Last(LB))
+    while ((found == false) && (p != Last(LB)))
     {
         if (Info(p).type == 1){
-            if((IsKataSama(Kota[Info(p).id], NamaKota) == true)){
+            if((IsKataSama(NamaKota(Kota,Id(p)), NamaKota) == true)){
                 found = true;
             }
         }
@@ -920,7 +873,7 @@ Address SearchKota(ListBoard LB, TabKota Kota, Kata NamaKota)
     }
 
     if (Info(p).type == 1){
-        if((IsKataSama(Kota[Info(p).id], NamaKota) == true)){
+        if((IsKataSama(NamaKota(Kota,Id(p)), NamaKota) == true)){
             found = true;
         }
     }
@@ -929,4 +882,147 @@ Address SearchKota(ListBoard LB, TabKota Kota, Kata NamaKota)
         return p;
     else
         return Nil;
+}
+
+void initBoard(ListBoard *LB,TabKota *Kota)
+{
+    FILE *fiboard;
+    Address p;
+    int i;
+	Infotype ipt;
+	int dummy;
+
+	i=1;
+    p = First(*LB);
+	fiboard = fopen("board.txt","r");
+	fscanf(fiboard,"%d\n", &ipt.type);
+	CreateList(LB);
+    while (ipt.type != ValUndef)
+    {
+        ipt.id = i;
+        InsVLast(LB,ipt);
+        //printf("\n");
+        //printf("First= %d\n",Info(First(*LB)).type);
+        //printf("IsEmpty = %d\n",IsListEmpty(*LB));
+        //printf("type: %d\n",ipt.type);
+        //printf("id  : %d\n",ipt.id);
+        if (ipt.type == 1){
+            //printf("masukn\n");
+            fgets(Kota->TK[i].name.TabKata, NMax, fiboard);
+            //printf("nama : %s",Kota->TK[i].name);
+            fscanf(fiboard,"%d\n",&(Kota->TK[i].price));
+            //printf("harga: %d\n",Kota->TK[i].price);
+            fscanf(fiboard,"%d\n",&(Kota->TK[i].rekreasi));
+            //printf("rekreasi: %d\n",Kota->TK[i].rekreasi);
+            fscanf(fiboard,"%d\n",&(Kota->TK[i].block));
+            //printf("block: %d\n",Kota->TK[i].block);
+            fscanf(fiboard,"%d\n",&(Kota->TK[i].level));
+            //printf("level: %d\n",Level(*Kota,i));
+            fscanf(fiboard,"%d\n",&(Kota->TK[i].owner));
+            //printf("owner: %d\n",Owner(*Kota,i));
+            fscanf(fiboard,"%d\n",&(Kota->TK[i].name.Length));
+        }
+        //fscanf(fiboard,"\n");
+        i++;
+        //scanf("%d",&dummy);
+        fscanf(fiboard,"%d\n", &ipt.type);
+    }
+	fclose(fiboard);
+}
+
+/*void FPrintKota(FILE *fokota, TabKota Kota, int id)
+{
+    int i;
+
+    fokota = fopen("save_file.txt","w");
+
+    for(i=1; i<=NamaKota(Kota,id).Length; i++){
+        fprintf(fokota,"%c",NamaKota(Kota,i),NamaKota(Kota,id).TabKata[i-1]);
+    }
+    fclose(fokota);
+}*/
+
+void Save (ListBoard LB, TabKota Kota)
+{
+    FILE *fosave;
+    Address p = First(LB);
+
+    fosave = fopen("save_file.txt","w");
+
+    while (p != Last(LB))
+    {
+        fprintf(fosave, "%d\n",Type(p));
+        if (Type(p) == 1){
+            fprintf(fosave,"%s",NamaKota(Kota,Id(p)));
+            fprintf(fosave,"%d\n",Price(Kota,Id(p)));
+            fprintf(fosave,"%d\n",isRekreasi(Kota,Id(p)));
+            fprintf(fosave,"%d\n",Block(Kota,Id(p)));
+            fprintf(fosave,"%d\n",Level(Kota,Id(p)));
+            fprintf(fosave,"%d\n",Owner(Kota,Id(p)));
+            fprintf(fosave,"%d\n",LengthNama(Kota,Id(p)));
+        }
+        fprintf(fosave,"\n");
+        p = Next(p);
+    }
+    fprintf(fosave, "%d\n",Type(p));
+    if (Type(p) == 1){
+        fprintf(fosave,"%s",NamaKota(Kota,Id(p)));
+        fprintf(fosave,"%d\n",Price(Kota,Id(p)));
+        fprintf(fosave,"%d\n",isRekreasi(Kota,Id(p)));
+        fprintf(fosave,"%d\n",Block(Kota,Id(p)));
+        fprintf(fosave,"%d\n",Level(Kota,Id(p)));
+        fprintf(fosave,"%d\n",Owner(Kota,Id(p)));
+        fprintf(fosave,"%d\n",LengthNama(Kota,Id(p)));
+    }
+    fprintf(fosave,"\n");
+    fprintf(fosave, "%d",ValUndef);
+    fclose(fosave);
+}
+
+void Load (ListBoard *LB,TabKota *Kota)
+{
+    FILE *fisave;
+    Address p;
+    int i;
+	Infotype ipt;
+	int dummy;
+
+	i=1;
+    p = First(*LB);
+	fisave = fopen("save_file.txt","r");
+	fscanf(fisave,"%d\n", &ipt.type);
+	CreateList(LB);
+    while (ipt.type != ValUndef)
+    {
+        //printf("load\n");
+        ipt.id = i;
+        InsVLast(LB,ipt);
+        //printf("\n");
+        //printf("First= %d\n",Info(First(*LB)).type);
+        //printf("IsEmpty = %d\n",IsListEmpty(*LB));
+        //printf("type: %d\n",ipt.type);
+        //printf("id  : %d\n",ipt.id);
+        if (ipt.type == 1){
+            //printf("masukn\n");
+            fgets(Kota->TK[i].name.TabKata, NMax, fisave);
+            //printf("nama : %s",Kota->TK[i].name);
+            fscanf(fisave,"%d\n",&(Price(*Kota,i)));
+            //printf("harga: %d\n",Kota->TK[i].price);
+            fscanf(fisave,"%d\n",&(isRekreasi(*Kota,i)));
+            //printf("rekreasi: %d\n",Kota->TK[i].rekreasi);
+            fscanf(fisave,"%d\n",&(Block(*Kota,i)));
+            //printf("block: %d\n",Kota->TK[i].block);
+            fscanf(fisave,"%d\n",&(Level(*Kota,i)));
+            //printf("level: %d\n",Level(*Kota,i));
+            fscanf(fisave,"%d\n",&(Owner(*Kota,i)));
+            //printf("owner: %d\n",Owner(*Kota,i));
+            fscanf(fisave,"%d\n",&(Kota->TK[i].name.Length));
+        }
+        //fscanf(fisave,"\n");
+        i++;
+        //scanf("%d",&dummy);
+        fscanf(fisave,"\n");
+        fscanf(fisave,"%d\n", &ipt.type);
+    }
+	fclose(fisave);
 }
