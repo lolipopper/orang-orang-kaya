@@ -226,5 +226,9 @@ void ShowBoard(ListBoard LB, TabKota Kota);
 
 Address SearchKota(ListBoard LB, TabKota Kota, Kata NamaKota);
 
+void Save (ListBoard LB, TabKota Kota);
+
+void Load (ListBoard *LB,TabKota *Kota);
+
 #endif
 
