@@ -15,7 +15,7 @@ typedef struct {
 	int id;
 	int type;
 	boolean special;
-} Infotype;
+} Petak;
 
 typedef struct TElmtList *Address;
 

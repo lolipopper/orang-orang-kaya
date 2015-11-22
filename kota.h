@@ -2,6 +2,7 @@
 #define KOTA_H
 #include "boolean.h"
 #include "mesinkata.h"
+#include "player.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -17,22 +18,27 @@ typedef struct {
 	boolean rekreasi;
 	int block;
 	int level;
-	char owner;
+	Player owner;
 	boolean LightOff;
-} ElType;
+} Kota;
 
 typedef struct {
 	ElType TK[IdxMax+1];
 } TabKota;
 
 //SELEKTOR
-#define NamaKota(Kota,i) (Kota).TK[(i)].name
-#define Price(Kota,i) (Kota).TK[(i)].price
-#define isRekreasi(Kota,i) (Kota).TK[(i)].rekreasi
-#define Block(Kota,i) (Kota).TK[(i)].block
-#define Level(Kota,i) (Kota).TK[(i)].level
-#define Owner(Kota,i) (Kota).TK[(i)].owner
-#define LightOff(Kota,i) (Kota).TK[(i)].owner
-#define LengthNama(Kota,i) (Kota).TK[(i)].name.Length
+#define NamaKota(Kota) (Kota).name
+#define Price(Kota) (Kota).price
+#define IsRekreasi(Kota) (Kota).rekreasi
+#define Block(Kota) (Kota).block
+#define Level(Kota) (Kota).level
+#define Owner(Kota) (Kota).owner
+#define IsLightOff(Kota) (Kota).LightOff
+#define LengthNama(Kota) (Kota).name.Length
+
+void buy(Player *P, Kota *K);
+void payRent(Player *P,Kota K);
+void upgrade(Kota *K);
+int UpgradePrice(Kota K);
 
 #endif
