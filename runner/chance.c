@@ -40,7 +40,7 @@ void randomCard(card *C, Player *P)
         (*C).el[random] -= 1;
         if (random == 0) {
             printf("Maaf, anda kurang beruntung. Anda mendapatkan kartu Go to Jail!\n");
-            gotojail(*P);
+            gotojail(P);
             (*C).el[0] += 1;
         }
         else if (random == 1) {
@@ -99,7 +99,7 @@ void freeme(Player *P)
     }
 }
 
-void protect(ListBoard LB, Player *P, TabKota *Kota, Kata input);
+void protect(ListBoard LB, Player *P, TabKota *Kota, Kata input)
 {
     Address adr;
 
@@ -125,6 +125,8 @@ void protect(ListBoard LB, Player *P, TabKota *Kota, Kata input);
 
 void off(ListBoard LB, Player *P, TabKota *Kota, Kata input)
 {
+    Address adr;
+
     if (CardOff(*P) == 0) {
         printf("Maaf, anda tidak memiliki kartu Off.\n");
     }
@@ -143,37 +145,4 @@ void off(ListBoard LB, Player *P, TabKota *Kota, Kata input)
             }
         }
     }
-}
-
-void leaderBoard(ListPlayer L, ListBoard LB)
-{
-    Address adrPlayer, adrBoard;
-    long long kekayaan[3];
-    TabKota Kota;
-
-    kekayaan[0] = 0;
-    kekayaan[1] = 0;
-    kekayaan[2] = 0;
-    kekayaan[3] = 0;
-    i = 0;
-    adrPlayer = First(L);
-    adrBoard = First(LB);
-    do {
-        kekayaan[i] = Info(Money(P));
-        while (adrBoard != Last(LB)) {
-            if (Info(adrBoard).type == 1) {
-                if (Kota[Info(adrBoard).id].owner = 'A') {
-                    kekayaan[i] = kekayaan[i] + Kota[Info(adrBoard).id].price;
-                    if (Kota[Info(adrBoard).id].level = 3) {
-                        kekayaan[i] = kekayaan[i] + (Kota[Info(adrBoard).id].price * 3) + (Kota[Info(adrBoard).id].price * 1.75)
-                    }
-                    else if  (Kota[Info(adrBoard).id].level = 2) {
-                        kekayaan[i] = kekayaan[i] + (Kota[Info(adrBoard).id].owner * 1.75);
-                    }
-                }
-            }
-            adrBoard = Next(adrBoard);
-        }
-
-    } while (i <= 3);
 }

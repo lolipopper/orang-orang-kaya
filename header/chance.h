@@ -1,5 +1,5 @@
-#ifndef KOTA_H
-#define KOTA_H
+#ifndef CHANCE_H
+#define CHANCE_H
 
 #include "boolean.h"
 #include "player.h"
@@ -50,8 +50,5 @@ void protect(ListBoard LB, Player *P, TabKota *Kota, Kata input);
 
 void off(ListBoard LB, Player *P, TabKota *Kota, Kata input);
 /* F.S : mematikan lampu di kota tertentu */
-
-void leaderBoard(ListPlayer L, ListBoard LB);
-/* F.S : menampilkan kekayaan tiap pemain */
 
 #endif
