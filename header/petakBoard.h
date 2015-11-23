@@ -17,12 +17,12 @@ typedef struct {
 	boolean special;
 } Petak;
 
-typedef struct TElmtList *Address;
+typedef struct TElmtListPetak *Address;
 
-typedef struct TElmtList {
+typedef struct TElmtListPetak {
 	Infotype 	info;
 	Address 	next;
-} ElmtList;
+} ElmtListPetak;
 
 typedef struct {
 	Address		first;

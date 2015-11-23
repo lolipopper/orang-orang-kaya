@@ -42,7 +42,7 @@ Address Alokasi (Infotype X)
 */
 {
     Address p;
-    p = (Address) malloc (sizeof(ElmtList));
+    p = (Address) malloc (sizeof(ElmtListPetak));
     if (p == Nil){
         return Nil;
     } else {

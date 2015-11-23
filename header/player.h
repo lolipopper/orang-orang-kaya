@@ -20,12 +20,12 @@ typedef struct {
 	boolean jail;
 } Player;
 
-typedef struct TElmtList *Address;
+typedef struct TElmtListPlayer *Address;
 
-typedef struct TElmtList {
+typedef struct TElmtListPlayer {
 	Player  	info;
 	Address 	next;
-} ElmtList;
+} ElmtListPlayer;
 
 typedef struct {
 	Address		first;
