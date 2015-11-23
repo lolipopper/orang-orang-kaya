@@ -1,4 +1,4 @@
-#include "chance.h"
+#include "../header/chance.h"
 
 void makeChance(card *C)
 {

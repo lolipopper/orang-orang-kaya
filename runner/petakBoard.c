@@ -1,4 +1,4 @@
-#include "petakBoard.h"
+#include "../header/petakBoard.h"
 
 boolean IsListEmpty (ListBoard L)
 /* Mengirim true jika ListBoard kosong */

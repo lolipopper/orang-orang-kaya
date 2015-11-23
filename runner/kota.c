@@ -1,4 +1,4 @@
-#include "kota.h"
+#include "../header/kota.h"
 
 void buy(Player *P, Kota *K)
 {

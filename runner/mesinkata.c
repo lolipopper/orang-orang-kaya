@@ -1,4 +1,4 @@
-#include "mesinkata.h"
+#include "../header/mesinkata.h"
 
 //primitif-primitif mesin kata
 void Ignore_Blank(FILE *fi) {

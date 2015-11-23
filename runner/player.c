@@ -1,4 +1,4 @@
-#include "player.h"
+#include "../header/player.h"
 
 void ConsPlayer(Player *P,int position,long long money, int nFreeTax, int nFreePrison,int nOffLight,int nProtect,char playerId,int kekayaan)
 {

@@ -1,4 +1,4 @@
-#include "mesinkarakter.h"
+#include "../header/mesinkarakter.h"
 
 extern void START(FILE *fi) {
 /* 	I.S. sembarang

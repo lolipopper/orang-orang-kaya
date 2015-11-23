@@ -1,4 +1,4 @@
-#include "command.h"
+#include "../header/command.h"
 
 Kata rolldice    = {"roll dice",     9};
 Kata buy         = {"buy",           3};
