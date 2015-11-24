@@ -1,6 +1,6 @@
 #ifndef PETAKBOARD_H
 #define PETAKBOARD_H
-#include "mesinkata.h"
+#include "other.h"
 #include "kota.h"
 #include "boolean.h"
 #include <stdio.h>
@@ -17,12 +17,12 @@ typedef struct {
 	boolean special;
 } Petak;
 
-typedef struct TElmtListPetak *Address;
+typedef struct TElmtList *Address;
 
-typedef struct TElmtListPetak {
-	Infotype 	info;
+typedef struct TElmtList {
+	Petak 	info;
 	Address 	next;
-} ElmtListPetak;
+} ElmtList;
 
 typedef struct {
 	Address		first;
@@ -51,7 +51,7 @@ void CreateList (ListBoard *L);
 	F.S. Terbentuk ListBoard kosong
 */
 
-Address Alokasi (Infotype X);
+Address Alokasi (Petak X);
 /*	Mengirimkan Address hasil alokasi sebuah elemen
 	Jika alokasi berhasil, maka Address tidak Nil, dan misalnya menghasilkan P, maka
 	Info(P) = X, Next(P) = Nil
@@ -67,7 +67,7 @@ void Dealokasi (Address *P);
 // PENCARIAN SEBUAH ELEMEN ListBoard
 
 //PENAMBAHAN ELEMEN
-void InsVFirst (ListBoard *L, Infotype X);
+void InsVFirst (ListBoard *L, Petak X);
 /*	I.S. L mungkin kosong
 	F.S. X ditambahkan sebagai elemen pertama L
 	Proses : Melakukan alokasi sebuah elemen dan menambahkan elemen pertama dengan
@@ -75,7 +75,7 @@ void InsVFirst (ListBoard *L, Infotype X);
 	Jika alokasi gagal: I.S.= F.S.
 */
 
-void InsVLast (ListBoard *L, Infotype X);
+void InsVLast (ListBoard *L, Petak X);
 /*	I.S. L mungkin kosong
 	F.S. X ditambahkan sebagai elemen terakhir L
 	Proses : Melakukan alokasi sebuah elemen dan menambahkan elemen ListBoard di akhir :
@@ -84,13 +84,13 @@ void InsVLast (ListBoard *L, Infotype X);
 */
 
 //PENGHAPUSAN ELEMEN
-void DelVFirst (ListBoard *L, Infotype *X);
+void DelVFirst (ListBoard *L, Petak *X);
 /*	I.S. ListBoard L tidak kosong
 	F.S. Elemen pertama ListBoard dihapus : nilai info disimpan pada X
 	dan alamat elemen pertama di-dealokasi
 */
 
-void DelVLast (ListBoard *L, Infotype *X);
+void DelVLast (ListBoard *L, Petak *X);
 /*	I.S. ListBoard tidak kosong
 	F.S. Elemen terakhir ListBoard dihapus : nilai info disimpan pada X
 	dan alamat elemen terakhir di-dealokasi
@@ -212,23 +212,23 @@ void PecahList (ListBoard *L1, ListBoard *L2, ListBoard L);
 	Jila alokasi gagal, semua elemen yang sudah dialokasikan harus di-dealokasi (bisa L1, L2 atau keduanya)
 */
 
-void PrintInfoKota(TabKota Kota, int id);
+void PrintInfoKota(TabKota TK, int id);
 
-void PrintInfoAdr(Address p, TabKota Kota);
+void PrintInfoAdr(Address p, TabKota TK);
 
-void PrintInfoBoard(ListBoard LB, TabKota Kota);
+void PrintInfoBoard(ListBoard LB, TabKota TK);
 
 void initBoard(ListBoard *LB, TabKota *TK);
 
-void PrintNamaPetak(TabKota Kota, Address P, int baris, int *length);
+void PrintNamaPetak(TabKota TK, Address P, int baris, int *length);
 
-void ShowBoard(ListBoard LB, TabKota Kota);
+void ShowBoard(ListBoard LB, TabKota TK);
 
-Address SearchKota(ListBoard LB, TabKota Kota, Kata NamaKota);
+Address SearchKota(ListBoard LB, TabKota TK, Kata NamaKota);
 
-void Save (ListBoard LB, TabKota Kota);
+void Save (ListBoard LB, TabKota TK);
 
-void Load (ListBoard *LB,TabKota *Kota);
+void Load (ListBoard *LB,TabKota *TK);
 
 #endif
 

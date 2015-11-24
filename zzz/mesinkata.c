@@ -80,7 +80,6 @@ void SalinKata(FILE *fi) {
 		EndKata = true;
 }
 
-//operasi lain
 boolean IsKataSama(Kata K1, Kata K2) {
 /*	Mengembalikan true jika K1 = K2; dua kata dikatakan sama jika panjangnya sama dan
 	urutan karakter yang menyusun kata juga sama. Sensitif terhadap uppercase dan lowercase
@@ -98,3 +97,7 @@ boolean IsKataSama(Kata K1, Kata K2) {
 	}
 	else return false;
 }
+
+
+//operasi lain
+

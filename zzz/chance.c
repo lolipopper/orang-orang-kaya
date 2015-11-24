@@ -1,4 +1,4 @@
-#include "../header/chance.h"
+#include "chance.h"
 
 void makeChance(card *C)
 {
@@ -25,9 +25,8 @@ boolean isDeckEmpty(card C)
     return kosong;
 }
 
-void randomCard(card *C, Player *P)
+void randomCard(card *C, AddressPl *P)
 {
-    int i;
     int random;
 
     if (isDeckEmpty(*C)) {
@@ -62,13 +61,13 @@ void randomCard(card *C, Player *P)
     }
 }
 
-void gotojail(Player *P)
+void gotojail(AddressPl *P)
 {
-    Position(*P) = 9;
+	Position(*P) = 9;
     Jail(*P) = true;
 }
 
-void freetax(Player *P)
+void freetax(AddressPl *P)
 {
     char yn;
 
@@ -87,7 +86,7 @@ void freetax(Player *P)
    }
 }
 
-void freeme(Player *P)
+void freeme(AddressPl *P)
 {
     if (CardFreePrison(*P) != 0) {
         printf("Anda bebas dari penjara.\n");
@@ -99,7 +98,7 @@ void freeme(Player *P)
     }
 }
 
-void protect(ListBoard LB, Player *P, TabKota *Kota, Kata input)
+void protect(ListBoard LB, AddressPl *P, TabKota *TK, Kata input)
 {
     Address adr;
 
@@ -107,40 +106,42 @@ void protect(ListBoard LB, Player *P, TabKota *Kota, Kata input)
         printf("Maaf, anda tidak memiliki kartu Protect.\n");
     }
     else {
-        adr = SearchKota(LB, *Kota, input);
+        adr = SearchKota(LB, *TK, input);
         if (adr == Nil) {
             printf("Nama kota tidak terdefinisi.\n");
         }
         else {
-            if ((*Kota).TK[Id(adr)].LightOff = false) {
+            if (!(*TK).TK[Id(adr)].LightOff) {
                 printf("Kota tersebut tidak berada dalam serangan.\n");
             }
             else {
-                (*Kota).TK[Id(adr)].LightOff = false;
+                (*TK).TK[Id(adr)].LightOff = false;
                 CardProtect(*P) -= 1;
             }
         }
     }
 }
 
-void off(ListBoard LB, Player *P, TabKota *Kota, Kata input)
+void off(ListBoard LB, AddressPl *P, TabKota *TK, Kata input)
 {
-    Address adr;
+	//Kamus
+	Address adr;
 
+	//Algoritma
     if (CardOff(*P) == 0) {
         printf("Maaf, anda tidak memiliki kartu Off.\n");
     }
     else {
-        adr = SearchKota(LB, *Kota, input);
+        adr = SearchKota(LB, *TK, input);
         if (adr == Nil) {
             printf("Nama kota tidak terdefinisi.\n");
         }
         else {
-            if ((*Kota).TK[Id(adr)].LightOff = true) {
+            if ((*TK).TK[Id(adr)].LightOff) {
                 printf("Sudah terjadi mati lampu di kota tersebut.\n");
             }
             else {
-                (*Kota).TK[Id(adr)].LightOff = true;
+                (*TK).TK[Id(adr)].LightOff = true;
                 CardOff(*P) -= 1;
             }
         }
