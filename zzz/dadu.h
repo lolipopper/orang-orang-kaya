@@ -14,4 +14,12 @@ typedef struct {
 #define Dice1(D) (D).dice1
 #define Dice2(D) (D).dice2
 
+//KAMUS GLOBAL
+Dadu D; //dadu dalam permainan
+
+//Spesififikasi
+void roll(); //roll dadu
+
+boolean reroll(); //boolean untuk menyatakan player dapat reroll atau tidak
+
 #endif
