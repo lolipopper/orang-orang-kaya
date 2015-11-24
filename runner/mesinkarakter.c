@@ -1,15 +1,14 @@
-#include "../header/mesinkarakter.h"
+#include "mesinkarakter.h"
 
-extern void START(FILE *fi) {
+extern void START() {
 /* 	I.S. sembarang
 	F.S. CC adalah karakter pertama pita (stdin)
 		 Bila Kondisi EOP terpenuhi, nyalakan EOP
 */
-	fscanf(fi,"%c",&CC);
-	printf("Masuk\n");
+	scanf("%c",&CC);
 }
 
-extern void ADV(FILE *fi) {
+extern void ADV() {
 /*	I.S. CC!=mark
 	F.S. CC adalah karakter berikutnya yang dapat diakuisisi
 		 contoh untuk pita "IF", bila CC menunjuk 'I', maka CC berikutnya adalah 'F'
@@ -17,10 +16,10 @@ extern void ADV(FILE *fi) {
 */
 	//ALGORITMA
 	if (!EOP())
-		fscanf(fi,"%c",&CC);
+		scanf("%c",&CC);
 }
 
 extern boolean EOP() {
 /*	true jika CC==mark */
-	return (CC==mark);
+	return (CC=='\n');
 }

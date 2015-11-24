@@ -1,20 +1,20 @@
-#include "../header/mesinkata.h"
+#include "mesinkata.h"
 
 //primitif-primitif mesin kata
-void Ignore_Blank(FILE *fi) {
+void Ignore_Blank() {
 /*	Mengabaikan satu atau beberapa BLANK
 	I.S. : CC sembarang
 	F.S. : CC != BLANK atau CC == MARK
 */
 	//ALGORITMA
 	while (!EOP() && (CC==blank)) {
-		ADV(fi);
+		ADV();
 	}
 	if (EOP())
 		EndKata=true;
 }
 
-void STARTKATA(FILE *fi) {
+void STARTKATA() {
 /*	I.S. : CC sembarang
 	F.S  : Salah satu dari dua kondisi dibawah.
 		1. EndKata = true dan CC == Mark
@@ -23,18 +23,18 @@ void STARTKATA(FILE *fi) {
 		Keterangan: CC mengacu pada yang disebut pada mesinkarakter
 */
 	//ALGORITMA
-	START(fi);
-	if (!EOP()) {
-		Ignore_Blank(fi);
+	START();
+	if (CC != '\n') {
+		Ignore_Blank();
 		EndKata=false;
-		SalinKata(fi);
+		SalinKata();
 	}
 	else {
 		EndKata=true;
 	}
 }
 
-void ADVKATA(FILE *fi) {
+void ADVKATA() {
 /*	I.S. : EndKata = false; CC adalah karakter sesudah karakter terakhir
 	dari kata yg sudah diakuisisi
 	F.S. : Jika CC = MARK, maka EndKata = true
@@ -42,19 +42,19 @@ void ADVKATA(FILE *fi) {
 	CC karakter pertama sesudah karakter terakhir kata
 */
 	//ALGORITMA
-	if (CC==mark) {
+	if (CC=='\n') {
 		EndKata=true;
 		int i;
 		for (i=0; i<CKata.Length; i++)
 			CKata.TabKata[i]='\0';
 	}
 	else {
-		Ignore_Blank(fi);
-		SalinKata(fi);
+		Ignore_Blank();
+		SalinKata();
 	}
 }
 
-void SalinKata(FILE *fi) {
+void SalinKata() {
 /*	Mengakuisisi kata, menyimpan dalam CKata
 	I.S. : CC adalah karakter pertama dari kata
 	F.S. : CKata berisi kata yang sudah diakuisisi, jika karakternya melebihi
@@ -69,12 +69,12 @@ void SalinKata(FILE *fi) {
 	for (i=0; i<CKata.Length; i++)
 		CKata.TabKata[i]='\0';
 	CKata.Length=0;
-	while (!EOP() && (CC!=blank)) {
+	while (!EOP() /*&& (CC!=blank)*/) {
 		if (CKata.Length<NMax) {
 			CKata.Length+=1;
 			CKata.TabKata[CKata.Length-1] = CC;
 		}
-		ADV(fi);
+		ADV();
 	}
 	if (EOP())
 		EndKata = true;
