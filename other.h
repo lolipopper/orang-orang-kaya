@@ -15,6 +15,9 @@ typedef struct {
 	int	 Length;
 } Kata;
 
+#define TabKata(Kata, i) (Kata).TabKata[i]
+#define Length(Kata) (Kata).Length
+
 typedef struct {
 	int dice1;
 	int dice2;

@@ -35,4 +35,7 @@ typedef struct {
 long long priceCity(Kota K);
 /* mengembalikan harga sewa kota */
 
+long long priceUpgrade(Kota K);
+/* mengembalikan harga upgrade kota */
+
 #endif

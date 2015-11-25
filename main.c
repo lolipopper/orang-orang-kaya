@@ -32,31 +32,40 @@ void menu(ListBoard *LB, TabKota *TK)
     do {
         printf("> ");
         scanf("%s", input);
-        if (strcmp(input, "new") == 0) {
+        if (strcmp(input, "new") == 0) { // new
             InitNPlayer();
         }
-        if (strcmp(input, "roll") == 0) {
+        if (strcmp(input, "roll") == 0) { // roll dice
             scanf("%s", input);
             if (strcmp(input, "dice") == 0) {
                 MovPlayer(*TK, *LB);
             }
         }
-        if (strcmp(input, "buy") == 0) {
-            buy();
+        if (strcmp(input, "buy") == 0) { // buy
+            buy(TK, LB);
         }
-        if (strcmp(input, "info") == 0) {
+        if (strcmp(input, "upgrade") == 0) {
+            upgrade(TK,LB);
+        }
+        if (strcmp(input, "print") == 0) { // print card
             scanf("%s", input);
             if (strcmp(input, "card") == 0) {
                 printCard(C);
             }
         }
-        if (strcmp(input, "end") == 0) {
+        if (strcmp(input, "show") == 0) { // show money
             scanf("%s", input);
-            if (strcmp(input, "dice") == 0) {
+            if (strcmp(input, "money") == 0) {
+                ShowMoney();
+            }
+        }
+        if (strcmp(input, "end") == 0) { // end turn
+            scanf("%s", input);
+            if (strcmp(input, "turn") == 0) {
                 EndTurn();
             }
         }
-        if (strcmp(input, "board") == 0) {
+        if (strcmp(input, "board") == 0) { // board
             ShowBoard(*LB, *TK);
             printf("\n");
         }

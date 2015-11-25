@@ -1,6 +1,6 @@
 #ifndef BOARD_H
 #define BOARD_H
-//#include "other.h"
+#include "other.h"
 #include "kota.h"
 #include "boolean.h"
 #include <stdio.h>
@@ -29,6 +29,8 @@ typedef struct {
 	Address		first;
 } ListBoard;
 
+ListBoard LB;
+
 //SELEKTOR
 #define First(L) (L).first
 #define Next(P) (P)->next
@@ -48,10 +50,6 @@ void PrintInfoBoard(ListBoard LB, TabKota TK);
 void initBoard(ListBoard *LB, TabKota *TK);
 
 void PrintNamaPetak(TabKota TK, Address P, int baris, int *length);
-
-boolean IsPlayerOnBoard(AddressPl P, int pos);
-
-int PlayersOnBoard(ListPlayer LP, int pos);
 
 void ShowBoard(ListBoard LB, TabKota TK);
 

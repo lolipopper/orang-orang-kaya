@@ -1,0 +1,20 @@
+bayar sewa
+boardWorldCup
+boardWorldTravel
+showBoard belum lengkap
+info <nama petak>
+sell
+sell bank
+sell offered
+buy offered <nama petak>
+host <nama kota>
+leaderboard
+save
+load
+off
+protect
+blok (bonus)
+tour monopoli (bonus)
+triple monopoli (bonus)
+batas"" yang dilakukan pemain di petak tertentu
+

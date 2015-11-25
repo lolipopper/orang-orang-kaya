@@ -44,6 +44,7 @@ void randomCard(card *C)
     }
     else {
         do {
+            srand ( time(NULL) );
             random = rand() %4;
         } while ((*C).el[random] == 0);
         (*C).el[random] -= 1;

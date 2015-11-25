@@ -4,6 +4,7 @@
 #include "boolean.h"
 #include "kota.h"
 #include "player.h"
+#include <time.h>
 
 //KAMUS GLOBAL
 typedef struct {

@@ -168,6 +168,7 @@ void boardDesertedIsland()
             else {
                 Money(PTurn) -= 300;
                 printf("  Kamu bebas dari penjara.\n");
+                ShowMoney();
                 inputBenar = true;
                 }
         }
