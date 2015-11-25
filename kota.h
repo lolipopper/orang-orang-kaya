@@ -1,16 +1,13 @@
 #ifndef KOTA_H
 #define KOTA_H
-#include "boolean.h"
-#include "mesinkata.h"
-#include "player.h"
-#include <stdio.h>
-#include <stdlib.h>
 
-//KONSTANTA
+#include "other.h"
+
+// KONSTANTA
 #define IdxMax 32
 #define IdxMin 1
 
-//DEFINISI TIPE
+// DEFINISI TIPE
 typedef int IdxType;
 typedef struct {
 	Kata name;
@@ -18,27 +15,24 @@ typedef struct {
 	boolean rekreasi;
 	int block;
 	int level;
-	Player owner;
+	char owner;
 	boolean LightOff;
 } Kota;
 
 typedef struct {
-	ElType TK[IdxMax+1];
+	Kota TK[IdxMax+1];
 } TabKota;
 
-//SELEKTOR
-#define NamaKota(Kota) (Kota).name
-#define Price(Kota) (Kota).price
-#define IsRekreasi(Kota) (Kota).rekreasi
-#define Block(Kota) (Kota).block
-#define Level(Kota) (Kota).level
-#define Owner(Kota) (Kota).owner
-#define IsLightOff(Kota) (Kota).LightOff
-#define LengthNama(Kota) (Kota).name.Length
+// SELEKTOR
+#define NamaKota(Kota,i) (Kota).TK[(i)].name
+#define Price(Kota,i) (Kota).TK[(i)].price
+#define isRekreasi(Kota,i) (Kota).TK[(i)].rekreasi
+#define Block(Kota,i) (Kota).TK[(i)].block
+#define Level(Kota,i) (Kota).TK[(i)].level
+#define Owner(Kota,i) (Kota).TK[(i)].owner
+#define LightOff(Kota,i) (Kota).TK[(i)].owner
 
-void buy(Player *P, Kota *K);
-void payRent(Player *P,Kota K);
-void upgrade(Kota *K);
-int UpgradePrice(Kota K);
+long long priceCity(Kota K);
+/* mengembalikan harga sewa kota */
 
 #endif

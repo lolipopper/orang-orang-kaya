@@ -3,9 +3,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "string.h"
 #include "boolean.h"
 #include "other.h"
 #include "board.h"
+#include "command.h"
+#include "chance.h"
 
 // KONSTANTA
 #define Nil NULL
@@ -60,7 +63,7 @@ AddressPl AlokasiPl (Player X);
 void DealokasiPl (AddressPl *P);
 /* melakukan dealokasi player */
 
-void ConsPlayer(Player *P, int position, long long money, int nFreeTax, int nFreePrison, int nOffLight, int nProtect, char playerId, int kekayaan);
+void ConsPlayer(Player *P, int position, long long money, int nFreeTax, int nFreePrison, int nOffLight, int nProtect, char playerId, int kekayaan, boolean jail);
 /* prosedur untuk menentukan info dari player */
 
 void InitPlayer(Player *P, char playerId);
@@ -71,5 +74,20 @@ void InitNPlayer();
 
 AddressPl SearchPl(char id);
 /* melakukan search di List Turn Player dengan playerId = id */
+
+void boardTax();
+/* efek yang didapatkan player ketika sampai di board Tax */
+
+void boardBonus();
+/* efek yang didapatkan player ketika sampai di board Bonus */
+
+void boardDesertedIsland();
+/* efek yang didapatkan player ketika sampai di board Deserted Island */
+
+void boardChance();
+/* efek yang didapatkan player ketika sampai di board Chance */
+
+void boardWorldCup();
+/* efek yang didapatkan player ketika sampai di board World Cup */
 
 #endif

@@ -1,11 +1,11 @@
 #include "string.h"
 #include "boolean.h"
 #include "kota.h"
-#include "kota.h"
 #include "command.h"
 #include "board.h"
 #include "player.h"
 #include "other.h"
+#include "chance.h"
 
 void menu();
 
@@ -14,7 +14,7 @@ int main ()
     ListBoard LB;
     TabKota TK;
 
-    CreateList(&LB);
+    makeChance(&C);
     initBoard(&LB,&TK);
     menu(&LB,&TK);
 
@@ -35,22 +35,26 @@ void menu(ListBoard *LB, TabKota *TK)
         if (strcmp(input, "new") == 0) {
             InitNPlayer();
         }
-        if (strcmp(input, "rolldice") == 0) {
-            MovPlayer(*TK, *LB);
+        if (strcmp(input, "roll") == 0) {
+            scanf("%s", input);
+            if (strcmp(input, "dice") == 0) {
+                MovPlayer(*TK, *LB);
+            }
         }
         if (strcmp(input, "buy") == 0) {
-            printf("posisi : %d\n", Position(PTurn));
-            //Kota now;
-            //TabKota TK;
-            //now = TK[1];
-           // buy(&Info(PTurn), &now);
+            buy();
         }
         if (strcmp(input, "info") == 0) {
-            //scanf("%s", input);
-            //infoKota(*B, choice);
+            scanf("%s", input);
+            if (strcmp(input, "card") == 0) {
+                printCard(C);
+            }
         }
-        if (strcmp(input, "endturn") == 0) {
-            EndTurn();
+        if (strcmp(input, "end") == 0) {
+            scanf("%s", input);
+            if (strcmp(input, "dice") == 0) {
+                EndTurn();
+            }
         }
         if (strcmp(input, "board") == 0) {
             ShowBoard(*LB, *TK);

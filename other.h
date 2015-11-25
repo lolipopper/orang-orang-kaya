@@ -4,9 +4,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "boolean.h"
+#include <time.h>
 
 // KONSTANTA
-#define NMax 50
+#define NMax 20
 
 // DEFINISI TIPE
 typedef struct {

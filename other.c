@@ -23,6 +23,7 @@ boolean IsKataSama(Kata K1, Kata K2)
 
 void roll()
 {
+    srand ( time(NULL) );
 	Dice1(D) = (rand() % 6) + 1;
 	Dice2(D) = (rand() % 6) + 1;
 }

@@ -9,8 +9,9 @@
 //KONSTANTA
 #define Nil NULL
 #define ValUndef -999
+#define NMax 20
 
-//DEFINISI TIPE
+// DEFINISI TIPE
 typedef struct {
 	int id;
 	int type;
@@ -136,5 +137,3 @@ void PecahList (ListBoard *L1, ListBoard *L2, ListBoard L);
 */
 
 #endif
-
-

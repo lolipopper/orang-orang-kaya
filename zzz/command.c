@@ -1,12 +1,7 @@
-#include "command.h"
-#include "action.h"
-#include "action.c"
-#include "petakBoard.c"
-#include "mesinkata.c"
-#include "mesinkarakter.c"
+#include "../header/command.h"
 
 Kata rolldice    = {"roll dice",     9};
-Kata Buy         = {"buy",           3};
+Kata buy         = {"buy",           3};
 Kata showoffered = {"show offered", 12};
 Kata upgrade     = {"upgrade",       7};
 Kata board       = {"board",         5};
@@ -21,8 +16,8 @@ Kata sellbank    = {"sell bank",     9};
 Kata buyoffered  = {"buy offered",  11};
 Kata hostkota    = {"host",          4};
 Kata travelkota  = {"travel",        6};
-Kata Off         = {"off",           3};
-Kata Protect     = {"protect",       7};
+Kata off         = {"off",           3};
+Kata protect     = {"protect",       7};
 Kata saving      = {"save",          4};
 Kata loading     = {"load",          4};
 
@@ -55,30 +50,32 @@ void PetakToDo(Address P) {
 
 void BacaCommand(Kata *K) {
 /*KAMUS*/
- //   int i;
+    int i;
 /*ALGORITMA*/
-//    i = 0;
-//    STARTKATA();
-    ADVKATA();
-    *K = CKata;
+    i = 0;
+    do {
+        CC = getchar();
+        (*K).TabKata[i] = CC;
+        i++;
+    } while(CC != '\n');
+    (*K).Length = i-1;
 }
 
 void DoCommand(Kata K, ListBoard LB, TabKota Kota, Player *P) {
 /*KAMUS*/
-    Kata Command;
-    Kata Objek;
+    Kata Command, Objek;
     int i, j;
     Address B;
 /*ALGORITMA*/
-    if     (IsKataSama(K, rolldice)   ) {}//RollDice();
-    else if(IsKataSama(K, Buy)        ) {}//buy();
-    else if(IsKataSama(K, showoffered)) {}//ShowOffered();
-    else if(IsKataSama(K, upgrade)    ) {}//Upgrade();
-    else if(IsKataSama(K, board)      ) ShowBoard(LB, Kota);
-    else if(IsKataSama(K, leaderboard)) {}//leaderBoard();
-    else if(IsKataSama(K, endturn)    ) {}//EndTurn();
-    else if(IsKataSama(K, FreeMe)     ) {}//freeme(P);
-    else if(IsKataSama(K, FreeTax)    ) {}//freetax(P);
+    if     (IsKataSama(K, rolldice)   ) RollDice();
+    else if(IsKataSama(K, buy)        ) Buy();
+    else if(IsKataSama(K, showoffered)) ShowOffered();
+    else if(IsKataSama(K, upgrade)    ) Upgrade();
+    else if(IsKataSama(K, board)      ) ShowBoard();
+    else if(IsKataSama(K, leaderboard)) leaderBoard();
+    else if(IsKataSama(K, endturn)    ) EndTurn();
+    else if(IsKataSama(K, FreeMe)     ) freeme(P);
+    else if(IsKataSama(K, FreeTax)    ) freetax(P);
     else {
         i = 0;
         while(K.TabKata[i] != ' ') {
@@ -103,15 +100,15 @@ void DoCommand(Kata K, ListBoard LB, TabKota Kota, Player *P) {
         Objek.Length = j-1;
         B = SearchKota(LB, Kota, Objek);
         if     (IsKataSama(Command, infopetak) ) PrintInfoKota(Kota, Id(B));
-        else if(IsKataSama(Command, sellpetak) ) {}//SellKota();
-        else if(IsKataSama(Command, sellbank)  ) {}//SellBank();
-        else if(IsKataSama(Command, buyoffered)) {}//BuyOffered();
-        else if(IsKataSama(Command, hostkota)  ) {}//HostKota();
-        else if(IsKataSama(Command, travelkota)) {}//TravelKota();
-        else if(IsKataSama(Command, Off)       ) {}//off();
-        else if(IsKataSama(Command, Protect)   ) {}//protect();
-        else if(IsKataSama(Command, saving)    ) {}//Save(LB, Kota);
-        else if(IsKataSama(Command, loading)   ) {}//Load(&LB, &Kota);
+        else if(IsKataSama(Command, sellpetak) ) SellKota();
+        else if(IsKataSama(Command, sellbank)  ) SellBank();
+        else if(IsKataSama(Command, buyoffered)) BuyOffered();
+        else if(IsKataSama(Command, hostkota)  ) HostKota();
+        else if(IsKataSama(Command, travelkota)) TravelKota();
+        else if(IsKataSama(Command, off)       ) Off();
+        else if(IsKataSama(Command, protect)   ) Protect();
+        else if(IsKataSama(Command, saving)    ) Save(LB, Kota);
+        else if(IsKataSama(Command, loading)   ) Load(&LB, &Kota);
         else {
             printf("Error: Wrong Command\n");
         }

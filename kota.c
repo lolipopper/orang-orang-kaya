@@ -1,28 +1,14 @@
-#include "../header/kota.h"
+#include "kota.h"
 
-void buy(Player *P, Kota *K)
+long long priceCity(Kota K)
 {
-	Money(*P)-=Price(*K);
-	Kekayaan(*P)+=Price(*K);
-	Owner(*K)=*P;
-	Level(*K)++;
-}
-
-void payRent(Player *P,Kota K)
-{
-	Money(*P)-=Price(K);
-	Kekayaan(*P)-=Price(K);
-	Money(Owner(K))+=Price(K);
-	Kekayaan(Owner(K))+=Price(K);
-}
-
-void upgrade(Kota *K)
-{
-	Money(Owner(*K))-=UpgradePrice(*K);
-	Level(*K)++;
-}
-
-int UpgradePrice(Kota K)
-{
-	return Price(K);
+    if ((K.level == 0) || (K.level == 1)) {
+        return K.price;
+    }
+    else if (K.level == 2) {
+        return 2 * K.price;
+    }
+    else if (K.level == 3) {
+        return 3 * K.price;
+    }
 }

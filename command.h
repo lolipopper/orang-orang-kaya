@@ -1,5 +1,5 @@
-#ifndef ACTION_H
-#define ACTION_H
+#ifndef COMMAND_H
+#define COMMAND_H
 
 #include "kota.h"
 #include "player.h"
@@ -19,16 +19,7 @@ void ShowMoney();
 void PrintPos(TabKota TK, ListBoard LB);
 /* menunjukkan posisi player tertentu pada board */
 
-void buy(Player *P, Kota *K);
+void buy();
 /* prosedur untuk melakukan pembelian kota */
-
-void payRent(Player *P, Kota K);
-/* prosedur untuk membayar sewa ke player lain */
-
-void Upgrade(ListBoard LB, TabKota *TK);
-/* prosedur untuk mengupgrade bangunan */
-
-void infoKota(TabKota TK, int id);
-/* prosedur untuk menampilkan info kota */
 
 #endif
