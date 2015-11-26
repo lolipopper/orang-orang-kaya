@@ -90,4 +90,10 @@ void boardChance();
 void boardWorldCup();
 /* efek yang didapatkan player ketika sampai di board World Cup */
 
+boolean IsPlayerOnBoard(AddressPl P, int pos);
+
+int PlayersOnBoard(int pos);
+
+void ShowBoard(ListBoard LB, TabKota TK);
+
 #endif
