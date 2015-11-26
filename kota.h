@@ -30,7 +30,7 @@ typedef struct {
 #define Block(Kota,i) (Kota).TK[(i)].block
 #define Level(Kota,i) (Kota).TK[(i)].level
 #define Owner(Kota,i) (Kota).TK[(i)].owner
-#define LightOff(Kota,i) (Kota).TK[(i)].owner
+#define LightOff(Kota,i) (Kota).TK[(i)].LightOff
 
 long long priceCity(Kota K);
 /* mengembalikan harga sewa kota */
