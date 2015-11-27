@@ -45,17 +45,17 @@ void MoveNPetak(TabKota *TK, ListBoard *LB, int N)
             Money(PTurn) += 150;
             ShowMoney();
 		}
-		if(PlayerId(PTurn) == whoWorldCup(TK, idWorldCup)) {
+		if(PlayerId(PTurn) == whoWorldCup(*TK, idWorldCup)) {
 			if(Position(PTurn) == 17) {
 				printf("  Kamu sudah melewati World Cup, efek harga sewa kota "); 
 				j = 0;
-				while(j < NamaKota(TK, idWorldCup).Length) {
-					printf("%c", NamaKota(TK, idWorldCup).TabKata[j]);
+				while(j < NamaKota(*TK, idWorldCup).Length) {
+					printf("%c", NamaKota(*TK, idWorldCup).TabKata[j]);
 					j++;
 				}
 				printf(" 2x lipat hilang.\n");
-				isWorldCup(TK, idWorldCup) = false;
-				whoWorldCup(TK, idWorldCup) = '0';
+				isWorldCup(*TK, idWorldCup) = false;
+				whoWorldCup(*TK, idWorldCup) = '0';
 				idWorldCup = 0;
 			}
 		}

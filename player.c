@@ -326,8 +326,8 @@ void ShowBoard(ListBoard LB, TabKota TK) {
 /*ALGORITMA*/
     /*INISIALISASI*/
     npetak = 9;//Jumlah Petak
-    x = 10 + 1; //Ukuran Petak
-    y = 5;     //Ukuran Petak
+    x = 12 + 1; //Ukuran Petak
+    y = 6;     //Ukuran Petak
     M = x*npetak; //Panjang Board
     N = y*npetak; //Lebar Board
     posnama = 1; //posisi baris nama dalam petak
@@ -377,10 +377,11 @@ void ShowBoard(ListBoard LB, TabKota TK) {
 							}
                         }
                         else {
-							if(isWorldCup(TK, Id(PF))) {
+							if(isWorldCup(TK, Id(PF)))
 								for(m = 0; m < (x-(length+4)); m++) printf(" ");
 							else
 								for(m = 0; m < (x-(length+2)); m++) printf(" ");
+						}
                         j += x-2;
                         PF = Next(PF);
                     }
@@ -496,12 +497,14 @@ void ShowBoard(ListBoard LB, TabKota TK) {
 									for(m = 0; m < (x-(length+4)); m++) printf(" ");
 								else
 									for(m = 0; m < (x-(length+2)); m++) printf(" ");
+							}
                         }
                         else {
 							if(isWorldCup(TK, Id(PF)))
 								for(m = 0; m < (x-(length+4)); m++) printf(" ");
 							else
 								for(m = 0; m < (x-(length+2)); m++) printf(" ");
+                        }
                         j += x-2;
                     }
                     else if(j > (M-x) && j < M) {
@@ -521,6 +524,7 @@ void ShowBoard(ListBoard LB, TabKota TK) {
 								for(m = 0; m < (x-(length+4)); m++) printf(" ");
 							else
 								for(m = 0; m < (x-(length+2)); m++) printf(" ");
+                        }
                         j += x-2;
                     }
                     else if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
@@ -694,6 +698,7 @@ void ShowBoard(ListBoard LB, TabKota TK) {
 								for(m = 0; m < (x-(length+5)); m++) printf(" ");
 							else
 								for(m = 0; m < (x-(length+3)); m++) printf(" ");
+                        }
                         j += x-2;
                         PL = Next(PL);
                     }
