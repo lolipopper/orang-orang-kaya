@@ -25,6 +25,7 @@ typedef struct {
 	int nOffLight;
 	char playerId;
 	boolean jail;
+	int movWorldTravel;
 } Player;
 
 typedef struct TElmtListPl *AddressPl;
@@ -51,12 +52,14 @@ typedef struct {
 #define CardOff(P) (P)->info.nOffLight
 #define PlayerId(P) (P)->info.playerId
 #define Jail(P) (P)->info.jail
+#define MovWorldTravel(P) (P)->info.movWorldTravel
 
 // KAMUS GLOBAL
 ListPlayer Turn;
 AddressPl PTurn;
 boolean rolled;
 int jumlahPemain;
+int idWorldCup;
 
 AddressPl AlokasiPl (Player X);
 /* melakukan alokasi player */
@@ -64,7 +67,7 @@ AddressPl AlokasiPl (Player X);
 void DealokasiPl (AddressPl *P);
 /* melakukan dealokasi player */
 
-void ConsPlayer(Player *P, int position, long long money, int nFreeTax, int nFreePrison, int nOffLight, int nProtect, char playerId, int kekayaan, boolean jail);
+void ConsPlayer(Player *P, int position, long long money, int nFreeTax, int nFreePrison, int nOffLight, int nProtect, char playerId, int kekayaan, boolean jail, int movworldtravel);
 /* prosedur untuk menentukan info dari player */
 
 void InitPlayer(Player *P, char playerId);
@@ -87,6 +90,16 @@ void boardDesertedIsland();
 
 void boardChance();
 /* efek yang didapatkan player ketika sampai di board Chance */
+
+void hostnama(Kata *NamaKota);
+
+void travelnama(Kata *NamaKota);
+
+void boardWorldCup();
+/* efek yang didapatkan player ketika sampai di board World Cup */
+
+void boardWorldTravel();
+/* efek yang didapatkan player ketika sampai di board World Travel */
 
 boolean IsPlayerOnBoard(AddressPl P, int pos);
 

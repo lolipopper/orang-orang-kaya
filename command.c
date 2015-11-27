@@ -2,6 +2,12 @@
 
 void MovPlayer(TabKota *TK, ListBoard *LB)
 {
+    if(MovWorldTravel(PTurn) != 0) {
+        printf("  Kamu pindah sejauh %d petak akibat World Travel\n", MovWorldTravel(PTurn));
+		MoveNPetak(TK, LB, MovWorldTravel(PTurn));
+		MovWorldTravel(PTurn) = 0;
+		rolled = true;
+	}
     if (!Jail(PTurn)) {
         if (!rolled) {
             roll();
@@ -19,7 +25,7 @@ void MovPlayer(TabKota *TK, ListBoard *LB)
 
 void MoveNPetak(TabKota *TK, ListBoard *LB, int N)
 {
-	int i, mov;
+	int i, mov, j;
 	Address P;
 
 	i = Position(PTurn);
@@ -39,6 +45,20 @@ void MoveNPetak(TabKota *TK, ListBoard *LB, int N)
             Money(PTurn) += 150;
             ShowMoney();
 		}
+		if(PlayerId(PTurn) == whoWorldCup(TK, idWorldCup)) {
+			if(Position(PTurn) == 17) {
+				printf("  Kamu sudah melewati World Cup, efek harga sewa kota "); 
+				j = 0;
+				while(j < NamaKota(TK, idWorldCup).Length) {
+					printf("%c", NamaKota(TK, idWorldCup).TabKata[j]);
+					j++;
+				}
+				printf(" 2x lipat hilang.\n");
+				isWorldCup(TK, idWorldCup) = false;
+				whoWorldCup(TK, idWorldCup) = '0';
+				idWorldCup = 0;
+			}
+		}
 		P = Next(P);
 		mov -=1;
 	}
@@ -56,7 +76,10 @@ void MoveNPetak(TabKota *TK, ListBoard *LB, int N)
 		boardDesertedIsland();
 	}
 	if (Type(P) == 6) {
-        //boardWorldCup();
+        boardWorldCup(LB, TK);
+	}
+	if (Type(P) == 7) {
+        boardWorldTravel(LB, TK);
 	}
 	if (Type(P) == 8) {
 		boardTax();
@@ -301,4 +324,3 @@ void showLeaderBoard()
     }
     printf("\n");
 }
-
