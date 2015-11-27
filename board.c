@@ -191,18 +191,6 @@ void initBoard(ListBoard *LB,TabKota *TK)
 	fclose(fiboard);
 }
 
-/*void FPrintKota(FILE *fokota, TabKota TK, int id)
-{
-    int i;
-
-    fokota = fopen("save_file.txt","w");
-
-    for(i=1; i<=NamaKota(TK,id).Length; i++){
-        fprintf(fokota,"%c",NamaKota(TK,i),NamaKota(TK,id).TabKata[i-1]);
-    }
-    fclose(fokota);
-}*/
-
 void Save (ListBoard LB, TabKota TK)
 {
     FILE *fosave;

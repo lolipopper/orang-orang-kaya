@@ -137,34 +137,40 @@ void buy(TabKota *Kota, ListBoard *LB)
     if (Type(P) == 1) {
         if (Owner(*Kota,pos) != PlayerId(PTurn)) {
             if (isRekreasi(*Kota,pos) == true) {
-                if (Money(PTurn) < priceCity((*Kota).TK[pos])) {
-                    printf("  Uangmu tidak cukup untuk membeli tempat rekreasi ini.\n");
-                }
-                else {
-                    Money(PTurn) -= priceCity((*Kota).TK[pos]);
-                    Kekayaan(PTurn) += priceCity((*Kota).TK[pos]);
-                    Owner(*Kota,pos) = PlayerId(PTurn);
-                    Level(*Kota,pos)++;
-                    printf("  Selamat, tempat rekreasi ini menjadi milikmu!\n");
-                    ShowMoney();
-                }
-            }
-            else {
-                if (Level(*Kota,pos) == 3) {
-                    printf("  Kota ini telah menjadi landmark. Landmark tidak bisa dibeli.\n");
-                }
-                else {
+                if (Owner(*Kota,pos) == '0') {
                     if (Money(PTurn) < priceCity((*Kota).TK[pos])) {
-                        printf("  Uangmu tidak cukup untuk membeli kota ini.\n");
+                        printf("  Uangmu tidak cukup untuk membeli tempat rekreasi ini.\n\n");
                     }
                     else {
                         Money(PTurn) -= priceCity((*Kota).TK[pos]);
                         Kekayaan(PTurn) += priceCity((*Kota).TK[pos]);
-                        Pl = First(Turn);
-                        while (PlayerId(Pl) != Owner(*Kota,pos)) {
-                            Pl = Next(Pl);
+                        Owner(*Kota,pos) = PlayerId(PTurn);
+                        Level(*Kota,pos)++;
+                        printf("  Selamat, tempat rekreasi ini menjadi milikmu!\n");
+                        ShowMoney();
+                        printf("\n");
+                    }
+                }
+            }
+            else {
+                if (Level(*Kota,pos) == 3) {
+                    printf("  Kota ini telah menjadi landmark. Landmark tidak bisa dibeli.\n\n");
+                }
+                else {
+                    if (Money(PTurn) < priceCity((*Kota).TK[pos])) {
+                        printf("  Uangmu tidak cukup untuk membeli kota ini.\n\n");
+                    }
+                    else {
+                        Money(PTurn) -= priceCity((*Kota).TK[pos]);
+                        Kekayaan(PTurn) += priceCity((*Kota).TK[pos]);
+                        if (Owner(*Kota,pos) != '0') {
+                            Pl = First(Turn);
+                            while (PlayerId(Pl) != Owner(*Kota,pos)) {
+                                    puts("buya");
+                                Pl = Next(Pl);
+                            }
+                            Kekayaan(Pl) -= priceCity((*Kota).TK[pos]);
                         }
-                        Kekayaan(Pl) -= priceCity((*Kota).TK[pos]);
                         Owner(*Kota,pos) = PlayerId(PTurn);
                         if (Level(*Kota,pos) == 0) {
                             Level(*Kota,pos)++;
@@ -172,16 +178,17 @@ void buy(TabKota *Kota, ListBoard *LB)
                         printf("  Selamat, kota ini menjadi milikmu!\n");
                         printf("  Level bangunan %d\n", Level(*Kota,pos));
                         ShowMoney();
+                        printf("\n");
                     }
                 }
             }
         }
         else {
-            printf("  Kota ini milik kamu. Kamu tidak bisa membeli kotamu sendiri.\n");
+            printf("  Kota ini milik kamu. Kamu tidak bisa membeli kotamu sendiri.\n\n");
         }
     }
     else {
-        printf("  Board ini tidak bisa dibeli.\n");
+        printf("  Board ini tidak bisa dibeli.\n\n");
     }
 }
 
@@ -198,15 +205,15 @@ void upgrade(TabKota *Kota, ListBoard *LB)
     if (Type(P) == 1) {
         if (Owner(*Kota,pos) == PlayerId(PTurn)) {
             if (isRekreasi(*Kota,pos) == true) {
-                printf("  Maaf, board rekreasi tidak bisa diupgrade lagi.\n");
+                printf("  Maaf, board rekreasi tidak bisa diupgrade lagi.\n\n");
             }
             else {
                 if (Level(*Kota,pos) == 3) {
-                    printf("  Kota ini telah menjadi landmark. Landmark tidak bisa upgrade.\n");
+                    printf("  Kota ini telah menjadi landmark. Landmark tidak bisa upgrade.\n\n");
                 }
                 else {
                     if (Money(PTurn) < priceUpgrade((*Kota).TK[pos])) {
-                        printf("  Uangmu tidak cukup untuk mengupgrade kota ini.\n");
+                        printf("  Uangmu tidak cukup untuk mengupgrade kota ini.\n\n");
                     }
                     else {
                         Money(PTurn) -= priceUpgrade((*Kota).TK[pos]);
@@ -220,11 +227,11 @@ void upgrade(TabKota *Kota, ListBoard *LB)
             }
         }
         else {
-            printf("  Kota ini bukan milik kamu. Kamu hanya bisa mengupgrade kota milikmu.\n");
+            printf("  Kota ini bukan milik kamu. Kamu hanya bisa mengupgrade kota milikmu.\n\n");
         }
     }
     else {
-        printf("  Board ini tidak bisa diupgrade.\n");
+        printf("  Board ini tidak bisa diupgrade.\n\n");
     }
 }
 
@@ -236,7 +243,7 @@ void payRent(ListBoard *LB, TabKota *Kota)
     pos = Position(PTurn);
     Pl = First(Turn);
 
-    if ( (Owner(*Kota,pos) != '0') || (PlayerId(Pl) != PlayerId(PTurn)) ) {
+    if ( (Owner(*Kota,pos) != '0') && (PlayerId(Pl) != PlayerId(PTurn)) ) {
         while (PlayerId(Pl) != Owner(*Kota,pos)) {
             Pl = Next(Pl);
         }
@@ -281,6 +288,7 @@ void infoCity(Kata K, TabKota TK)
 void showLeaderBoard()
 {
     long long kekayaan[jumlahPemain - 1];
+    char player[jumlahPemain - 1];
     AddressPl Pl;
     int i;
 
@@ -291,14 +299,53 @@ void showLeaderBoard()
         Pl = Next(Pl);
         i++;
     } while (i<=jumlahPemain-1);
-    printf("Player A %lldK\n", kekayaan[0]);
-    printf("Player B %lldK\n", kekayaan[1]);
+    player[0] = 'A';
+    player[1] = 'B';
     if (jumlahPemain > 2) {
-        printf("Player C %lldK\n", kekayaan[2]);
+        player[2] = 'C';
         if (jumlahPemain > 3) {
-            printf("Player B %lldK\n", kekayaan[4]);
+            player[3] = 'D';
         }
+    }
+    quicksort(kekayaan, player, 0, jumlahPemain-1);
+    for (i=0; i<jumlahPemain; i++) {
+        printf("  Player %c %lldK\n", player[i], kekayaan[i]);
     }
     printf("\n");
 }
 
+void quicksort(long long x[3], char y[3], int first, int last)
+{
+    int i, j, k;
+    long long temp;
+
+    if (first < last) {
+        k = first;
+        i = first;
+        j = last;
+        while (i < j){
+            while ((x[i] <= x[k]) && (i < last)) {
+                i++;
+            }
+            while (x[j] > x[k]) {
+                j--;
+            }
+            if (i < j){
+                temp = x[i];
+                x[i] = x[j];
+                x[j] = temp;
+                temp = y[i];
+                y[i] = y[j];
+                y[j] = temp;
+             }
+         }
+         temp = x[k];
+         x[k] = x[j];
+         x[j] = temp;
+         temp = y[k];
+         y[k] = y[j];
+         y[j] = temp;
+         quicksort(x, y, first, j-1);
+         quicksort(x, y, j+1, last);
+    }
+}

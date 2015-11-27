@@ -33,5 +33,9 @@ void infoCity(Kata K, TabKota TK);
 /* prosedur untuk menampilkan info dari kota tertentu */
 
 void showLeaderBoard();
+/* prosedur untuk menampilkan urutan kekayaan player beserta kekayaannya */
+
+void quicksort(long long x[3], char y[3], int first, int last);
+/* prosedur untuk sorting array dengan metode quicksort */
 
 #endif
