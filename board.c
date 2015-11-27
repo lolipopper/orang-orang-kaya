@@ -179,8 +179,10 @@ void initBoard(ListBoard *LB,TabKota *TK)
             fscanf(fiboard,"%d\n",&(TK->TK[i].level));
             //printf("level: %d\n",Level(*TK,i));
             fscanf(fiboard,"%c\n",&(TK->TK[i].owner));
-            //printf("owner: %d\n",Owner(*TK,i));
             fscanf(fiboard,"%d\n",&(TK->TK[i].LightOff));
+            fscanf(fiboard,"%d\n",&(TK->TK[i].WorldCup.isWCup));
+            fscanf(fiboard,"%c\n",&(TK->TK[i].WorldCup.who));
+            //printf("owner: %d\n",Owner(*TK,i));
             fscanf(fiboard,"%d\n",&(TK->TK[i].name.Length));
         }
         //fscanf(fiboard,"\n");

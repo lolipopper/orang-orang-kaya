@@ -8,6 +8,11 @@
 #define IdxMin 1
 
 // DEFINISI TIPE
+typedef struct {
+	boolean isWCup;
+	char who;
+} WCup;
+
 typedef int IdxType;
 typedef struct {
 	Kata name;
@@ -17,6 +22,7 @@ typedef struct {
 	int level;
 	char owner;
 	boolean LightOff;
+	WCup WorldCup;
 } Kota;
 
 typedef struct {
@@ -31,6 +37,8 @@ typedef struct {
 #define Level(Kota,i) (Kota).TK[(i)].level
 #define Owner(Kota,i) (Kota).TK[(i)].owner
 #define LightOff(Kota,i) (Kota).TK[(i)].LightOff
+#define isWorldCup(Kota,i) (Kota).TK[(i)].WorldCup.isWCup
+#define whoWorldCup(Kota,i) (Kota).TK[(i)].WorldCup.who
 
 long long priceCity(Kota K);
 /* mengembalikan harga sewa kota */

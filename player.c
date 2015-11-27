@@ -19,7 +19,7 @@ void DealokasiPl (AddressPl *P)
     free(*P);
 }
 
-void ConsPlayer(Player *P, int position, long long money, int nFreeTax, int nFreePrison, int nOffLight, int nProtect, char playerId, int kekayaan, boolean jail)
+void ConsPlayer(Player *P, int position, long long money, int nFreeTax, int nFreePrison, int nOffLight, int nProtect, char playerId, int kekayaan, boolean jail, int movworldtravel)
 {
 	(*P).position = position;
 	(*P).money = money;
@@ -30,11 +30,12 @@ void ConsPlayer(Player *P, int position, long long money, int nFreeTax, int nFre
 	(*P).playerId = playerId;
 	(*P).kekayaan = kekayaan;
 	(*P).jail = jail;
+	(*P).movWorldTravel = movworldtravel;
 }
 
 void InitPlayer(Player *P, char playerId)
 {
-	ConsPlayer(P,1,1000,0,0,0,0,playerId,0,false);
+	ConsPlayer(P,1,1000,0,0,0,0,playerId,0,false, 0);
 }
 
 void InitNPlayer()
@@ -93,6 +94,206 @@ AddressPl SearchPl (char id)
 	}
 }
 
+<<<<<<< HEAD
+=======
+void boardTax()
+{
+    boolean inputBenar;
+    char input[20];
+
+    printf("  Pajak Bumi dan Bangunan. Kamu harus membayar sebesar 100K.\n");
+    printf("  Kamu bisa bebas dari pajak dengan menggunakan kartu Free Tax.\n");
+    printf("  Ketik 'free tax' untuk menggunakan kartu Free Tax, 'pay' untuk tetap membayar.\n");
+    inputBenar = false;
+    do {
+        printf("> ");
+        scanf("%s", input);
+        if (strcmp(input, "free") == 0) {
+            scanf("%s", input);
+            if (strcmp(input, "tax") == 0) {
+                if (CardFreeTax(PTurn) == 0) {
+                    printf("  Kamu tidak memiliki kartu Free Tax.\n");
+                }
+                else {
+                    CardFreeTax(PTurn) -= 1;
+                    printf("  Kamu bebas pajak.\n");
+                    inputBenar = true;
+                }
+            }
+            else if (strcmp(input, "pay") == 0) {
+                printf("Uang kamu berkurang sebesar 100K.\n");
+                inputBenar = true;
+                Money(PTurn) -= 100;
+            }
+        }
+    } while (!inputBenar);
+}
+
+void boardBonus()
+{
+    long long int randomNum;
+
+    randomNum = (rand() % 300) + 100;
+    printf("  Selamat, kamu mendapatkan %lld.\n\n", randomNum);
+    Money(PTurn) += randomNum;
+    ShowMoney();
+}
+
+void boardDesertedIsland()
+{
+    boolean inputBenar;
+    char input[20];
+
+    printf("  Kamu masuk penjara.\n");
+    printf("  Kamu bisa keluar dengan menggunakan kartu Free Prison atau membayar 300K\n");
+    printf("  Ketik 'free me' untuk menggunakan kartu Free Prison, 'pay' untuk membayar, 'stay' untuk tetap di penjara.\n\n");
+    inputBenar = false;
+    do {
+        printf("> ");
+        scanf("%s", input);
+        if (strcmp(input, "free") == 0) {
+            scanf("%s", input);
+            if (strcmp(input, "me") == 0) {
+                if (CardFreePrison(PTurn) == 0) {
+                    printf("  Kamu tidak memiliki kartu Free Prison.\n");
+                }
+                else {
+                    CardFreePrison(PTurn) -= 1;
+                    printf("  Kamu bebas dari penjara.\n");
+                    inputBenar = true;
+                }
+            }
+        }
+        else if (strcmp(input, "pay") == 0) {
+            if (Money(PTurn) < 300) {
+                printf("  Uangmu tidak cukup.\n");
+            }
+            else {
+                Money(PTurn) -= 300;
+                printf("  Kamu bebas dari penjara.\n");
+                ShowMoney();
+                inputBenar = true;
+                }
+        }
+        else if (strcmp(input, "stay") == 0) {
+            printf("  Kamu masuk penjara.\n");
+            inputBenar = true;
+            Jail(PTurn) = true;
+        }
+    } while (!inputBenar);
+}
+
+void boardChance()
+{
+    randomCard(&C);
+}
+
+void hostnama(Kata *NKota) {
+	char input[20], namakota[10];
+	int i, length;
+	
+	printf("  Ketik \"host <nama kota>\".\n");
+	printf("  Nama kota yang terpilih akan mendapatkan harga sewa 2x lipat sampai pemain melewati start.\n\n");
+	
+  INPUT:
+	printf("> ");
+    scanf("%s", input);
+    if (strcmp(input, "host") == 0) {
+        scanf("%s", input);
+        if(strcmp(input, "New") == 0 || strcmp(input, "Sao") == 0) {
+			scanf("%s", input);
+			if(strcmp(input, "York") == 0)
+				strcpy(namakota, "New York\0");
+			else if(strcmp(input, "Delhi") == 0)
+				strcpy(namakota, "New Delhi\0");
+			else if(strcmp(input, "Paolo") == 0)
+				strcpy(namakota, "Sao Paolo\0");
+		}
+		else
+			strcpy(namakota, input);
+        i = 0;
+		length = 0;
+        while(namakota[i] != '\0') {
+			NKota->TabKata[i] = namakota[i];
+			length++;
+			i++;
+		}
+		NKota->Length = length;
+	}
+	else {
+		printf("  Masukkan salah, ketik \"host <nama kota>\"\n\n");
+		goto INPUT;
+	}
+}
+
+void travelnama(Kata *NKota) {
+	int i, length;
+    char input[20], namakota[10];
+	
+	printf("  Kamu dapat pergi ke petak tujuan yang kamu inginkan pada saat giliran selanjutnya tanpa harus me-roll dadu.\n");
+    printf("  Ketik \"travel <nama kota>\".\n");
+  INPUT:
+	printf("> ");
+    scanf("%s", input);
+    if (strcmp(input, "travel") == 0) {
+        scanf("%s", input);
+        if(strcmp(input, "New") == 0 || strcmp(input, "Sao") == 0) {
+			scanf("%s", input);
+			if(strcmp(input, "York") == 0)
+				strcpy(namakota, "New York\0");
+			else if(strcmp(input, "Delhi") == 0)
+				strcpy(namakota, "New Delhi\0");
+			else if(strcmp(input, "Paolo") == 0)
+				strcpy(namakota, "Sao Paolo\0");
+		}
+		else
+			strcpy(namakota, input);
+        i = 0;
+		length = 0;
+        while(namakota[i] != '\0') {
+			NKota->TabKata[i] = namakota[i];
+			length++;
+			i++;
+		}
+		NKota->Length = length;
+	}
+	else {
+		printf("  Masukkan salah, ketik \"travel <nama kota>\"\n\n");
+		goto INPUT;
+	}
+}
+
+void boardWorldCup(ListBoard LB, TabKota TK) {
+    Address P;
+    Kata NKota;
+
+    hostnama(&NKota);
+    P = First(LB);
+    while (!IsKataSama(NamaKota(TK, Id(P)), NKota)) {
+        P = Next(P);
+    }
+    isWorldCup(TK, Id(P)) = true;
+    whoWorldCup(TK, Id(P)) = PlayerId(PTurn);
+    idWorldCup = Id(P);
+    printf("  %s menjadi host World Cup.\n", NKota);
+}
+
+void boardWorldTravel(ListBoard LB, TabKota TK) {
+	Kata NKota;
+	Address P;
+	
+	travelnama(&NKota);
+    P = First(LB);
+    while (!IsKataSama(NamaKota(TK, Id(P)), NKota)) {
+        P = Next(P);
+    }
+    MovWorldTravel(PTurn) = Id(P) - Position(PTurn);
+    if(MovWorldTravel(PTurn) < 0)
+		MovWorldTravel(PTurn) += 32;
+    rolled = false;
+}
+
+>>>>>>> origin/master
 boolean IsPlayerOnBoard(AddressPl P, int pos) {
     if(Position(P) == pos) return true;
     else return false;
@@ -128,8 +329,8 @@ void ShowBoard(ListBoard LB, TabKota TK) {
 /*ALGORITMA*/
     /*INISIALISASI*/
     npetak = 9;//Jumlah Petak
-    x = 10 + 1; //Ukuran Petak
-    y = 5;     //Ukuran Petak
+    x = 12 + 1; //Ukuran Petak
+    y = 6;     //Ukuran Petak
     M = x*npetak; //Panjang Board
     N = y*npetak; //Lebar Board
     posnama = 1; //posisi baris nama dalam petak
@@ -160,15 +361,30 @@ void ShowBoard(ListBoard LB, TabKota TK) {
 					if((j%x) == 0) printf("|");
                     else if((j%x) != 0){
                         printf(" ");
+                        if(isWorldCup(TK, Id(PF))) printf("(");
                         PrintNamaPetak(TK, PF, 1, &length);
+                        if(isWorldCup(TK, Id(PF))) printf(")");
                         if(Type(PF) == 1) {
                             if(LightOff(TK, Id(PF))) {
                                 printf("*");
-                                for(m = 0; m < (x-(length+3)); m++) printf(" ");
+                                if(isWorldCup(TK, Id(PF)))
+									for(m = 0; m < (x-(length+5)); m++) printf(" ");
+								else
+									for(m = 0; m < (x-(length+3)); m++) printf(" ");
                             }
-                            else for(m = 0; m < (x-(length+2)); m++) printf(" ");
+                            else { 
+								if(isWorldCup(TK, Id(PF)))
+									for(m = 0; m < (x-(length+4)); m++) printf(" ");
+								else
+									for(m = 0; m < (x-(length+2)); m++) printf(" ");
+							}
                         }
-                        else for(m = 0; m < (x-(length+2)); m++) printf(" ");
+                        else {
+							if(isWorldCup(TK, Id(PF)))
+								for(m = 0; m < (x-(length+4)); m++) printf(" ");
+							else
+								for(m = 0; m < (x-(length+2)); m++) printf(" ");
+						}
                         j += x-2;
                         PF = Next(PF);
                     }
@@ -268,25 +484,50 @@ void ShowBoard(ListBoard LB, TabKota TK) {
                 if((i%y) == posnama) { //Posisi Nama
                     if(j > 0 && j < x) {
                         for(m = 0; m < 1; m++) printf(" ");
+                        if(isWorldCup(TK, Id(PF))) printf("(");
                         PrintNamaPetak(TK, PL, 1, &length);
+                        if(isWorldCup(TK, Id(PF))) printf(")");
                         if(Type(PL) == 1) {
                             if(LightOff(TK, Id(PL))) {
                                 printf("*");
-                                for(m = 0; m < (x-(length+3)); m++) printf(" ");
+                                if(isWorldCup(TK, Id(PF)))
+									for(m = 0; m < (x-(length+5)); m++) printf(" ");
+                                else
+									for(m = 0; m < (x-(length+3)); m++) printf(" ");
                             }
-                            else for(m = 0; m < (x-(length+2)); m++) printf(" ");
+                            else {
+								if(isWorldCup(TK, Id(PF)))
+									for(m = 0; m < (x-(length+4)); m++) printf(" ");
+								else
+									for(m = 0; m < (x-(length+2)); m++) printf(" ");
+							}
                         }
-                        else for(m = 0; m < (x-(length+2)); m++) printf(" ");
+                        else {
+							if(isWorldCup(TK, Id(PF)))
+								for(m = 0; m < (x-(length+4)); m++) printf(" ");
+							else
+								for(m = 0; m < (x-(length+2)); m++) printf(" ");
+                        }
                         j += x-2;
                     }
                     else if(j > (M-x) && j < M) {
                         for(m = 0; m < 1; m++) printf(" ");
+                        if(isWorldCup(TK, Id(PF))) printf("(");
                         PrintNamaPetak(TK, PF, 1, &length);
+                        if(isWorldCup(TK, Id(PF))) printf("(");
                         if(LightOff(TK, Id(PF))) {
                             printf("*");
-                            for(m = 0; m < (x-(length+3)); m++) printf(" ");
+                            if(isWorldCup(TK, Id(PF)))
+								for(m = 0; m < (x-(length+5)); m++) printf(" ");
+                            else
+								for(m = 0; m < (x-(length+3)); m++) printf(" ");
                         }
-                        else for(m = 0; m < (x-(length+2)); m++) printf(" ");
+                        else {
+							if(isWorldCup(TK, Id(PF)))
+								for(m = 0; m < (x-(length+4)); m++) printf(" ");
+							else
+								for(m = 0; m < (x-(length+2)); m++) printf(" ");
+                        }
                         j += x-2;
                     }
                     else if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
@@ -445,12 +686,22 @@ void ShowBoard(ListBoard LB, TabKota TK) {
 					if((j%x)== 0) printf("|");
                     else {
                         printf("  ");
+                        if(isWorldCup(TK, Id(PF))) printf("(");
                         PrintNamaPetak(TK, PL, 1, &length);
+                        if(isWorldCup(TK, Id(PF))) printf(")");
                         if(LightOff(TK, Id(PL))) {
                             printf("*");
-                            for(m = 0; m < (x-(length+4)); m++) printf(" ");
+                            if(isWorldCup(TK, Id(PF)))
+								for(m = 0; m < (x-(length+6)); m++) printf(" ");
+							else
+								for(m = 0; m < (x-(length+4)); m++) printf(" ");
                         }
-                        else for(m = 0; m < (x-(length+3)); m++) printf(" ");
+                        else {
+							if(isWorldCup(TK, Id(PF)))
+								for(m = 0; m < (x-(length+5)); m++) printf(" ");
+							else
+								for(m = 0; m < (x-(length+3)); m++) printf(" ");
+                        }
                         j += x-2;
                         PL = Next(PL);
                     }
@@ -555,4 +806,3 @@ void ShowBoard(ListBoard LB, TabKota TK) {
     printf("* menandakan kota sedang mati lampu.\n");
     printf("() menandakan sedang terjadi World Cup pada kota tersebut.\n");
 }
-
