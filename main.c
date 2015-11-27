@@ -24,6 +24,8 @@ int main ()
 void menu(ListBoard *LB, TabKota *TK)
 {
     char input[100];
+    Kata K;
+    int i, length;
 
     printf("-----------------------------------------------\n");
     printf("---------------LET'S GET WEALTHY---------------\n");
@@ -38,8 +40,22 @@ void menu(ListBoard *LB, TabKota *TK)
         if (strcmp(input, "roll") == 0) { // roll dice
             scanf("%s", input);
             if (strcmp(input, "dice") == 0) {
-                MovPlayer(*TK, *LB);
+                MovPlayer(TK, LB);
             }
+        }
+        if (strcmp(input, "info") == 0) {
+            scanf("%s", input);
+            length = 0; i = 0;
+            while (input[i] != '\0') {
+                K.TabKata[i] = input[i];
+                length++;
+                i++;
+            }
+            K.Length = length;
+            infoCity(K, *TK);
+        }
+        if (strcmp(input, "leaderboard") == 0) {
+            showLeaderBoard();
         }
         if (strcmp(input, "buy") == 0) { // buy
             buy(TK, LB);

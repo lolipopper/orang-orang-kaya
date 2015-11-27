@@ -1,6 +1,6 @@
 #include "command.h"
 
-void MovPlayer(TabKota TK, ListBoard LB)
+void MovPlayer(TabKota *TK, ListBoard *LB)
 {
     if (!Jail(PTurn)) {
         if (!rolled) {
@@ -17,13 +17,13 @@ void MovPlayer(TabKota TK, ListBoard LB)
     }
 }
 
-void MoveNPetak(TabKota TK, ListBoard LB, int N)
+void MoveNPetak(TabKota *TK, ListBoard *LB, int N)
 {
 	int i, mov;
 	Address P;
 
 	i = Position(PTurn);
-	P = First(LB);
+	P = First(*LB);
 	while (i > 1) {
 		P = Next(P);
 		i -= 1;
@@ -42,9 +42,12 @@ void MoveNPetak(TabKota TK, ListBoard LB, int N)
 		P = Next(P);
 		mov -=1;
 	}
-	PrintPos(TK, LB);
-	if (Type(P) == 8) {
-		boardTax();
+	PrintPos(*TK, *LB);
+	if (Type(P) == 1) {
+        payRent(LB, TK);
+	}
+	if (Type(P) == 3) {
+		boardChance();
 	}
 	if (Type(P) == 4) {
 		boardBonus();
@@ -52,11 +55,11 @@ void MoveNPetak(TabKota TK, ListBoard LB, int N)
 	if (Type(P) == 5) {
 		boardDesertedIsland();
 	}
-	if (Type(P) == 3) {
-		boardChance();
-	}
 	if (Type(P) == 6) {
-        boardWorldCup();
+        //boardWorldCup();
+	}
+	if (Type(P) == 8) {
+		boardTax();
 	}
 	printf("\n");
 }
@@ -124,6 +127,7 @@ void buy(TabKota *Kota, ListBoard *LB)
 {
     int pos;
     Address P;
+    AddressPl Pl;
 
     pos = Position(PTurn);
     P = First(*LB);
@@ -138,6 +142,7 @@ void buy(TabKota *Kota, ListBoard *LB)
                 }
                 else {
                     Money(PTurn) -= priceCity((*Kota).TK[pos]);
+                    Kekayaan(PTurn) += priceCity((*Kota).TK[pos]);
                     Owner(*Kota,pos) = PlayerId(PTurn);
                     Level(*Kota,pos)++;
                     printf("  Selamat, tempat rekreasi ini menjadi milikmu!\n");
@@ -154,8 +159,16 @@ void buy(TabKota *Kota, ListBoard *LB)
                     }
                     else {
                         Money(PTurn) -= priceCity((*Kota).TK[pos]);
+                        Kekayaan(PTurn) += priceCity((*Kota).TK[pos]);
+                        Pl = First(Turn);
+                        while (PlayerId(Pl) != Owner(*Kota,pos)) {
+                            Pl = Next(Pl);
+                        }
+                        Kekayaan(Pl) -= priceCity((*Kota).TK[pos]);
                         Owner(*Kota,pos) = PlayerId(PTurn);
-                        Level(*Kota,pos)++;
+                        if (Level(*Kota,pos) == 0) {
+                            Level(*Kota,pos)++;
+                        }
                         printf("  Selamat, kota ini menjadi milikmu!\n");
                         printf("  Level bangunan %d\n", Level(*Kota,pos));
                         ShowMoney();
@@ -197,9 +210,11 @@ void upgrade(TabKota *Kota, ListBoard *LB)
                     }
                     else {
                         Money(PTurn) -= priceUpgrade((*Kota).TK[pos]);
+                        Kekayaan(PTurn) += priceUpgrade((*Kota).TK[pos]);
                         Level(*Kota,pos)++;
                         printf("  Selamat, level kota ini naik menjadi %d\n", Level(*Kota,pos));
                         ShowMoney();
+                        printf("\n");
                     }
                 }
             }
@@ -212,3 +227,78 @@ void upgrade(TabKota *Kota, ListBoard *LB)
         printf("  Board ini tidak bisa diupgrade.\n");
     }
 }
+
+void payRent(ListBoard *LB, TabKota *Kota)
+{
+    int pos;
+    AddressPl Pl;
+
+    pos = Position(PTurn);
+    Pl = First(Turn);
+
+    if ( (Owner(*Kota,pos) != '0') || (PlayerId(Pl) != PlayerId(PTurn)) ) {
+        while (PlayerId(Pl) != Owner(*Kota,pos)) {
+            Pl = Next(Pl);
+        }
+        printf("  Kamu harus membayar sewa ke pemilik kota ini sebanyak %d\n", priceCity((*Kota).TK[pos]));
+        Money(PTurn) -= priceCity((*Kota).TK[pos]);
+        Money(Pl) += priceCity((*Kota).TK[pos]);
+        ShowMoney();
+    }
+}
+
+void infoCity(Kata K, TabKota TK)
+{
+    int i, j;
+
+    i = 1;
+    while ((!IsKataSama(K, NamaKota(TK,i))) && (i<= 32)) {
+        i++;
+    }
+    if (i <= 32) {
+        printf("  ");
+        for (j=0; j<K.Length; j++) {
+            printf("%c", K.TabKata[j]);
+        }
+        printf(", pemilik properti ");
+        if (Owner(TK,i) == '0') {
+            printf("tidak ada, ");
+        }
+        else {
+            printf("%c, ", Owner(TK,i));
+        }
+        printf("bangunan level %d\n", Level(TK,i));
+        printf("  Biaya sewa : %lld\n", priceCity(TK.TK[i]));
+        printf("  Biaya ambil alih : %lld\n", priceCity(TK.TK[i]));
+        printf("  Biaya upgrade bangunan : %lld\n", priceUpgrade(TK.TK[i]));
+        printf("\n");
+    }
+    else {
+        printf("  Tidak ada kota dengan nama tersebut.\n");
+    }
+}
+
+void showLeaderBoard()
+{
+    long long kekayaan[jumlahPemain - 1];
+    AddressPl Pl;
+    int i;
+
+    Pl = First(Turn);
+    i = 0;
+    do {
+        kekayaan[i] = Money(Pl) + Kekayaan(Pl);
+        Pl = Next(Pl);
+        i++;
+    } while (i<=jumlahPemain-1);
+    printf("Player A %lldK\n", kekayaan[0]);
+    printf("Player B %lldK\n", kekayaan[1]);
+    if (jumlahPemain > 2) {
+        printf("Player C %lldK\n", kekayaan[2]);
+        if (jumlahPemain > 3) {
+            printf("Player B %lldK\n", kekayaan[4]);
+        }
+    }
+    printf("\n");
+}
+

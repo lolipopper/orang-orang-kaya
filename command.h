@@ -5,10 +5,10 @@
 #include "player.h"
 #include "board.h"
 
-void MovPlayer(TabKota TK, ListBoard LB);
+void MovPlayer(TabKota *TK, ListBoard *LB);
 /* prosedur gerak untuk player */
 
-void MoveNPetak(TabKota TK, ListBoard LB, int N);
+void MoveNPetak(TabKota *TK, ListBoard *LB, int N);
 /* memindahkan player sesuai dengan dadu yang di roll oleh player tersebut */
 
 void EndTurn();
@@ -25,5 +25,13 @@ void buy(TabKota *Kota, ListBoard *LB);
 
 void upgrade(TabKota *Kota, ListBoard *LB);
 /* prosedur untuk melakukan upgrade pada kota */
+
+void payRent(ListBoard *LB, TabKota *Kota);
+/* prosedur untuk membayar sewa kota */
+
+void infoCity(Kata K, TabKota TK);
+/* prosedur untuk menampilkan info dari kota tertentu */
+
+void showLeaderBoard();
 
 #endif

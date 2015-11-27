@@ -18,7 +18,7 @@
 typedef struct {
 	int position;
 	long long money;
-	int kekayaan;
+	long long kekayaan;
 	int nFreePrison;
 	int nFreeTax;
 	int nProtect;
@@ -56,6 +56,7 @@ typedef struct {
 ListPlayer Turn;
 AddressPl PTurn;
 boolean rolled;
+int jumlahPemain;
 
 AddressPl AlokasiPl (Player X);
 /* melakukan alokasi player */
@@ -86,9 +87,6 @@ void boardDesertedIsland();
 
 void boardChance();
 /* efek yang didapatkan player ketika sampai di board Chance */
-
-void boardWorldCup();
-/* efek yang didapatkan player ketika sampai di board World Cup */
 
 boolean IsPlayerOnBoard(AddressPl P, int pos);
 

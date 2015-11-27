@@ -52,6 +52,7 @@ void InitNPlayer()
 
 	printf("  Input banyak pemain (2 - 4) : ");
 	scanf("%d", &n);
+	jumlahPemain = n;
 	printf("\n");
 	if (n > 2)
 	{
@@ -69,7 +70,6 @@ void InitNPlayer()
 	}
 	Next(P) = First(Turn);
 	PTurn = First(Turn);
-	rolled = false;
 	rolled = false;
 }
 
@@ -183,25 +183,6 @@ void boardDesertedIsland()
 void boardChance()
 {
     randomCard(&C);
-}
-
-void boardWorldCup()
-{
-    /*
-    char input[20];
-    ListBoard LB;
-    Address P;
-    TabKota TK;
-
-    printf("  Ketik 'host <nama kota>. Nama kota yang terpilih akan mendapatkan harga sewa 2x lipat sampai pemain melewati start.\n");
-    scanf("%s", input);
-    if (strcmp(input, "host") == 0) {
-        scanf("%s", input);
-        P = First(LB);
-        while (input != NamaKota(TK,Id(P))) {
-            P = Next(P);
-        }
-    } */
 }
 
 boolean IsPlayerOnBoard(AddressPl P, int pos) {
@@ -663,4 +644,7 @@ void ShowBoard(ListBoard LB, TabKota TK) {
         if(i == posnama || i == posnama+1 || i == posnama+2) PF = First(L1);
         if(i == (N-y)+posnama || i == (N-y)+posnama+1 || i == (N-y)+posnama+2) PL = Pt;
     }
+    printf("* menandakan kota sedang mati lampu.\n");
+    printf("() menandakan sedang terjadi World Cup pada kota tersebut.\n");
 }
+

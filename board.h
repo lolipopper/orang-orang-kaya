@@ -51,8 +51,6 @@ void initBoard(ListBoard *LB, TabKota *TK);
 
 void PrintNamaPetak(TabKota TK, Address P, int baris, int *length);
 
-void ShowBoard(ListBoard LB, TabKota TK);
-
 Address SearchKota(ListBoard LB, TabKota TK, Kata NamaKota);
 
 void Save (ListBoard LB, TabKota TK);
