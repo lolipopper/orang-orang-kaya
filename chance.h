@@ -33,4 +33,22 @@ void randomCard(card *C);
 /* F.S : jika deck card kosong, Player tidak mendapatkan apapun.
          jika deck tidak kosong, kartu di deck berkurang 1 dan Player mendapatkan 1 kartu secara random */
 
+void protect(Kata K, TabKota *TK, card *C);
+/* prosedur untuk menggunakan kartu protect */
+
+void off(Kata K, TabKota *TK, card *C);
+/* prosedur untuk menggunakan kartu off light */
+
+void boardTax(card *C);
+/* efek yang didapatkan player ketika sampai di board Tax */
+
+void boardDesertedIsland(card *C);
+/* efek yang didapatkan player ketika sampai di board Deserted Island */
+
+void boardChance();
+/* efek yang didapatkan player ketika sampai di board Chance */
+
+void boardBonus();
+/* efek yang didapatkan player ketika sampai di board Bonus */
+
 #endif

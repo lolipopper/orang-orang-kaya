@@ -38,4 +38,7 @@ long long priceCity(Kota K);
 long long priceUpgrade(Kota K);
 /* mengembalikan harga upgrade kota */
 
+void infoCity(Kata K, TabKota TK);
+/* prosedur untuk menampilkan info dari kota tertentu */
+
 #endif

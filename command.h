@@ -29,11 +29,11 @@ void upgrade(TabKota *Kota, ListBoard *LB);
 void payRent(ListBoard *LB, TabKota *Kota);
 /* prosedur untuk membayar sewa kota */
 
-void infoCity(Kata K, TabKota TK);
-/* prosedur untuk menampilkan info dari kota tertentu */
-
 void showLeaderBoard();
 /* prosedur untuk menampilkan urutan kekayaan player beserta kekayaannya */
+
+void printKekayaan();
+/* prosedur untuk menampilkan uang dan kekayaan dari masing" player */
 
 void quicksort(long long x[3], char y[3], int first, int last);
 /* prosedur untuk sorting array dengan metode quicksort */
