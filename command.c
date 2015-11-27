@@ -261,6 +261,7 @@ void upgrade(TabKota *Kota, ListBoard *LB)
 void payRent(ListBoard *LB, TabKota *Kota)
 {
     int pos;
+    long long sewa;
     AddressPl Pl;
 
     pos = Position(PTurn);
@@ -270,9 +271,14 @@ void payRent(ListBoard *LB, TabKota *Kota)
         while (PlayerId(Pl) != Owner(*Kota,pos)) {
             Pl = Next(Pl);
         }
-        printf("  Kamu harus membayar sewa ke pemilik kota ini sebanyak %d\n", priceCity((*Kota).TK[pos]));
-        Money(PTurn) -= priceCity((*Kota).TK[pos]);
-        Money(Pl) += priceCity((*Kota).TK[pos]);
+        if(idWorldCup == pos) {
+			printf("  Karena petak ini adalah host World Cup, biaya sewa menjadi 2x lipat.\n");
+			sewa = 2*priceCity((*Kota).TK[pos]);
+		}
+		else sewa = priceCity((*Kota).TK[pos]);
+        printf("  Kamu harus membayar sewa ke pemilik kota ini sebanyak %d\n", sewa);
+        Money(PTurn) -= sewa;
+        Money(Pl) += sewa;
         ShowMoney();
     }
 }
