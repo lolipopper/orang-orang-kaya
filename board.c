@@ -115,8 +115,18 @@ void PrintNamaPetak(TabKota TK, Address P, int baris, int *length) {
     }
 }
 
-Address SearchKota(ListBoard LB, TabKota TK, Kata NamaKota)
+int SearchKota(Kata K,TabKota TK)
+/* Mengembalikan id dengan nama kota K berada
+   bila tidak ada kota bernama K, dikembalikan 33 (jumlah petak + 1)
+*/
 {
+    int id;
+    id = 1;
+    while ((!IsKataSama(K, NamaKota(TK,id))) && (id<= 32)) {
+        id++;
+    }
+    return id;
+    /*
     Address p;
     boolean found;
 
@@ -141,7 +151,7 @@ Address SearchKota(ListBoard LB, TabKota TK, Kata NamaKota)
     if (found == true)
         return p;
     else
-        return Nil;
+        return Nil; */
 }
 
 void initBoard(ListBoard *LB,TabKota *TK)
@@ -184,6 +194,7 @@ void initBoard(ListBoard *LB,TabKota *TK)
             fscanf(fiboard,"%c\n",&(TK->TK[i].WorldCup.who));
             //printf("owner: %d\n",Owner(*TK,i));
             fscanf(fiboard,"%d\n",&(TK->TK[i].name.Length));
+            isOffered(*TK,i) = false;
         }
         //fscanf(fiboard,"\n");
         i++;
@@ -205,12 +216,14 @@ void initBoard(ListBoard *LB,TabKota *TK)
     fclose(fokota);
 }*/
 
-void Save (ListBoard LB, TabKota TK)
+void Save (ListBoard LB, TabKota TK, SKata K)
 {
     FILE *fosave;
     Address p = First(LB);
-
-    fosave = fopen("save_file.txt","w");
+    SKata SaveFName;
+    strcpy(SaveFName,K);
+    strcat(SaveFName,".txt");
+    fosave = fopen(SaveFName,"w");
 
     while (p != Last(LB))
     {
@@ -240,53 +253,63 @@ void Save (ListBoard LB, TabKota TK)
     fprintf(fosave,"\n");
     fprintf(fosave, "%d",ValUndef);
     fclose(fosave);
+
+    printf("File telah disave dalam file %s\n",SaveFName);
 }
 
-void Load (ListBoard *LB,TabKota *TK)
+void Load (ListBoard *LB,TabKota *TK, SKata K)
 {
     FILE *fisave;
     Address p;
     int i;
 	Petak ipt;
 	int dummy;
+    SKata LoadFName;
 
+    strcpy(LoadFName,K);
+    strcat(LoadFName,".txt");
 	i=1;
     p = First(*LB);
-	fisave = fopen("save_file.txt","r");
-	fscanf(fisave,"%d\n", &ipt.type);
-	CreateList(LB);
-    while (ipt.type != ValUndef)
-    {
-        //printf("load\n");
-        ipt.id = i;
-        InsVLast(LB,ipt);
-        //printf("\n");
-        //printf("First= %d\n",Info(First(*LB)).type);
-        //printf("IsEmpty = %d\n",IsListEmpty(*LB));
-        //printf("type: %d\n",ipt.type);
-        //printf("id  : %d\n",ipt.id);
-        if (ipt.type == 1){
-            //printf("masukn\n");
-            fgets(TK->TK[i].name.TabKata, NMax, fisave);
-            //printf("nama : %s",TK->TK[i].name);
-            fscanf(fisave,"%d\n",&(Price(*TK,i)));
-            //printf("harga: %d\n",TK->TK[i].price);
-            fscanf(fisave,"%d\n",&(isRekreasi(*TK,i)));
-            //printf("rekreasi: %d\n",TK->TK[i].rekreasi);
-            fscanf(fisave,"%d\n",&(Block(*TK,i)));
-            //printf("block: %d\n",TK->TK[i].block);
-            fscanf(fisave,"%d\n",&(Level(*TK,i)));
-            //printf("level: %d\n",Level(*TK,i));
-            fscanf(fisave,"%d\n",&(Owner(*TK,i)));
-            //printf("owner: %d\n",Owner(*TK,i));
-            fscanf(fisave,"%d\n",&(TK->TK[i].name.Length));
-        }
-        //fscanf(fisave,"\n");
-        i++;
-        //scanf("%d",&dummy);
-        fscanf(fisave,"\n");
+	fisave = fopen(LoadFName,"r");
+	if (fisave){
         fscanf(fisave,"%d\n", &ipt.type);
-    }
+        CreateList(LB);
+        while (ipt.type != ValUndef)
+        {
+            //printf("load\n");
+            ipt.id = i;
+            InsVLast(LB,ipt);
+            //printf("\n");
+            //printf("First= %d\n",Info(First(*LB)).type);
+            //printf("IsEmpty = %d\n",IsListEmpty(*LB));
+            //printf("type: %d\n",ipt.type);
+            //printf("id  : %d\n",ipt.id);
+            if (ipt.type == 1){
+                //printf("masukn\n");
+                fgets(TK->TK[i].name.TabKata, NMax, fisave);
+                //printf("nama : %s",TK->TK[i].name);
+                fscanf(fisave,"%d\n",&(Price(*TK,i)));
+                //printf("harga: %d\n",TK->TK[i].price);
+                fscanf(fisave,"%d\n",&(isRekreasi(*TK,i)));
+                //printf("rekreasi: %d\n",TK->TK[i].rekreasi);
+                fscanf(fisave,"%d\n",&(Block(*TK,i)));
+                //printf("block: %d\n",TK->TK[i].block);
+                fscanf(fisave,"%d\n",&(Level(*TK,i)));
+                //printf("level: %d\n",Level(*TK,i));
+                fscanf(fisave,"%d\n",&(Owner(*TK,i)));
+                //printf("owner: %d\n",Owner(*TK,i));
+                fscanf(fisave,"%d\n",&(TK->TK[i].name.Length));
+            }
+            //fscanf(fisave,"\n");
+            i++;
+            //scanf("%d",&dummy);
+            fscanf(fisave,"\n");
+            fscanf(fisave,"%d\n", &ipt.type);
+        }
+        printf("File %s telah diload\n",LoadFName);
+	}else{
+        printf("Nama file tidak ditemukan!\n");
+	}
 	fclose(fisave);
 }
 

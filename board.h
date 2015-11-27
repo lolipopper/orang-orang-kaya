@@ -5,6 +5,7 @@
 #include "boolean.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 //KONSTANTA
 #define Nil NULL
@@ -51,11 +52,11 @@ void initBoard(ListBoard *LB, TabKota *TK);
 
 void PrintNamaPetak(TabKota TK, Address P, int baris, int *length);
 
-Address SearchKota(ListBoard LB, TabKota TK, Kata NamaKota);
+int SearchKota(Kata K,TabKota TK);
 
-void Save (ListBoard LB, TabKota TK);
+void Save (ListBoard LB, TabKota TK, SKata K);
 
-void Load (ListBoard *LB,TabKota *TK);
+void Load (ListBoard *LB,TabKota *TK, SKata K);
 
 Address Last(ListBoard L);
 /*	I.S. sembarang

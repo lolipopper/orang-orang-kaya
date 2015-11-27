@@ -29,6 +29,8 @@ Dadu D;
 #define Dice1(D) (D).dice1
 #define Dice2(D) (D).dice2
 
+typedef char SKata[100];
+
 boolean IsKataSama(Kata K1, Kata K2);
 /* Mengembalikan true jika K1 = K2; dua kata dikatakan sama jika panjangnya sama dan
    urutan karakter yang menyusun kata juga sama. Sensitif terhadap uppercase dan lowercase */

@@ -23,6 +23,7 @@ typedef struct {
 	char owner;
 	boolean LightOff;
 	WCup WorldCup;
+	boolean isOffered;
 } Kota;
 
 typedef struct {
@@ -39,11 +40,14 @@ typedef struct {
 #define LightOff(Kota,i) (Kota).TK[(i)].LightOff
 #define isWorldCup(Kota,i) (Kota).TK[(i)].WorldCup.isWCup
 #define whoWorldCup(Kota,i) (Kota).TK[(i)].WorldCup.who
-
+#define isOffered(Kota,i) (Kota).TK[(i)].isOffered
+#define City(Kota,i) (Kota).TK[(i)]
 long long priceCity(Kota K);
 /* mengembalikan harga sewa kota */
 
 long long priceUpgrade(Kota K);
 /* mengembalikan harga upgrade kota */
+
+long long priceSell (Kota K);
 
 #endif

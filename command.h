@@ -34,4 +34,16 @@ void infoCity(Kata K, TabKota TK);
 
 void showLeaderBoard();
 
+void sell(Kata K, TabKota *TK);
+/* menambahkan kota dengan nama K ke list offered */
+
+void sellbank(Kata K, TabKota *TK);
+/* menjual kota dengan nama K ke bank */
+
+void showOffered(TabKota TK);
+/* menampilkan info kota yang ada di list offered */
+
+void buyoffered (Kata K, TabKota *TK);
+/* membeli kota yang ada di list offered */
+
 #endif

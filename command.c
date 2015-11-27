@@ -47,7 +47,7 @@ void MoveNPetak(TabKota *TK, ListBoard *LB, int N)
 		}
 		if(PlayerId(PTurn) == whoWorldCup(*TK, idWorldCup)) {
 			if(Position(PTurn) == 17) {
-				printf("  Kamu sudah melewati World Cup, efek harga sewa kota "); 
+				printf("  Kamu sudah melewati World Cup, efek harga sewa kota ");
 				j = 0;
 				while(j < NamaKota(*TK, idWorldCup).Length) {
 					printf("%c", NamaKota(*TK, idWorldCup).TabKata[j]);
@@ -323,4 +323,81 @@ void showLeaderBoard()
         }
     }
     printf("\n");
+}
+
+void sell(Kata K, TabKota *TK)
+{
+    int id;
+
+    id = SearchKota(K,*TK);
+    if (id <= 32){
+        if (Owner(*TK,id) == PlayerId(PTurn)){
+            isOffered(*TK,id) = true;
+            printf("Kota anda telah ditambahkan ke dalam List Offered\n");
+            printf("Kepemilikan kota ini akan berpindah setelah ada player yang membeli kotamu\n");
+        }else{
+            printf("  Kota ini bukan milikmu!\n");
+        }
+    }else{
+        printf("  Tidak ada kota dengan nama itu!\n");
+    }
+}
+
+void sellbank(Kata K, TabKota *TK)
+{
+    int id,hargajualbank;
+
+    id = SearchKota(K,*TK);
+    if (id <= 32){
+        if (Owner(*TK,id) == PlayerId(PTurn)){
+            hargajualbank = priceSell(City(*TK,id)) * 0.75;
+            Money(PTurn) += hargajualbank;
+            Owner(*TK,id) = '0';
+            printf("  Kota dijual ke bank seharga %d\n",hargajualbank);
+            printf("  Uangmu sekarang %d\n",Money(PTurn));
+        }else{
+            printf("  Kota ini bukan milikmu!\n");
+        }
+    }else{
+        printf("  Tidak ada kota dengan nama itu!\n");
+    }
+}
+
+void showOffered (TabKota TK)
+{
+    int i;
+
+    printf("Kota-kota yang ada dalam List Offered:\n");
+
+    for (i=1; i<=32; i++)
+    {
+        if (isOffered(TK,i) == true){
+            PrintInfoKota(TK,i);
+        }
+    }
+}
+
+void buyoffered (Kata K, TabKota *TK)
+{
+    int id,hargabeli;
+
+    id = SearchKota(K,*TK);
+    if (id <= 32){
+        if (isOffered(*TK,id) == true){
+            hargabeli = priceSell(City(*TK,id));
+            if (Money(PTurn) >= hargabeli){
+                Money(PTurn) -= hargabeli;
+                Owner(*TK,id) = PlayerId(PTurn);
+                isOffered(*TK,id) = false;
+                printf("  Kota ini anda beli dengan harga %d\n",PlayerId(PTurn),hargabeli);
+                printf("  Uangmu sekarang %d\n",Money(PTurn));
+            }else{
+                printf("  Uangmu tidak cukup!\n");
+            }
+        }else{
+            printf("  Kota ini tidak ada di List Offered!\n");
+        }
+    }else{
+        printf("  Tidak ada kota dengan nama itu!\n");
+    }
 }

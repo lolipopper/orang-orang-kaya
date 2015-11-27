@@ -85,5 +85,42 @@ void menu(ListBoard *LB, TabKota *TK)
             ShowBoard(*LB, *TK);
             printf("\n");
         }
+        if (strcmp(input, "sell") == 0){
+            scanf("%s", input);
+            if (strcmp(input, "bank") == 0){
+                scanf("%s", input);
+                length = 0; i = 0;
+                while (input[i] != '\0') {
+                    K.TabKata[i] = input[i];
+                    length++;
+                    i++;
+                }
+                K.Length = length;
+                sellbank(K,TK);
+            }else{
+                length = 0; i = 0;
+                while (input[i] != '\0') {
+                    K.TabKata[i] = input[i];
+                    length++;
+                    i++;
+                }
+                K.Length = length;
+                sell(K,TK);
+            }
+        }
+        if (strcmp(input, "show") == 0){
+            scanf("%s",input);
+            if (strcmp(input,"offered") == 0){
+                showOffered(*TK);
+            }
+        }
+        if (strcmp(input, "save") == 0){
+            scanf("%s", input);
+            Save(*LB,*TK,input);
+        }
+        if (strcmp(input, "load") == 0){
+            scanf("%s", input);
+            Load(LB,TK,input);
+        }
     } while (strcmp(input, "exit") != 0);
 }

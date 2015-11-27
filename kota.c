@@ -22,3 +22,8 @@ long long priceUpgrade(Kota K)
         return 3 * K.price;
     }
 }
+
+long long priceSell (Kota K)
+{
+    return priceCity(K)/2;
+}
