@@ -1,25 +1,27 @@
+alson :
 blok (bonus)
 triple monopoli (bonus)
 - pemain memiliki 3 blok langsung menang
 tour monopoli (bonus)
 - pemain memiliki semua rekreasi langsung menang
-
-Bugs:
-
-micky - batas"" yang dilakukan pemain di petak tertentu (help )
-micky - Kalo abis dipenjara stay sekali turn berikut ga bisa ngapa2in, game berhenti, mau end turn juga ga bisa.
-micky - roll dice kalo gak bisa reroll pesan kesalahan
 alson - kota dengan dua kata banyak error
 alson - show offered kalo kosong
-nathan - player mati, hilang dari list, kota juga juga smua ada pemilik
 alson - save turn, card, offered
 
-kak mustawa belum di debug
+micky :
+micky - Kalo abis dipenjara stay sekali turn berikut ga bisa ngapa2in, game berhenti, mau end turn juga ga bisa.
+micky - lightoff lewat start kembali ke semula
+buy gak bisa langsung upgrade
 
-SEMUA DIKERJAKAN DENGAN RAPI !!!
-
+nathan :
 playernya kalah
 player hilang dari list
 smua kota yang dia miliki jadi gak ada pemilik
 kartu yang dia pegang balik ke deck
 di show offered hilang yang dia offered
+
+batas"" yang dilakukan pemain di petak tertentu (help )
+
+(SEMUA DIKERJAKAN DENGAN RAPI !!!)
+(KALO KERJANYA LAMA BAKAL LANGSUNG DIGANTIKAN ORANG LAIN
+DAN RESIKO DITANGGUNG SENDIRI !!!)

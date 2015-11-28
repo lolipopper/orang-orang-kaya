@@ -85,11 +85,11 @@ AddressPl SearchPl(char id);
 
 boolean isPlayerOwnKota(ListBoard LB, TabKota TK);
 
-void hostnama(Kata *NamaKota);
+void hostnama(Kata *NKota, ListBoard LB, TabKota TK);
 
-void travelnama(Kata *NamaKota);
+void travelnama(Kata *NamaKota, ListBoard LB, TabKota TK);
 
-void boardWorldCup(ListBoard LB, TabKota TK);
+void boardWorldCup(ListBoard LB, TabKota *TK);
 /* efek yang didapatkan player ketika sampai di board World Cup */
 
 void boardWorldTravel(ListBoard LB, TabKota TK);

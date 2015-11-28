@@ -1,1 +1,0 @@
-# orang-orang-kaya
