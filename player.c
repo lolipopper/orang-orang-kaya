@@ -115,11 +115,16 @@ void Load (ListBoard *LB,TabKota *TK, SKata K)
             fscanf(fisave,"%d\n", &ipt.type);
         }
         AddressPl plyr;
-
+        //printf("Reading Jumlah Player\n");
         fscanf(fisave,"%d\n",&jumlahPemain);
+        DeleteAllPlayer();
+        InitNumPlayer(jumlahPemain);
+
         plyr = First(Turn);
+        printf("Reading INfo player\n");
         for (i=1;i<=jumlahPemain;i++)
         {
+            //printf("Read %d\n",i);
             fscanf(fisave,"%d\n",&Position(plyr));
             fscanf(fisave,"%d\n",&Money(plyr));
             fscanf(fisave,"%d\n",&Kekayaan(plyr));
@@ -192,6 +197,62 @@ void InitNPlayer()
 
 	printf("  Input banyak pemain (2 - 4) : ");
 	scanf("%d", &n);
+	jumlahPemain = n;
+	printf("\n");
+	if (n > 2)
+	{
+		Prec = Next(Prec);
+		InitPlayer(&Pl, 'C');
+		P = AlokasiPl(Pl);
+		Next(Prec) = P;
+		if (n > 3)
+		{
+			Prec = Next(Prec);
+			InitPlayer(&Pl, 'D');
+			P = AlokasiPl(Pl);
+			Next(Prec) = P;
+		}
+	}
+	Next(P) = First(Turn);
+	PTurn = First(Turn);
+	rolled = false;
+}
+
+void DeleteAllPlayer ()
+/*	Delete semua elemen ListBoard dan alamat elemen di-dealokasi
+	I.S. : L terdefinisi, boleh kosong
+	F.S. : Jika L tidak kosong, semua elemen ListBoard di-delete dan didealokasi
+*/
+{
+    AddressPl p,prec;
+    p = First(Turn);
+    if(First(Turn) != Nil){
+        p = Next(First(Turn));
+        prec = First(Turn);
+        while (p!= First(Turn))
+        {
+            DealokasiPl(&prec);
+            prec = p;
+            p = Next(p);
+        }
+        DealokasiPl(&prec);
+        First(Turn) = Nil;
+    }
+}
+
+
+void InitNumPlayer(int n)
+{
+	AddressPl Prec, P;
+	Player Pl;
+
+	InitPlayer(&Pl, 'A');
+	Prec = AlokasiPl(Pl);
+	InitPlayer(&Pl, 'B');
+	P = AlokasiPl(Pl);
+	First(Turn) = Prec;
+	Next(Prec) = P;
+
 	jumlahPemain = n;
 	printf("\n");
 	if (n > 2)

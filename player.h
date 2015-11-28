@@ -76,6 +76,10 @@ void InitPlayer(Player *P, char playerId);
 void InitNPlayer();
 /* proseudr untuk menentukan jumlah pemain */
 
+void InitNumPlayer(int n);
+
+void DeleteAllPlayer ();
+
 AddressPl SearchPl(char id);
 /* melakukan search di List Turn Player dengan playerId = id */
 

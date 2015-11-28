@@ -41,7 +41,12 @@ void menu(ListBoard *LB, TabKota *TK)
             InitNPlayer();
             inputBenar = true;
         }
-        else {
+        else if (strcmp(input, "load") == 0){
+            scanf("%s", input);
+            printf("Mulai Load\n");
+            Load(LB,TK,input);
+            inputBenar = true;
+        }else{
             pesanKesalahan();
             inputBenar = false;
         }
