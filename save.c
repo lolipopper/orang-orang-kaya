@@ -7,7 +7,7 @@ void Save (ListBoard LB, TabKota TK, SKata K)
     SKata SaveFName;
     strcpy(SaveFName,K);
     strcat(SaveFName,".txt");
-    strcat("SaveFiles/",SaveFName);
+    //strcat("SaveFiles/",SaveFName);
     fosave = fopen(SaveFName,"w");
     int i;
 
@@ -77,7 +77,7 @@ boolean Load (ListBoard *LB,TabKota *TK, SKata K)
 
     strcpy(LoadFName,K);
     strcat(LoadFName,".txt");
-    strcat("SaveFiles/",SaveFName);
+    //strcat("SaveFiles/",LoadFName);
 	i=1;
     p = First(*LB);
 	fisave = fopen(LoadFName,"r");
