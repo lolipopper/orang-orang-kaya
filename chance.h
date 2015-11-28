@@ -51,6 +51,4 @@ void boardChance();
 void boardBonus();
 /* efek yang didapatkan player ketika sampai di board Bonus */
 
-void returnCards(Player P);
-
 #endif

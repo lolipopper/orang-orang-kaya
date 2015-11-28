@@ -195,12 +195,7 @@ void boardDesertedIsland(card *C)
     boolean inputBenar;
     char input[20];
 
-    if (Jail(PTurn)) {
-        printf("  Kamu sedang berada di penjara.\n");
-    }
-    else {
-        printf("  Kamu masuk penjara.\n");
-    }
+    printf("  Kamu masuk penjara.\n");
     printf("  Kamu bisa keluar dengan menggunakan kartu Free Prison atau membayar 300K\n");
     printf("  Ketik 'free me' untuk menggunakan kartu Free Prison, 'pay' untuk membayar, 'stay' untuk tetap di penjara.\n\n");
     inputBenar = false;
