@@ -25,7 +25,8 @@ int main ()
 
 void menu(ListBoard *LB, TabKota *TK)
 {
-    char input[100];
+    boolean Win;
+    SKata input;
     Kata K;
     int i, length;
     boolean inputBenar;
@@ -203,7 +204,11 @@ void menu(ListBoard *LB, TabKota *TK)
         {
             pesanKesalahan();
         }
-    } while (strcmp(input, "exit") != 0);
+
+        //CEK TOUR MONOPOLI
+        Win = isWinTour(*TK);
+        Win = isWinBlock(*TK);
+    } while ((strcmp(input, "exit") != 0) && (Win == false));
 }
 
 void pesanKesalahan()

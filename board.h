@@ -31,6 +31,7 @@ typedef struct {
 } ListBoard;
 
 ListBoard LB;
+int jumPetak, jumBlock;
 
 //SELEKTOR
 #define First(L) (L).first

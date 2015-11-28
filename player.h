@@ -102,4 +102,8 @@ void ShowBoard(ListBoard LB, TabKota TK);
 
 void deletePlayer(ListPlayer *L,Player P);
 
+boolean isWinTour(TabKota Kota);
+
+boolean isWinBlock(TabKota Kota);
+
 #endif

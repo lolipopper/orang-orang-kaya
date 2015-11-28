@@ -30,6 +30,8 @@ typedef struct {
 	Kota TK[IdxMax+1];
 } TabKota;
 
+int jumRek;
+
 // SELEKTOR
 #define NamaKota(Kota,i) (Kota).TK[(i)].name
 #define Price(Kota,i) (Kota).TK[(i)].price

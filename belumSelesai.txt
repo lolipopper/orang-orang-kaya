@@ -9,10 +9,10 @@ Bugs:
 micky - batas"" yang dilakukan pemain di petak tertentu (help )
 micky - Kalo abis dipenjara stay sekali turn berikut ga bisa ngapa2in, game berhenti, mau end turn juga ga bisa.
 micky - roll dice kalo gak bisa reroll pesan kesalahan
-alson - kota dengan dua kata banyak error
-alson - show offered kalo kosong V
+alson - kota dengan dua kata banyak error (DONE)
+alson - show offered kalo kosong (DONE)
 nathan - player mati, hilang dari list, kota juga juga smua ada pemilik
-alson - save turn, card, offered
+alson - save turn, card, offered (DONE)
 
 kak mustawa belum di debug
 

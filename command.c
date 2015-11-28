@@ -206,6 +206,7 @@ void buy(TabKota *Kota, ListBoard *LB)
                         if (Level(*Kota,pos) == 0) {
                             Level(*Kota,pos)++;
                         }
+                        isOffered(*Kota,pos) = false;
                         printf("  Selamat, kota ini menjadi milikmu!\n");
                         printf("  Level bangunan %d\n", Level(*Kota,pos));
                         ShowMoney();
@@ -385,6 +386,7 @@ void sellbank(Kata K, TabKota *TK)
             Money(PTurn) += hargajualbank;
             Kekayaan(PTurn) -= priceCity(City(*TK,id));
             Owner(*TK,id) = '0';
+            isOffered(*TK,id) = false;
             printf("  Kota dijual ke bank seharga %d\n",hargajualbank);
             printf("  Uangmu sekarang %d\n\n",Money(PTurn));
         }else{
@@ -577,6 +579,7 @@ boolean Load (ListBoard *LB,TabKota *TK, SKata K)
 	int dummy;
     SKata LoadFName;
 
+    jumRek = 0;
     strcpy(LoadFName,K);
     strcat(LoadFName,".txt");
     //strcat("SaveFiles/",LoadFName);
@@ -600,6 +603,9 @@ boolean Load (ListBoard *LB,TabKota *TK, SKata K)
                 fscanf(fisave,"%c\n",&(Owner(*TK,i)));
                 fscanf(fisave,"%d\n",&(isOffered(*TK,i)));
                 fscanf(fisave,"%d\n",&(TK->TK[i].name.Length));
+                if (isRekreasi(*TK,i) == true){
+                    jumRek++;
+                }
             }
             i++;
             fscanf(fisave,"\n");
