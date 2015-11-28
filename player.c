@@ -51,8 +51,13 @@ void InitNPlayer()
 	First(Turn) = Prec;
 	Next(Prec) = P;
 
-	printf("  Input banyak pemain (2 - 4) : ");
-	scanf("%d", &n);
+    do {
+        printf("  Input banyak pemain (2 - 4) : ");
+        scanf("%d", &n);
+        if (n < 2 || n > 4) {
+            printf("  Jumlah pemain 2 - 4. Silahkan input ulang.\n\n");
+        }
+    } while (n < 2 || n > 4);
 	jumlahPemain = n;
 	printf("\n");
 	if (n > 2)
@@ -95,7 +100,6 @@ void DeleteAllPlayer ()
         First(Turn) = Nil;
     }
 }
-
 
 void InitNumPlayer(int n)
 {
@@ -150,9 +154,11 @@ AddressPl SearchPl (char id)
 	}
 }
 
-void hostnama(Kata *NKota) {
+void hostnama(Kata *NKota, ListBoard LB, TabKota TK) {
 	char input[20], namakota[10];
 	int i, length;
+	boolean found = false;
+	Address P;
 
 	printf("  Ketik \"host <nama kota>\".\n");
 	printf("  Nama kota yang terpilih akan mendapatkan harga sewa 2x lipat sampai pemain melewati start.\n\n");
@@ -168,8 +174,8 @@ void hostnama(Kata *NKota) {
 				strcpy(namakota, "New York\0");
 			else if(strcmp(input, "Delhi") == 0)
 				strcpy(namakota, "New Delhi\0");
-			else if(strcmp(input, "Paolo") == 0)
-				strcpy(namakota, "Sao Paolo\0");
+			else if(strcmp(input, "Paulo") == 0)
+				strcpy(namakota, "Sao Paulo\0");
 		}
 		else
 			strcpy(namakota, input);
@@ -181,6 +187,16 @@ void hostnama(Kata *NKota) {
 			i++;
 		}
 		NKota->Length = length;
+		P = First(LB);
+        do {
+            if(IsKataSama(NamaKota(TK, Id(P)), *NKota))
+                found = true;
+            P = Next(P);
+        } while (P != First(LB) && !found);
+        if(!found) {
+            printf("  Nama Kota salah, masukkan nama kota yang valid.\n\n");
+            goto INPUT;
+        }
 	}
 	else {
 		printf("  Masukkan salah, ketik \"host <nama kota>\"\n\n");
@@ -188,12 +204,14 @@ void hostnama(Kata *NKota) {
 	}
 }
 
-void travelnama(Kata *NKota) {
+void travelnama(Kata *NKota, ListBoard LB, TabKota TK) {
 	int i, length;
     char input[20], namakota[10];
+    boolean found = false;
+    Address P;
 
 	printf("  Kamu dapat pergi ke petak tujuan yang kamu inginkan pada saat giliran selanjutnya tanpa harus me-roll dadu.\n");
-    printf("  Ketik \"travel <nama kota>\".\n");
+    printf("  Ketik \"travel <nama kota>\".\n\n");
   INPUT:
 	printf("> ");
     scanf("%s", input);
@@ -205,8 +223,8 @@ void travelnama(Kata *NKota) {
 				strcpy(namakota, "New York\0");
 			else if(strcmp(input, "Delhi") == 0)
 				strcpy(namakota, "New Delhi\0");
-			else if(strcmp(input, "Paolo") == 0)
-				strcpy(namakota, "Sao Paolo\0");
+			else if(strcmp(input, "Paulo") == 0)
+				strcpy(namakota, "Sao Paulo\0");
 		}
 		else
 			strcpy(namakota, input);
@@ -218,6 +236,16 @@ void travelnama(Kata *NKota) {
 			i++;
 		}
 		NKota->Length = length;
+		P = First(LB);
+		do {
+            if(IsKataSama(NamaKota(TK, Id(P)), *NKota))
+                found = true;
+            P = Next(P);
+        } while (P != First(LB) && !found);
+        if(!found) {
+            printf("  Nama Kota salah, masukkan nama kota yang valid.\n\n");
+            goto INPUT;
+        }
 	}
 	else {
 		printf("  Masukkan salah, ketik \"travel <nama kota>\"\n\n");
@@ -225,26 +253,76 @@ void travelnama(Kata *NKota) {
 	}
 }
 
-void boardWorldCup(ListBoard LB, TabKota TK) {
-    Address P;
-    Kata NKota;
+boolean isPlayerOwnKota(ListBoard LB, TabKota TK) {
+	Address P;
+	boolean ownKota;
 
-    hostnama(&NKota);
-    P = First(LB);
-    while (!IsKataSama(NamaKota(TK, Id(P)), NKota)) {
-        P = Next(P);
-    }
-    isWorldCup(TK, Id(P)) = true;
-    whoWorldCup(TK, Id(P)) = PlayerId(PTurn);
-    idWorldCup = Id(P);
-    printf("  %s menjadi host World Cup.\n", NKota);
+	ownKota = false;
+	P = First(LB);
+	while(Next(P) != First(LB) && !ownKota) {
+		if(Owner(TK, Id(P)) == PlayerId(PTurn))
+			ownKota = true;
+		P = Next(P);
+	}
+	return ownKota;
+}
+
+void boardWorldCup(ListBoard LB, TabKota *TK) {
+    Address P;
+    int i;
+    Kata NKota;
+    boolean ismine;
+
+	ismine = false;
+	if(isPlayerOwnKota(LB, *TK)) {
+		do {
+			hostnama(&NKota, LB, *TK);
+			P = First(LB);
+			while (!IsKataSama(NamaKota(*TK, Id(P)), NKota)) {
+				P = Next(P);
+			}
+			if(Owner(*TK, Id(P)) == PlayerId(PTurn)) {
+				isWorldCup(*TK, Id(P)) = true;
+				whoWorldCup(*TK, Id(P)) = PlayerId(PTurn);
+				if(PlayerId(PTurn) == 'A')
+					idWorldCup[1] = Id(P);
+				else if(PlayerId(PTurn) == 'B')
+					idWorldCup[2] = Id(P);
+				else if(PlayerId(PTurn) == 'C')
+					idWorldCup[3] = Id(P);
+				else if(PlayerId(PTurn) == 'D')
+					idWorldCup[4] = Id(P);
+				ismine = true;
+			}
+			else {
+				printf("  Kota ");
+				i = 0;
+				while(i < NKota.Length) {
+                    printf("%c", NKota.TabKata[i]);
+                    i++;
+				}
+				printf(" bukan milikmu. Pilihlah kota milikmu.\n\n");
+			}
+            if(ismine) {
+                printf("  ");
+                i = 0;
+                while(i < NKota.Length) {
+                    printf("%c", NKota.TabKata[i]);
+                    i++;
+                }
+                printf(" menjadi host World Cup.\n");
+            }
+		} while(!ismine);
+	}
+	else
+		printf("  Sayang sekali kamu belum memiliki satu petak pun. Kamu tidak dapat memilih host World Cup.\n");
 }
 
 void boardWorldTravel(ListBoard LB, TabKota TK) {
 	Kata NKota;
 	Address P;
 
-	travelnama(&NKota);
+	travelnama(&NKota, LB, TK);
     P = First(LB);
     while (!IsKataSama(NamaKota(TK, Id(P)), NKota)) {
         P = Next(P);
@@ -252,7 +330,8 @@ void boardWorldTravel(ListBoard LB, TabKota TK) {
     MovWorldTravel(PTurn) = Id(P) - Position(PTurn);
     if(MovWorldTravel(PTurn) < 0)
 		MovWorldTravel(PTurn) += 32;
-    rolled = false;
+    rolled = true;
+    printf("  Kamu akan sampai di %s pada giliran selanjutnya setelah ketik perintah \"roll dice\"\n", NKota);
 }
 
 boolean IsPlayerOnBoard(AddressPl P, int pos) {
@@ -322,9 +401,11 @@ void ShowBoard(ListBoard LB, TabKota TK) {
 					if((j%x) == 0) printf("|");
                     else if((j%x) != 0){
                         printf(" ");
-                        if(isWorldCup(TK, Id(PF))) printf("(");
+                        if(Type(PF) == 1)
+                            if(isWorldCup(TK, Id(PF))) printf("(");
                         PrintNamaPetak(TK, PF, 1, &length);
-                        if(isWorldCup(TK, Id(PF))) printf(")");
+                        if(Type(PF) == 1)
+                            if(isWorldCup(TK, Id(PF))) printf(")");
                         if(Type(PF) == 1) {
                             if(LightOff(TK, Id(PF))) {
                                 printf("*");
@@ -356,7 +437,7 @@ void ShowBoard(ListBoard LB, TabKota TK) {
                         if(j > 0 && j < (M-x)) {
                             if(Type(PF) == 1) {
                                 for(m = 0; m < 3; m++) printf(" ");
-                                harga = Price(TK, Id(PF));
+                                harga = priceCity(TK.TK[Id(PF)]);
                                 printf("%dK", harga);
                                 if(harga < 10)
                                     for(m = 0; m < x-2-4; m++) printf(" ");
@@ -445,9 +526,11 @@ void ShowBoard(ListBoard LB, TabKota TK) {
                 if((i%y) == posnama) { //Posisi Nama
                     if(j > 0 && j < x) {
                         for(m = 0; m < 1; m++) printf(" ");
-                        if(isWorldCup(TK, Id(PF))) printf("(");
+                        if(Type(PL) == 1)
+                            if(isWorldCup(TK, Id(PL))) printf("(");
                         PrintNamaPetak(TK, PL, 1, &length);
-                        if(isWorldCup(TK, Id(PF))) printf(")");
+                        if(Type(PL) == 1)
+                            if(isWorldCup(TK, Id(PL))) printf(")");
                         if(Type(PL) == 1) {
                             if(LightOff(TK, Id(PL))) {
                                 printf("*");
@@ -473,9 +556,11 @@ void ShowBoard(ListBoard LB, TabKota TK) {
                     }
                     else if(j > (M-x) && j < M) {
                         for(m = 0; m < 1; m++) printf(" ");
-                        if(isWorldCup(TK, Id(PF))) printf("(");
+                        if(Type(PF) == 1)
+                            if(isWorldCup(TK, Id(PF))) printf("(");
                         PrintNamaPetak(TK, PF, 1, &length);
-                        if(isWorldCup(TK, Id(PF))) printf("(");
+                        if(Type(PF) == 1)
+                            if(isWorldCup(TK, Id(PF))) printf(")");
                         if(LightOff(TK, Id(PF))) {
                             printf("*");
                             if(isWorldCup(TK, Id(PF)))
@@ -498,7 +583,7 @@ void ShowBoard(ListBoard LB, TabKota TK) {
                     if(j > 0 && j < x) {
                         if(Type(PL) == 1) {
                             for(m = 0; m < 3; m++) printf(" ");
-                            harga = Price(TK, Id(PL));
+                            harga = priceCity(TK.TK[Id(PL)]);
                             printf("%dK", harga);
                             if(harga < 10)
                                 for(m = 0; m < x-2-4; m++) printf(" ");
@@ -515,7 +600,7 @@ void ShowBoard(ListBoard LB, TabKota TK) {
                     else if(j > (M-x) && j < M) {
                         if(Type(PF) == 1) {
                             for(m = 0; m < 3; m++) printf(" ");
-                            harga = Price(TK, Id(PF));
+                            harga = priceCity(TK.TK[Id(PF)]);
                             printf("%dK", harga);
                             if(harga < 10)
                                 for(m = 0; m < x-2-4; m++) printf(" ");
@@ -647,9 +732,11 @@ void ShowBoard(ListBoard LB, TabKota TK) {
 					if((j%x)== 0) printf("|");
                     else {
                         printf("  ");
-                        if(isWorldCup(TK, Id(PF))) printf("(");
+                        if(Type(PL) == 1)
+                            if(isWorldCup(TK, Id(PF))) printf("(");
                         PrintNamaPetak(TK, PL, 1, &length);
-                        if(isWorldCup(TK, Id(PF))) printf(")");
+                        if(Type(PL) == 1)
+                            if(isWorldCup(TK, Id(PF))) printf(")");
                         if(LightOff(TK, Id(PL))) {
                             printf("*");
                             if(isWorldCup(TK, Id(PF)))
@@ -673,7 +760,7 @@ void ShowBoard(ListBoard LB, TabKota TK) {
                         if(j > x && j < (M-x)) {
                             if(Type(PL) == 1) {
                                 for(m = 0; m < 3; m++) printf(" ");
-                                harga = Price(TK, Id(PL));
+                                harga = priceCity(TK.TK[Id(PL)]);
                                 printf("%dK", harga);
                                 if(harga < 10)
                                     for(m = 0; m < x-2-4; m++) printf(" ");
@@ -770,11 +857,12 @@ void ShowBoard(ListBoard LB, TabKota TK) {
 
 void deletePlayer(ListPlayer *L,Player P)
 {
-    AddressPl temp=First(L);
-    while (Info(temp)!=P)
+   /* AddressPl temp=First(*L);
+    while (Info(temp) != P)
     {
         temp=Next(temp);
     }
     next(prev)=next(temp);
     DealokasiPl(&temp);
+    */
 }

@@ -2,30 +2,35 @@
 
 void MovPlayer(TabKota *TK, ListBoard *LB)
 {
-    if(MovWorldTravel(PTurn) != 0) {
-        printf("  Kamu pindah sejauh %d petak akibat World Travel\n", MovWorldTravel(PTurn));
-		MoveNPetak(TK, LB, MovWorldTravel(PTurn));
-		MovWorldTravel(PTurn) = 0;
-		rolled = true;
-	}
-    if (!Jail(PTurn)) {
-        if (!rolled) {
-            roll();
-            printf("  %d + %d = %d\n", Dice1(D), Dice2(D), (Dice1(D) + Dice2(D)));
-            MoveNPetak(TK, LB, (Dice1(D) + Dice2(D)));
-            if (!reroll()) {
-                rolled = true;
-            }
-        }
+    if (rolled == true) {
+        printf("  Kamu tidak bisa melakukan roll dice lagi.\n\n");
     }
     else {
-        printf("  Maaf, kamu sedang dipenjara.\n\n");
+        if(MovWorldTravel(PTurn) != 0) {
+            printf("  Kamu pindah sejauh %d petak akibat World Travel\n", MovWorldTravel(PTurn));
+            MoveNPetak(TK, LB, MovWorldTravel(PTurn));
+            MovWorldTravel(PTurn) = 0;
+            rolled = true;
+        }
+        if (!Jail(PTurn)) {
+            if (!rolled) {
+                roll();
+                printf("  %d + %d = %d\n", Dice1(D), Dice2(D), (Dice1(D) + Dice2(D)));
+                MoveNPetak(TK, LB, (Dice1(D) + Dice2(D)));
+                if (!reroll()) {
+                    rolled = true;
+                }
+            }
+        }
+        else {
+            printf("  Maaf, kamu sedang dipenjara.\n\n");
+        }
     }
 }
 
 void MoveNPetak(TabKota *TK, ListBoard *LB, int N)
 {
-	int i, mov, j;
+	int i, mov, j, k;
 	Address P;
 
 	i = Position(PTurn);
@@ -35,6 +40,14 @@ void MoveNPetak(TabKota *TK, ListBoard *LB, int N)
 		i -= 1;
 	}
 	mov = N;
+	if(PlayerId(PTurn) == 'A')
+		k = 1;
+	else if(PlayerId(PTurn) == 'B')
+		k = 2;
+	else if(PlayerId(PTurn) == 'C')
+		k = 3;
+	else if(PlayerId(PTurn) == 'D')
+		k = 4;
 	while (mov > 0) {
 		Position(PTurn) += 1;
 		if (Position(PTurn) > 32) {
@@ -45,18 +58,18 @@ void MoveNPetak(TabKota *TK, ListBoard *LB, int N)
             Money(PTurn) += 150;
             ShowMoney();
 		}
-		if(PlayerId(PTurn) == whoWorldCup(*TK, idWorldCup)) {
+		if(PlayerId(PTurn) == whoWorldCup(*TK, idWorldCup[k])) {
 			if(Position(PTurn) == 17) {
 				printf("  Kamu sudah melewati World Cup, efek harga sewa kota ");
 				j = 0;
-				while(j < NamaKota(*TK, idWorldCup).Length) {
-					printf("%c", NamaKota(*TK, idWorldCup).TabKata[j]);
+				while(j < NamaKota(*TK, idWorldCup[k]).Length) {
+					printf("%c", NamaKota(*TK, idWorldCup[k]).TabKata[j]);
 					j++;
 				}
 				printf(" 2x lipat hilang.\n");
-				isWorldCup(*TK, idWorldCup) = false;
-				whoWorldCup(*TK, idWorldCup) = '0';
-				idWorldCup = 0;
+				isWorldCup(*TK, idWorldCup[k]) = false;
+				whoWorldCup(*TK, idWorldCup[k]) = '0';
+				idWorldCup[k] = 0;
 			}
 		}
 		P = Next(P);
@@ -76,10 +89,10 @@ void MoveNPetak(TabKota *TK, ListBoard *LB, int N)
 		boardDesertedIsland(&C);
 	}
 	if (Type(P) == 6) {
-        boardWorldCup(LB, TK);
+        boardWorldCup(*LB, TK);
 	}
 	if (Type(P) == 7) {
-        boardWorldTravel(LB, TK);
+        boardWorldTravel(*LB, *TK);
 	}
 	if (Type(P) == 8) {
 		boardTax(&C);
@@ -95,7 +108,7 @@ void EndTurn()
 		PTurn = Next(PTurn);
 	}
 	else {
-		printf("  Kamu harus melakukan 'rolldice'\n\n");
+		printf("  Kamu harus melakukan 'roll dice'\n\n");
 	}
 }
 
@@ -271,7 +284,19 @@ void payRent(ListBoard *LB, TabKota *Kota)
         while (PlayerId(Pl) != Owner(*Kota,pos)) {
             Pl = Next(Pl);
         }
-        if(idWorldCup == pos) {
+        if(idWorldCup[1] == pos) {
+			printf("  Karena petak ini adalah host World Cup, biaya sewa menjadi 2x lipat.\n");
+			sewa = 2*priceCity((*Kota).TK[pos]);
+		}
+		else if(idWorldCup[2] == pos) {
+			printf("  Karena petak ini adalah host World Cup, biaya sewa menjadi 2x lipat.\n");
+			sewa = 2*priceCity((*Kota).TK[pos]);
+		}
+		else if(idWorldCup[3] == pos) {
+			printf("  Karena petak ini adalah host World Cup, biaya sewa menjadi 2x lipat.\n");
+			sewa = 2*priceCity((*Kota).TK[pos]);
+		}
+		else if(idWorldCup[4] == pos) {
 			printf("  Karena petak ini adalah host World Cup, biaya sewa menjadi 2x lipat.\n");
 			sewa = 2*priceCity((*Kota).TK[pos]);
 		}
@@ -346,8 +371,8 @@ void sell(Kata K, TabKota *TK)
     if (id <= 32){
         if (Owner(*TK,id) == PlayerId(PTurn)){
             isOffered(*TK,id) = true;
-            printf("  Kota anda telah ditambahkan ke dalam List Offered\n");
-            printf("  Kepemilikan kota ini akan berpindah setelah ada player yang membeli kotamu\n\n");
+            printf("Kota anda telah ditambahkan ke dalam List Offered\n");
+            printf("Kepemilikan kota ini akan berpindah setelah ada player yang membeli kotamu\n");
         }else{
             printf("  Kota ini bukan milikmu!\n");
         }
