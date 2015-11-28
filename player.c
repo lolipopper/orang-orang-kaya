@@ -171,7 +171,7 @@ void boardDesertedIsland()
                 printf("  Kamu bebas dari penjara.\n");
                 ShowMoney();
                 inputBenar = true;
-                }
+            }
         }
         else if (strcmp(input, "stay") == 0) {
             printf("  Kamu masuk penjara.\n");
