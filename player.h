@@ -87,10 +87,10 @@ void hostnama(Kata *NamaKota);
 
 void travelnama(Kata *NamaKota);
 
-void boardWorldCup();
+void boardWorldCup(ListBoard LB, TabKota TK);
 /* efek yang didapatkan player ketika sampai di board World Cup */
 
-void boardWorldTravel();
+void boardWorldTravel(ListBoard LB, TabKota TK);
 /* efek yang didapatkan player ketika sampai di board World Travel */
 
 boolean IsPlayerOnBoard(AddressPl P, int pos);
@@ -99,8 +99,6 @@ int PlayersOnBoard(int pos);
 
 void ShowBoard(ListBoard LB, TabKota TK);
 
-void Save (ListBoard LB, TabKota TK, SKata K);
-
-boolean Load (ListBoard *LB,TabKota *TK, SKata K);
+void bangkrut(ListPlayer *L,Player P);
 
 #endif
