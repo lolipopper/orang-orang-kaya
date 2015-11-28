@@ -5,6 +5,7 @@
 #include "board.h"
 #include "player.h"
 #include "other.h"
+#include "save.h"
 #include "chance.h"
 
 void menu();

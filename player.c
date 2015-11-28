@@ -775,4 +775,6 @@ void deletePlayer(ListPlayer *L,Player P)
     {
         temp=Next(temp);
     }
+    next(prev)=next(temp);
+    DealokasiPl(&temp);
 }
