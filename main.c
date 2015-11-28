@@ -1,4 +1,5 @@
-#include "string.h"
+#include <string.h>
+//#include "save.h"
 #include "boolean.h"
 #include "kota.h"
 #include "command.h"
@@ -43,7 +44,7 @@ void menu(ListBoard *LB, TabKota *TK)
         }
         else if (strcmp(input, "load") == 0){
             scanf("%s", input);
-            printf("Mulai Load\n");
+            printf("Loading...\n");
             boolean valid;
             valid = Load(LB,TK,input);
             if (valid)

@@ -227,7 +227,7 @@ void travelnama(Kata *NKota) {
 boolean isPlayerOwnKota(ListBoard LB, TabKota TK) {
 	Address P;
 	boolean ownKota;
-	
+
 	ownKota = false;
 	P = First(LB);
 	while(Next(P) != First(LB) && !ownKota) {
@@ -803,11 +803,13 @@ void ShowBoard(ListBoard LB, TabKota TK) {
     printf("() menandakan sedang terjadi World Cup pada kota tersebut.\n");
 }
 
+/*
 void deletePlayer(ListPlayer *L,Player P)
 {
-    AddressPl temp=First(L);
+    AddressPl temp=First(*L);
     while (Info(temp)!=P)
     {
         temp=Next(temp);
     }
 }
+*/

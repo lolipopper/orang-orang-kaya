@@ -173,34 +173,20 @@ void initBoard(ListBoard *LB,TabKota *TK)
     {
         ipt.id = i;
         InsVLast(LB,ipt);
-        //printf("\n");
-        //printf("First= %d\n",Info(First(*LB)).type);
-        //printf("IsEmpty = %d\n",IsListEmpty(*LB));
-        //printf("type: %d\n",ipt.type);
-        //printf("id  : %d\n",ipt.id);
         if (ipt.type == 1){
-            //printf("masukn\n");
             fgets(TK->TK[i].name.TabKata, NMax, fiboard);
-            //printf("nama : %s",TK->TK[i].name);
             fscanf(fiboard,"%d\n",&(TK->TK[i].price));
-            //printf("harga: %d\n",TK->TK[i].price);
             fscanf(fiboard,"%d\n",&(TK->TK[i].rekreasi));
-            //printf("rekreasi: %d\n",TK->TK[i].rekreasi);
             fscanf(fiboard,"%d\n",&(TK->TK[i].block));
-            //printf("block: %d\n",TK->TK[i].block);
             fscanf(fiboard,"%d\n",&(TK->TK[i].level));
-            //printf("level: %d\n",Level(*TK,i));
             fscanf(fiboard,"%c\n",&(TK->TK[i].owner));
             fscanf(fiboard,"%d\n",&(TK->TK[i].LightOff));
             fscanf(fiboard,"%d\n",&(TK->TK[i].WorldCup.isWCup));
             fscanf(fiboard,"%c\n",&(TK->TK[i].WorldCup.who));
-            //printf("owner: %d\n",Owner(*TK,i));
             fscanf(fiboard,"%d\n",&(TK->TK[i].name.Length));
             isOffered(*TK,i) = false;
         }
-        //fscanf(fiboard,"\n");
         i++;
-        //scanf("%d",&dummy);
         fscanf(fiboard,"%d\n", &ipt.type);
     }
 	fclose(fiboard);

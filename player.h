@@ -5,9 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "boolean.h"
-#include "other.h"
 #include "board.h"
-#include "command.h"
+//#include "command.h"
 #include "chance.h"
 
 // KONSTANTA

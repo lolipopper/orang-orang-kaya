@@ -26,7 +26,7 @@ void roll()
     srand ( time(NULL) );
 	Dice1(D) = (rand() % 6) + 1;
 	Dice2(D) = (rand() % 6) + 1;
-	Dice1(D) = 6; Dice2(D) = 6;
+	//Dice1(D) = 6; Dice2(D) = 6;
 }
 
 boolean reroll()
