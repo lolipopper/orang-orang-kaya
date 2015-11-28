@@ -14,3 +14,11 @@ batas"" yang dilakukan pemain di petak tertentu
 blok (bonus)
 tour monopoli (bonus)
 triple monopoli (bonus)
+
+Pesan kesalahan
+Tambahin help
+
+Bugs:
+
+- Kalo abis dipenjara stay sekali turn berikut ga bisa ngapa2in, game berhenti, mau end turn juga ga bisa.
+- Load kalo di awal gagal, mau load lagi gagal.
