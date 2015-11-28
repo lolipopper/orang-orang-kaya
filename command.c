@@ -346,8 +346,8 @@ void sell(Kata K, TabKota *TK)
     if (id <= 32){
         if (Owner(*TK,id) == PlayerId(PTurn)){
             isOffered(*TK,id) = true;
-            printf("Kota anda telah ditambahkan ke dalam List Offered\n");
-            printf("Kepemilikan kota ini akan berpindah setelah ada player yang membeli kotamu\n");
+            printf("  Kota anda telah ditambahkan ke dalam List Offered\n");
+            printf("  Kepemilikan kota ini akan berpindah setelah ada player yang membeli kotamu\n\n");
         }else{
             printf("  Kota ini bukan milikmu!\n");
         }
@@ -365,6 +365,7 @@ void sellbank(Kata K, TabKota *TK)
         if (Owner(*TK,id) == PlayerId(PTurn)){
             hargajualbank = priceSell(City(*TK,id)) * 0.75;
             Money(PTurn) += hargajualbank;
+            Kekayaan(PTurn) -= priceCity(City(*TK,id));
             Owner(*TK,id) = '0';
             printf("  Kota dijual ke bank seharga %d\n",hargajualbank);
             printf("  Uangmu sekarang %d\n",Money(PTurn));
@@ -380,7 +381,7 @@ void showOffered (TabKota TK)
 {
     int i;
 
-    printf("Kota-kota yang ada dalam List Offered:\n");
+    printf("  Kota-kota yang ada dalam List Offered:\n");
 
     for (i=1; i<=32; i++)
     {
@@ -393,6 +394,7 @@ void showOffered (TabKota TK)
 void buyoffered (Kata K, TabKota *TK)
 {
     int id,hargabeli;
+    AddressPl Plyr;
 
     id = SearchKota(K,*TK);
     if (id <= 32){
@@ -400,18 +402,25 @@ void buyoffered (Kata K, TabKota *TK)
             hargabeli = priceSell(City(*TK,id));
             if (Money(PTurn) >= hargabeli){
                 Money(PTurn) -= hargabeli;
+                Kekayaan(PTurn) += priceCity(City(*TK,id));
+                Plyr = First(Turn);
+                while (Owner(*TK,id) != PlayerId(Plyr)){
+                    Plyr = Next(Plyr);
+                }
+                Money(Plyr) += hargabeli;
+                Kekayaan(Plyr) -= priceCity(City(*TK,id));
                 Owner(*TK,id) = PlayerId(PTurn);
                 isOffered(*TK,id) = false;
                 printf("  Kota ini anda beli dengan harga %d\n",PlayerId(PTurn),hargabeli);
-                printf("  Uangmu sekarang %d\n",Money(PTurn));
+                printf("  Uangmu sekarang %d\n\n",Money(PTurn));
             }else{
-                printf("  Uangmu tidak cukup!\n");
+                printf("  Uangmu tidak cukup!\n\n");
             }
         }else{
-            printf("  Kota ini tidak ada di List Offered!\n");
+            printf("  Kota ini tidak ada di List Offered!\n\n");
         }
     }else{
-        printf("  Tidak ada kota dengan nama itu!\n");
+        printf("  Tidak ada kota dengan nama itu!\n\n");
     }
 }
 

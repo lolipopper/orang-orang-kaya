@@ -1,24 +1,25 @@
-boardWorldCup (kak musta)
-boardWorldTravel (kak musta)
-host <nama kota> (kak musta)
-sell (alson)
-sell bank (alson)
-show offered (alson)
-buy offered <nama petak> (alson)
-save (alson)
-load (alson)
-off (micky)
-protect (micky)
-batas"" yang dilakukan pemain di petak tertentu
-
 blok (bonus)
-tour monopoli (bonus)
 triple monopoli (bonus)
-
-Pesan kesalahan
-Tambahin help
+- pemain memiliki 3 blok langsung menang
+tour monopoli (bonus)
+- pemain memiliki semua rekreasi langsung menang
 
 Bugs:
 
-- Kalo abis dipenjara stay sekali turn berikut ga bisa ngapa2in, game berhenti, mau end turn juga ga bisa.
-- Load kalo di awal gagal, mau load lagi gagal.
+micky - batas"" yang dilakukan pemain di petak tertentu (help )
+micky - Kalo abis dipenjara stay sekali turn berikut ga bisa ngapa2in, game berhenti, mau end turn juga ga bisa.
+micky - roll dice kalo gak bisa reroll pesan kesalahan
+alson - kota dengan dua kata banyak error
+alson - show offered kalo kosong
+nathan - player mati, hilang dari list, kota juga juga smua ada pemilik
+alson - save turn, card, offered
+
+kak mustawa belum di debug
+
+SEMUA DIKERJAKAN DENGAN RAPI !!!
+
+playernya kalah
+player hilang dari list
+smua kota yang dia miliki jadi gak ada pemilik
+kartu yang dia pegang balik ke deck
+di show offered hilang yang dia offered
