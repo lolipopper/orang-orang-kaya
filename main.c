@@ -30,6 +30,7 @@ void menu(ListBoard *LB, TabKota *TK)
     Kata K;
     int i, length;
     boolean inputBenar;
+    char dum;
 
     printf("-----------------------------------------------\n");
     printf("---------------LET'S GET WEALTHY---------------\n");
@@ -71,7 +72,6 @@ void menu(ListBoard *LB, TabKota *TK)
             }
         }
         else if (strcmp(input, "info") == 0) { // info kota
-            char dum;
             scanf("%c",&dum);
             gets(input);
             length = 0; i = 0;
@@ -90,7 +90,6 @@ void menu(ListBoard *LB, TabKota *TK)
             buy(TK, LB);
         }
         else if (strcmp(input, "buyoffered") == 0) {
-            char dum;
             scanf("%c",&dum);
             gets(input);
             length = 0; i = 0;
@@ -118,7 +117,8 @@ void menu(ListBoard *LB, TabKota *TK)
             }
         }
         else if (strcmp(input, "protect") == 0) { // print card
-            scanf("%s", input);
+            scanf("%c",&dum);
+            gets(input);
             length = 0; i = 0;
             while (input[i] != '\0') {
                 K.TabKata[i] = input[i];
@@ -129,7 +129,8 @@ void menu(ListBoard *LB, TabKota *TK)
             protect(K, TK, &C);
         }
         else if (strcmp(input, "off") == 0) { // print card
-            scanf("%s", input);
+            scanf("%c",&dum);
+            gets(input);
             length = 0; i = 0;
             while (input[i] != '\0') {
                 K.TabKata[i] = input[i];
@@ -167,7 +168,8 @@ void menu(ListBoard *LB, TabKota *TK)
         else if (strcmp(input, "sell") == 0){
             scanf("%s", input);
             if (strcmp(input, "bank") == 0){
-                scanf("%s", input);
+                scanf("%c",&dum);
+                gets(input);
                 length = 0; i = 0;
                 while (input[i] != '\0') {
                     K.TabKata[i] = input[i];
@@ -177,6 +179,8 @@ void menu(ListBoard *LB, TabKota *TK)
                 K.Length = length;
                 sellbank(K,TK);
             }else{
+                scanf("%c",&dum);
+                gets(input);
                 length = 0; i = 0;
                 while (input[i] != '\0') {
                     K.TabKata[i] = input[i];
