@@ -216,7 +216,7 @@ void initBoard(ListBoard *LB,TabKota *TK)
     fclose(fokota);
 }*/
 
-void Save (ListBoard LB, TabKota TK)
+void Save (ListBoard LB, TabKota TK, SKata K)
 {
     FILE *fosave;
     Address p = First(LB);
