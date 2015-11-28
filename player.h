@@ -58,6 +58,7 @@ typedef struct {
 ListPlayer Turn;
 AddressPl PTurn;
 boolean rolled;
+boolean turnAwal;
 int jumlahPemain;
 int idWorldCup[4+1];
 

@@ -18,12 +18,12 @@ int main ()
 
     makeChance(&C);
     initBoard(&LB,&TK);
-    menu(&LB,&TK);
+    menu(&LB,&TK,&C);
 
     return 0;
 }
 
-void menu(ListBoard *LB, TabKota *TK)
+void menu(ListBoard *LB, TabKota *TK, card *C)
 {
     char input[100];
     Kata K;
@@ -40,7 +40,9 @@ void menu(ListBoard *LB, TabKota *TK)
         scanf("%s", input);
         if (strcmp(input, "new") == 0) { // new
             InitNPlayer();
+            help();
             inputBenar = true;
+            turnAwal = true;
         }
         else if (strcmp(input, "load") == 0){
             scanf("%s", input);
@@ -58,11 +60,19 @@ void menu(ListBoard *LB, TabKota *TK)
     } while (!inputBenar);
 
     do {
+        if (Jail(PTurn) && turnAwal) {
+            printf("  Kamu sedang berada di penjara.\n");
+            printf("  Kamu bisa keluar dengan menggunakan kartu Free Prison atau membayar 100K\n");
+            printf("  Ketik 'free me' untuk menggunakan kartu Free Prison, 'pay' untuk membayar\n\n");
+            rolled = true;
+            turnAwal = false;
+        }
         printf("> ");
         scanf("%s", input);
         if (strcmp(input, "roll") == 0) { // roll dice
             scanf("%s", input);
             if (strcmp(input, "dice") == 0) {
+                buyupgrade = false;
                 MovPlayer(TK, LB);
             }
             else {
@@ -115,7 +125,7 @@ void menu(ListBoard *LB, TabKota *TK)
         else if (strcmp(input, "print") == 0) { // print card
             scanf("%s", input);
             if (strcmp(input, "card") == 0) {
-                printCard(C);
+                printCard(*C);
             }
             else if (strcmp(input, "kekayaan") == 0) {
                 printKekayaan();
@@ -126,6 +136,18 @@ void menu(ListBoard *LB, TabKota *TK)
         }
         else if (strcmp(input, "protect") == 0) { // print card
             scanf("%s", input);
+            if ((strcmp(input, "New") == 0) || (strcmp(input, "Sao") == 0)) {
+                scanf("%s", input);
+                if ((strcmp(input, "York") == 0)) {
+                    strcpy(input, "New York");
+                }
+                else if ((strcmp(input, "Delhi") == 0)) {
+                    strcpy(input, "New Delhi");
+                }
+                else if ((strcmp(input, "Paulo") == 0)) {
+                    strcpy(input, "Sao Paulo");
+                }
+            }
             length = 0; i = 0;
             while (input[i] != '\0') {
                 K.TabKata[i] = input[i];
@@ -133,10 +155,22 @@ void menu(ListBoard *LB, TabKota *TK)
                 i++;
             }
             K.Length = length;
-            protect(K, TK, &C);
+            protect(K, TK, C);
         }
         else if (strcmp(input, "off") == 0) { // print card
             scanf("%s", input);
+            if ((strcmp(input, "New") == 0) || (strcmp(input, "Sao") == 0)) {
+                scanf("%s", input);
+                if ((strcmp(input, "York") == 0)) {
+                    strcpy(input, "New York");
+                }
+                else if ((strcmp(input, "Delhi") == 0)) {
+                    strcpy(input, "New Delhi");
+                }
+                else if ((strcmp(input, "Paulo") == 0)) {
+                    strcpy(input, "Sao Paulo");
+                }
+            }
             length = 0; i = 0;
             while (input[i] != '\0') {
                 K.TabKata[i] = input[i];
@@ -144,7 +178,7 @@ void menu(ListBoard *LB, TabKota *TK)
                 i++;
             }
             K.Length = length;
-            off(K, TK, &C);
+            off(K, TK, C);
         }
         else if (strcmp(input, "show") == 0) { // show money
             scanf("%s", input);
@@ -194,21 +228,60 @@ void menu(ListBoard *LB, TabKota *TK)
                 sell(K,TK);
             }
         }
-        else if (strcmp(input, "save") == 0){
+        else if (strcmp(input, "save") == 0){ // save
             scanf("%s", input);
             Save(*LB,*TK,input);
         }
-        else if (strcmp(input, "load") == 0){
+        else if (strcmp(input, "load") == 0){ // load
             scanf("%s", input);
             printf("Mulai Load\n");
             Load(LB,TK,input);
         }
-        else if (strcmp(input, "exit") == 0)
-        {
-            printf("Thanks for playing\n");
+        else if (strcmp(input, "pay") == 0){ // kasus khusus di penjara
+            if (Jail(PTurn)) {
+                if (Money(PTurn) < 100) {
+                    printf("  Uangmu tidak cukup.\n\n");
+                }
+                else {
+                    Money(PTurn) -= 100;
+                    printf("  Kamu bebas dari penjara.\n");
+                    ShowMoney();
+                    Jail(PTurn) = false;
+                    rolled = true;
+                    printf("\n");
+                }
+            }
+            else {
+                pesanKesalahan();
+            }
         }
-        else
-        {
+        else if (strcmp(input, "free") == 0) {
+            scanf("%s", input);
+            if (strcmp(input, "me") == 0) {
+                if (Jail(PTurn)) {
+                    if (CardFreePrison(PTurn) == 0) {
+                        printf("  Kamu tidak memiliki kartu Free Prison.\n\n");
+                    }
+                    else {
+                        CardFreePrison(PTurn) -= 1;
+                        printf("  Kamu bebas dari penjara.\n\n");
+                        Jail(PTurn) = false;
+                        (*C).el[1] += 1;
+                        rolled = true;
+                    }
+                }
+                else {
+                    pesanKesalahan();
+                }
+            }
+            else {
+                pesanKesalahan();
+            }
+        }
+        else if (strcmp(input, "help") == 0) {
+            help();
+        }
+        else {
             pesanKesalahan();
         }
     } while (strcmp(input, "exit") != 0);

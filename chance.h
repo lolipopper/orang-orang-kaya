@@ -22,9 +22,6 @@ void makeChance(card *C);
 /* C.el[3] menyatakan jumlah kartu Protect */
 /* C.el[4] menyatakan jumlah kartu Light Off */
 
-boolean isDeckEmpty(card C);
-/* mengembalikan true jika deck kosong, false jika tidak */
-
 void printCard(card C);
 /* prosedur untuk menampilkan jumlah kartu di dalam deck saat ini */
 

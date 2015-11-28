@@ -5,6 +5,8 @@
 #include "player.h"
 #include "board.h"
 
+boolean buyupgrade;
+
 void MovPlayer(TabKota *TK, ListBoard *LB);
 /* prosedur gerak untuk player */
 

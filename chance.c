@@ -9,22 +9,6 @@ void makeChance(card *C)
     }
 }
 
-boolean isDeckEmpty(card C)
-{
-    int i;
-    boolean kosong;
-
-    kosong = true;
-    i = 0;
-    while ((i<=4) && (kosong)) {
-        if (C.el[i] != 0) {
-            kosong = false;
-        }
-        i++;
-    }
-    return kosong;
-}
-
 void printCard(card C)
 {
     printf("  Jumlah kartu pada Deck :\n");
@@ -39,37 +23,32 @@ void randomCard(card *C)
 {
     int random;
 
-    if (isDeckEmpty(*C)) {
-        printf("  Kartu chance telah habis.\n");
+    do {
+        srand ( time(NULL) );
+        random = rand() %5;
+    } while ((*C).el[random] == 0);
+    (*C).el[random] -= 1;
+    if (random == 0) {
+        printf("  Maaf, anda kurang beruntung. Anda mendapatkan kartu Go to Jail!\n");
+        Position(PTurn) = 9;
+        boardDesertedIsland(C);
+        (*C).el[0] += 1;
     }
-    else {
-        do {
-            srand ( time(NULL) );
-            random = rand() %5;
-        } while ((*C).el[random] == 0);
-        (*C).el[random] -= 1;
-        if (random == 0) {
-            printf("  Maaf, anda kurang beruntung. Anda mendapatkan kartu Go to Jail!\n");
-            Position(PTurn) = 9;
-            boardDesertedIsland(C);
-            (*C).el[0] += 1;
-        }
-        else if (random == 1) {
-            printf("  Selamat, anda mendapatkan kartu Free Prison!\n");
-            CardFreePrison(PTurn) += 1;
-        }
-        else if (random == 2) {
-            printf("  Selamat, anda mendapatkan kartu Free Tax!\n");
-            CardFreeTax(PTurn) += 1;
-        }
-        else if (random == 3) {
-            printf("  Selamat, anda mendapatkan kartu Protect!\n");
-            CardProtect(PTurn) += 1;
-        }
-        else if (random == 4) {
-            printf("  Selamat, anda mendapatkan kartu Light Off!\n");
-            CardOff(PTurn) += 1;
-        }
+    else if (random == 1) {
+        printf("  Selamat, anda mendapatkan kartu Free Prison!\n");
+        CardFreePrison(PTurn) += 1;
+    }
+    else if (random == 2) {
+        printf("  Selamat, anda mendapatkan kartu Free Tax!\n");
+        CardFreeTax(PTurn) += 1;
+    }
+    else if (random == 3) {
+        printf("  Selamat, anda mendapatkan kartu Protect!\n");
+        CardProtect(PTurn) += 1;
+    }
+    else if (random == 4) {
+        printf("  Selamat, anda mendapatkan kartu Light Off!\n");
+        CardOff(PTurn) += 1;
     }
 }
 
@@ -183,6 +162,7 @@ void boardTax(card *C)
             printf("  Uang kamu berkurang sebesar %lldK.\n", (Kekayaan(PTurn) / 10));
             inputBenar = true;
             Money(PTurn) -= (Kekayaan(PTurn) / 10);
+            ShowMoney();
         }
         else {
             printf("  Input salah\n\n");
@@ -195,13 +175,8 @@ void boardDesertedIsland(card *C)
     boolean inputBenar;
     char input[20];
 
-    if (Jail(PTurn)) {
-        printf("  Kamu sedang berada di penjara.\n");
-    }
-    else {
-        printf("  Kamu masuk penjara.\n");
-    }
-    printf("  Kamu bisa keluar dengan menggunakan kartu Free Prison atau membayar 300K\n");
+    printf("  Kamu masuk penjara.\n");
+    printf("  Kamu bisa keluar dengan menggunakan kartu Free Prison atau membayar 100K\n");
     printf("  Ketik 'free me' untuk menggunakan kartu Free Prison, 'pay' untuk membayar, 'stay' untuk tetap di penjara.\n\n");
     inputBenar = false;
     do {
@@ -211,31 +186,37 @@ void boardDesertedIsland(card *C)
             scanf("%s", input);
             if (strcmp(input, "me") == 0) {
                 if (CardFreePrison(PTurn) == 0) {
-                    printf("  Kamu tidak memiliki kartu Free Prison.\n");
+                    printf("  Kamu tidak memiliki kartu Free Prison.\n\n");
                 }
                 else {
                     CardFreePrison(PTurn) -= 1;
                     printf("  Kamu bebas dari penjara.\n");
+                    Jail(PTurn) = false;
                     inputBenar = true;
                     (*C).el[1] += 1;
+                    rolled = true;
                 }
             }
         }
         else if (strcmp(input, "pay") == 0) {
-            if (Money(PTurn) < 300) {
+            if (Money(PTurn) < 100) {
                 printf("  Uangmu tidak cukup.\n");
             }
             else {
-                Money(PTurn) -= 300;
+                Money(PTurn) -= 100;
                 printf("  Kamu bebas dari penjara.\n");
                 ShowMoney();
+                Jail(PTurn) = false;
                 inputBenar = true;
+                rolled = true;
             }
         }
         else if (strcmp(input, "stay") == 0) {
             printf("  Kamu masuk penjara.\n");
             inputBenar = true;
             Jail(PTurn) = true;
+            rolled = true;
+            turnAwal = false;
         }
     } while (!inputBenar);
 }

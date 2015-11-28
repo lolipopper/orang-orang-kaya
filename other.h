@@ -42,4 +42,6 @@ boolean reroll();
 /* mengembalikan true jika pemain dapat melakukan reroll, false jika tidak
    pemain yang dapat melakukan reroll adalah pemain yang sebelum nya melakukan roll dengan dadu 1 = dadu 2 */
 
+void help();
+
 #endif

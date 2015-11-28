@@ -14,6 +14,7 @@ void MovPlayer(TabKota *TK, ListBoard *LB)
         }
         if (!Jail(PTurn)) {
             if (!rolled) {
+                turnAwal = false;
                 roll();
                 printf("  %d + %d = %d\n", Dice1(D), Dice2(D), (Dice1(D) + Dice2(D)));
                 MoveNPetak(TK, LB, (Dice1(D) + Dice2(D)));
@@ -54,8 +55,8 @@ void MoveNPetak(TabKota *TK, ListBoard *LB, int N)
 			Position(PTurn) -= 32;
 		}
 		if (Position(PTurn) == 1) {
-            printf("  Kamu melewati board Start. Kamu mendapatkan bonus 150K.\n");
-            Money(PTurn) += 150;
+            printf("  Kamu melewati board Start. Kamu mendapatkan bonus 300K.\n");
+            Money(PTurn) += 300;
             ShowMoney();
 		}
 		if(PlayerId(PTurn) == whoWorldCup(*TK, idWorldCup[k])) {
@@ -106,6 +107,7 @@ void EndTurn()
 		printf("  Player %c mengakhiri gilirannya\n\n", PlayerId(PTurn));
 		rolled = false;
 		PTurn = Next(PTurn);
+		turnAwal = true;
 	}
 	else {
 		printf("  Kamu harus melakukan 'roll dice'\n\n");
@@ -170,61 +172,70 @@ void buy(TabKota *Kota, ListBoard *LB)
     while (pos != Id(P)) {
         P = Next(P);
     }
-    if (Type(P) == 1) {
-        if (Owner(*Kota,pos) != PlayerId(PTurn)) {
-            if (isRekreasi(*Kota,pos) == true) {
-                if (Owner(*Kota,pos) == '0') {
-                    if (Money(PTurn) < priceCity((*Kota).TK[pos])) {
-                        printf("  Uangmu tidak cukup untuk membeli tempat rekreasi ini.\n\n");
+    if (turnAwal == false) {
+        if (Type(P) == 1) {
+            if (Owner(*Kota,pos) != PlayerId(PTurn)) {
+                if (isRekreasi(*Kota,pos) == true) {
+                    if (Owner(*Kota,pos) == '0') {
+                        if (Money(PTurn) < priceCity((*Kota).TK[pos])) {
+                            printf("  Uangmu tidak cukup untuk membeli tempat rekreasi ini.\n\n");
+                        }
+                        else {
+                            Money(PTurn) -= priceCity((*Kota).TK[pos]);
+                            Kekayaan(PTurn) += priceCity((*Kota).TK[pos]);
+                            Owner(*Kota,pos) = PlayerId(PTurn);
+                            Level(*Kota,pos)++;
+                            printf("  Selamat, tempat rekreasi ini menjadi milikmu!\n");
+                            ShowMoney();
+                            printf("\n");
+                        }
                     }
                     else {
-                        Money(PTurn) -= priceCity((*Kota).TK[pos]);
-                        Kekayaan(PTurn) += priceCity((*Kota).TK[pos]);
-                        Owner(*Kota,pos) = PlayerId(PTurn);
-                        Level(*Kota,pos)++;
-                        printf("  Selamat, tempat rekreasi ini menjadi milikmu!\n");
-                        ShowMoney();
-                        printf("\n");
+                        printf("  Kamu tidak bisa membeli petak rekreasi milik player lain.\n\n");
+                    }
+                }
+                else {
+                    if (Level(*Kota,pos) == 3) {
+                        printf("  Kota ini telah menjadi landmark. Landmark tidak bisa dibeli.\n\n");
+                    }
+                    else {
+                        if (Money(PTurn) < priceCity((*Kota).TK[pos])) {
+                            printf("  Uangmu tidak cukup untuk membeli kota ini.\n\n");
+                        }
+                        else {
+                            Money(PTurn) -= priceCity((*Kota).TK[pos]);
+                            Kekayaan(PTurn) += priceCity((*Kota).TK[pos]);
+                            if (Owner(*Kota,pos) != '0') {
+                                Pl = First(Turn);
+                                while (PlayerId(Pl) != Owner(*Kota,pos)) {
+                                    Pl = Next(Pl);
+                                }
+                                Kekayaan(Pl) -= priceCity((*Kota).TK[pos]);
+                                Money(Pl) += priceCity((*Kota).TK[pos]);
+                            }
+                            Owner(*Kota,pos) = PlayerId(PTurn);
+                            if (Level(*Kota,pos) == 0) {
+                                Level(*Kota,pos)++;
+                            }
+                            printf("  Selamat, kota ini menjadi milikmu!\n");
+                            printf("  Level bangunan %d\n", Level(*Kota,pos));
+                            ShowMoney();
+                            printf("\n");
+                            buyupgrade = true;
+                        }
                     }
                 }
             }
             else {
-                if (Level(*Kota,pos) == 3) {
-                    printf("  Kota ini telah menjadi landmark. Landmark tidak bisa dibeli.\n\n");
-                }
-                else {
-                    if (Money(PTurn) < priceCity((*Kota).TK[pos])) {
-                        printf("  Uangmu tidak cukup untuk membeli kota ini.\n\n");
-                    }
-                    else {
-                        Money(PTurn) -= priceCity((*Kota).TK[pos]);
-                        Kekayaan(PTurn) += priceCity((*Kota).TK[pos]);
-                        if (Owner(*Kota,pos) != '0') {
-                            Pl = First(Turn);
-                            while (PlayerId(Pl) != Owner(*Kota,pos)) {
-                                Pl = Next(Pl);
-                            }
-                            Kekayaan(Pl) -= priceCity((*Kota).TK[pos]);
-                            Money(Pl) += priceCity((*Kota).TK[pos]);
-                        }
-                        Owner(*Kota,pos) = PlayerId(PTurn);
-                        if (Level(*Kota,pos) == 0) {
-                            Level(*Kota,pos)++;
-                        }
-                        printf("  Selamat, kota ini menjadi milikmu!\n");
-                        printf("  Level bangunan %d\n", Level(*Kota,pos));
-                        ShowMoney();
-                        printf("\n");
-                    }
-                }
+                printf("  Kota ini milik kamu. Kamu tidak bisa membeli kotamu sendiri.\n\n");
             }
         }
         else {
-            printf("  Kota ini milik kamu. Kamu tidak bisa membeli kotamu sendiri.\n\n");
+            printf("  Board ini tidak bisa dibeli.\n\n");
         }
     }
     else {
-        printf("  Board ini tidak bisa dibeli.\n\n");
+        printf("  Kamu harus melakukan roll dice terlebih dahulu.\n\n");
     }
 }
 
@@ -239,31 +250,37 @@ void upgrade(TabKota *Kota, ListBoard *LB)
         P = Next(P);
     }
     if (Type(P) == 1) {
-        if (Owner(*Kota,pos) == PlayerId(PTurn)) {
-            if (isRekreasi(*Kota,pos) == true) {
-                printf("  Maaf, board rekreasi tidak bisa diupgrade lagi.\n\n");
-            }
-            else {
-                if (Level(*Kota,pos) == 3) {
-                    printf("  Kota ini telah menjadi landmark. Landmark tidak bisa upgrade.\n\n");
+        if (buyupgrade == false) {
+            if (Owner(*Kota,pos) == PlayerId(PTurn)) {
+                if (isRekreasi(*Kota,pos) == true) {
+                    printf("  Maaf, board rekreasi tidak bisa diupgrade lagi.\n\n");
                 }
                 else {
-                    if (Money(PTurn) < priceUpgrade((*Kota).TK[pos])) {
-                        printf("  Uangmu tidak cukup untuk mengupgrade kota ini.\n\n");
+                    if (Level(*Kota,pos) == 3) {
+                        printf("  Kota ini telah menjadi landmark. Landmark tidak bisa upgrade.\n\n");
                     }
                     else {
-                        Money(PTurn) -= priceUpgrade((*Kota).TK[pos]);
-                        Kekayaan(PTurn) += priceUpgrade((*Kota).TK[pos]);
-                        Level(*Kota,pos)++;
-                        printf("  Selamat, level kota ini naik menjadi %d\n", Level(*Kota,pos));
-                        ShowMoney();
-                        printf("\n");
+                        if (Money(PTurn) < priceUpgrade((*Kota).TK[pos])) {
+                            printf("  Uangmu tidak cukup untuk mengupgrade kota ini.\n\n");
+                        }
+                        else {
+                            Money(PTurn) -= priceUpgrade((*Kota).TK[pos]);
+                            Kekayaan(PTurn) += priceUpgrade((*Kota).TK[pos]);
+                            Level(*Kota,pos)++;
+                            printf("  Selamat, level kota ini naik menjadi %d\n", Level(*Kota,pos));
+                            ShowMoney();
+                            printf("\n");
+                            buyupgrade = true;
+                        }
                     }
                 }
+            }
+            else {
+                printf("  Kota ini bukan milik kamu. Kamu hanya bisa mengupgrade kota milikmu.\n\n");
             }
         }
         else {
-            printf("  Kota ini bukan milik kamu. Kamu hanya bisa mengupgrade kota milikmu.\n\n");
+            printf("  Kamu hanya bisa melakukan buy dan upgrade sekali setiap turn.\n\n");
         }
     }
     else {
@@ -280,31 +297,41 @@ void payRent(ListBoard *LB, TabKota *Kota)
     pos = Position(PTurn);
     Pl = First(Turn);
 
-    if ( (Owner(*Kota,pos) != '0') && (PlayerId(Pl) != PlayerId(PTurn)) ) {
+    if (Owner(*Kota,pos) != '0') {
         while (PlayerId(Pl) != Owner(*Kota,pos)) {
             Pl = Next(Pl);
         }
-        if(idWorldCup[1] == pos) {
-			printf("  Karena petak ini adalah host World Cup, biaya sewa menjadi 2x lipat.\n");
-			sewa = 2*priceCity((*Kota).TK[pos]);
-		}
-		else if(idWorldCup[2] == pos) {
-			printf("  Karena petak ini adalah host World Cup, biaya sewa menjadi 2x lipat.\n");
-			sewa = 2*priceCity((*Kota).TK[pos]);
-		}
-		else if(idWorldCup[3] == pos) {
-			printf("  Karena petak ini adalah host World Cup, biaya sewa menjadi 2x lipat.\n");
-			sewa = 2*priceCity((*Kota).TK[pos]);
-		}
-		else if(idWorldCup[4] == pos) {
-			printf("  Karena petak ini adalah host World Cup, biaya sewa menjadi 2x lipat.\n");
-			sewa = 2*priceCity((*Kota).TK[pos]);
-		}
-		else sewa = priceCity((*Kota).TK[pos]);
-        printf("  Kamu harus membayar sewa ke pemilik kota ini sebanyak %d\n", sewa);
-        Money(PTurn) -= sewa;
-        Money(Pl) += sewa;
-        ShowMoney();
+        if (PlayerId(Pl) != PlayerId(PTurn)) {
+            if (LightOff(*Kota,pos)) {
+                printf("  Karena sedang terjadi mati lamput pada petak ini, maka biaya sewa menjadi 0K.\n");
+                sewa = 0;
+            }
+            else {
+                if(idWorldCup[1] == pos) {
+                    printf("  Karena petak ini adalah host World Cup, biaya sewa menjadi 2x lipat.\n");
+                    sewa = 2*priceCity((*Kota).TK[pos]);
+                }
+                else if(idWorldCup[2] == pos) {
+                    printf("  Karena petak ini adalah host World Cup, biaya sewa menjadi 2x lipat.\n");
+                    sewa = 2*priceCity((*Kota).TK[pos]);
+                }
+                else if(idWorldCup[3] == pos) {
+                    printf("  Karena petak ini adalah host World Cup, biaya sewa menjadi 2x lipat.\n");
+                    sewa = 2*priceCity((*Kota).TK[pos]);
+                }
+                else if(idWorldCup[4] == pos) {
+                    printf("  Karena petak ini adalah host World Cup, biaya sewa menjadi 2x lipat.\n");
+                    sewa = 2*priceCity((*Kota).TK[pos]);
+                }
+                else {
+                    sewa = priceCity((*Kota).TK[pos]);
+                }
+            }
+            printf("  Kamu harus membayar sewa ke pemilik kota ini sebanyak %d\n", sewa);
+            Money(PTurn) -= sewa;
+            Money(Pl) += sewa;
+            ShowMoney();
+        }
     }
 }
 

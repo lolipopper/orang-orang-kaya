@@ -35,7 +35,7 @@ void ConsPlayer(Player *P, int position, long long money, int nFreeTax, int nFre
 
 void InitPlayer(Player *P, char playerId)
 {
-	ConsPlayer(P,1,1000,0,0,0,0,playerId,0,false, 0);
+	ConsPlayer(P,1,2000,0,0,0,0,playerId,0,false, 0);
 }
 
 void InitNPlayer()
