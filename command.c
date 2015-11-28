@@ -2,24 +2,29 @@
 
 void MovPlayer(TabKota *TK, ListBoard *LB)
 {
-    if(MovWorldTravel(PTurn) != 0) {
-        printf("  Kamu pindah sejauh %d petak akibat World Travel\n", MovWorldTravel(PTurn));
-		MoveNPetak(TK, LB, MovWorldTravel(PTurn));
-		MovWorldTravel(PTurn) = 0;
-		rolled = true;
-	}
-    if (!Jail(PTurn)) {
-        if (!rolled) {
-            roll();
-            printf("  %d + %d = %d\n", Dice1(D), Dice2(D), (Dice1(D) + Dice2(D)));
-            MoveNPetak(TK, LB, (Dice1(D) + Dice2(D)));
-            if (!reroll()) {
-                rolled = true;
-            }
-        }
+    if (rolled == true) {
+        printf("  Kamu tidak bisa melakukan roll dice lagi.\n\n");
     }
     else {
-        printf("  Maaf, kamu sedang dipenjara.\n\n");
+        if(MovWorldTravel(PTurn) != 0) {
+            printf("  Kamu pindah sejauh %d petak akibat World Travel\n", MovWorldTravel(PTurn));
+            MoveNPetak(TK, LB, MovWorldTravel(PTurn));
+            MovWorldTravel(PTurn) = 0;
+            rolled = true;
+        }
+        if (!Jail(PTurn)) {
+            if (!rolled) {
+                roll();
+                printf("  %d + %d = %d\n", Dice1(D), Dice2(D), (Dice1(D) + Dice2(D)));
+                MoveNPetak(TK, LB, (Dice1(D) + Dice2(D)));
+                if (!reroll()) {
+                    rolled = true;
+                }
+            }
+        }
+        else {
+            printf("  Maaf, kamu sedang dipenjara.\n\n");
+        }
     }
 }
 
@@ -84,7 +89,7 @@ void MoveNPetak(TabKota *TK, ListBoard *LB, int N)
 		boardDesertedIsland(&C);
 	}
 	if (Type(P) == 6) {
-        boardWorldCup(*LB, *TK);
+        boardWorldCup(*LB, TK);
 	}
 	if (Type(P) == 7) {
         boardWorldTravel(*LB, *TK);
@@ -103,7 +108,7 @@ void EndTurn()
 		PTurn = Next(PTurn);
 	}
 	else {
-		printf("  Kamu harus melakukan 'rolldice'\n\n");
+		printf("  Kamu harus melakukan 'roll dice'\n\n");
 	}
 }
 

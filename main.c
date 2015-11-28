@@ -5,7 +5,9 @@
 #include "board.h"
 #include "player.h"
 #include "other.h"
+#include "save.h"
 #include "chance.h"
+#include "save.h"
 
 void menu();
 void pesanKesalahan();
@@ -70,6 +72,18 @@ void menu(ListBoard *LB, TabKota *TK)
         }
         else if (strcmp(input, "info") == 0) { // info kota
             scanf("%s", input);
+            if ((strcmp(input, "New") == 0) || (strcmp(input, "Sao") == 0)) {
+                scanf("%s", input);
+                if ((strcmp(input, "York") == 0)) {
+                    strcpy(input, "New York");
+                }
+                else if ((strcmp(input, "Delhi") == 0)) {
+                    strcpy(input, "New Delhi");
+                }
+                else if ((strcmp(input, "Paulo") == 0)) {
+                    strcpy(input, "Sao Paulo");
+                }
+            }
             length = 0; i = 0;
             while (input[i] != '\0') {
                 K.TabKata[i] = input[i];

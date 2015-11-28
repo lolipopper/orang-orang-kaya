@@ -23,10 +23,13 @@ boolean IsKataSama(Kata K1, Kata K2)
 
 void roll()
 {
-    srand ( time(NULL) );
-	Dice1(D) = (rand() % 6) + 1;
-	Dice2(D) = (rand() % 6) + 1;
-	Dice1(D) = 6; Dice2(D) = 6;
+    int a, b;
+    //srand ( time(NULL) );
+	//Dice1(D) = (rand() % 6) + 1;
+	//Dice2(D) = (rand() % 6) + 1;
+	scanf("%d", &a);
+	scanf("%d", &b);
+	Dice1(D) = a; Dice2(D) = b;
 }
 
 boolean reroll()

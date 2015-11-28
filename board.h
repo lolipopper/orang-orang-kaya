@@ -129,4 +129,6 @@ void PecahList (ListBoard *L1, ListBoard *L2, ListBoard L);
 	Jila alokasi gagal, semua elemen yang sudah dialokasikan harus di-dealokasi (bisa L1, L2 atau keduanya)
 */
 
+void DeleteAllOwnedBuildings(ListBoard *L,Player *P);
+
 #endif
