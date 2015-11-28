@@ -27,7 +27,7 @@ void roll()
     //srand ( time(NULL) );
 	//Dice1(D) = (rand() % 6) + 1;
 	//Dice2(D) = (rand() % 6) + 1;
-	printf("Masukkan angka dadu yang diinginkan (dadu1 dadu2) : ");
+	printf("  Masukkan angka dadu yang diinginkan (dadu1 dadu2) : ");
 	scanf("%d", &a);
 	scanf("%d", &b);
 	Dice1(D) = a; Dice2(D) = b;

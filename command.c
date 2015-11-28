@@ -24,9 +24,9 @@ void MovPlayer(TabKota *TK, ListBoard *LB)
 
             }
         }
-    }
-    else {
-        printf("  Maaf, kamu sedang dipenjara.\n\n");
+        else {
+            printf("  Maaf, kamu sedang dipenjara.\n\n");
+        }
     }
 }
 
@@ -218,20 +218,13 @@ void buy(TabKota *Kota, ListBoard *LB)
                             if (Level(*Kota,pos) == 0) {
                                 Level(*Kota,pos)++;
                             }
+                            isOffered(*Kota,pos) = false;
                             printf("  Selamat, kota ini menjadi milikmu!\n");
                             printf("  Level bangunan %d\n", Level(*Kota,pos));
                             ShowMoney();
                             printf("\n");
                             buyupgrade = true;
                         }
-<<<<<<< HEAD
-=======
-                        isOffered(*Kota,pos) = false;
-                        printf("  Selamat, kota ini menjadi milikmu!\n");
-                        printf("  Level bangunan %d\n", Level(*Kota,pos));
-                        ShowMoney();
-                        printf("\n");
->>>>>>> origin/master
                     }
                 }
             }
@@ -304,12 +297,8 @@ void payRent(ListBoard *LB, TabKota *Kota)
     AddressPl Pl;
     pos = Position(PTurn);
     Pl = First(Turn);
-<<<<<<< HEAD
 
     if (Owner(*Kota,pos) != '0') {
-=======
-    if ( (Owner(*Kota,pos) != '0') && (PlayerId(Pl) != PlayerId(PTurn)) ) {
->>>>>>> origin/master
         while (PlayerId(Pl) != Owner(*Kota,pos)) {
             Pl = Next(Pl);
         }

@@ -126,7 +126,7 @@ void menu(ListBoard *LB, TabKota *TK, card *C)
                 pesanKesalahan();
             }
         }
-        else if (strcmp(input, "protect") == 0) { // print card
+        else if (strcmp(input, "protect") == 0) { //protect
             scanf("%c",&dum);
             gets(input);
             length = 0; i = 0;
@@ -138,7 +138,7 @@ void menu(ListBoard *LB, TabKota *TK, card *C)
             K.Length = length;
             protect(K, TK, C);
         }
-        else if (strcmp(input, "off") == 0) { // print card
+        else if (strcmp(input, "off") == 0) { // off
             scanf("%c",&dum);
             gets(input);
             length = 0; i = 0;
