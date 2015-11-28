@@ -50,4 +50,7 @@ long long priceUpgrade(Kota K);
 
 long long priceSell (Kota K);
 
+void infoCity(Kata K, TabKota TK);
+/* prosedur untuk menampilkan info dari kota tertentu */
+
 #endif

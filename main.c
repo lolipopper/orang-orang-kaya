@@ -8,6 +8,7 @@
 #include "chance.h"
 
 void menu();
+void pesanKesalahan();
 
 int main ()
 {
@@ -26,24 +27,37 @@ void menu(ListBoard *LB, TabKota *TK)
     char input[100];
     Kata K;
     int i, length;
+    boolean inputBenar;
 
     printf("-----------------------------------------------\n");
     printf("---------------LET'S GET WEALTHY---------------\n");
     printf("-----------------------------------------------\n");
-    printf("Ketik new untuk memulai permainan.\n");
+    printf("Ketik new untuk memulai permainan baru.\n");
     do {
         printf("> ");
         scanf("%s", input);
         if (strcmp(input, "new") == 0) { // new
             InitNPlayer();
+            inputBenar = true;
         }
+        else {
+            pesanKesalahan();
+            inputBenar = false;
+        }
+    } while (!inputBenar);
+    do {
+        printf("> ");
+        scanf("%s", input);
         if (strcmp(input, "roll") == 0) { // roll dice
             scanf("%s", input);
             if (strcmp(input, "dice") == 0) {
                 MovPlayer(TK, LB);
             }
+            else {
+                pesanKesalahan();
+            }
         }
-        if (strcmp(input, "info") == 0) {
+        else if (strcmp(input, "info") == 0) { // info kota
             scanf("%s", input);
             length = 0; i = 0;
             while (input[i] != '\0') {
@@ -54,37 +68,72 @@ void menu(ListBoard *LB, TabKota *TK)
             K.Length = length;
             infoCity(K, *TK);
         }
-        if (strcmp(input, "leaderboard") == 0) {
+        else if (strcmp(input, "leaderboard") == 0) { // leaderboard
             showLeaderBoard();
         }
-        if (strcmp(input, "buy") == 0) { // buy
+        else if (strcmp(input, "buy") == 0) { // buy
             buy(TK, LB);
         }
-        if (strcmp(input, "upgrade") == 0) {
+        else if (strcmp(input, "upgrade") == 0) { // upgrade
             upgrade(TK,LB);
         }
-        if (strcmp(input, "print") == 0) { // print card
+        else if (strcmp(input, "print") == 0) { // print card
             scanf("%s", input);
             if (strcmp(input, "card") == 0) {
                 printCard(C);
             }
+            else if (strcmp(input, "kekayaan") == 0) {
+                printKekayaan();
+            }
+            else {
+                pesanKesalahan();
+            }
         }
-        if (strcmp(input, "show") == 0) { // show money
+        else if (strcmp(input, "protect") == 0) { // print card
+            scanf("%s", input);
+            length = 0; i = 0;
+            while (input[i] != '\0') {
+                K.TabKata[i] = input[i];
+                length++;
+                i++;
+            }
+            K.Length = length;
+            protect(K, TK, &C);
+        }
+        else if (strcmp(input, "off") == 0) { // print card
+            scanf("%s", input);
+            length = 0; i = 0;
+            while (input[i] != '\0') {
+                K.TabKata[i] = input[i];
+                length++;
+                i++;
+            }
+            K.Length = length;
+            off(K, TK, &C);
+        }
+        else if (strcmp(input, "show") == 0) { // show money
             scanf("%s", input);
             if (strcmp(input, "money") == 0) {
                 ShowMoney();
             }
+            else {
+                pesanKesalahan();
+            }
         }
-        if (strcmp(input, "end") == 0) { // end turn
+        else if (strcmp(input, "end") == 0) { // end turn
             scanf("%s", input);
             if (strcmp(input, "turn") == 0) {
                 EndTurn();
             }
+            else {
+                pesanKesalahan();
+            }
         }
-        if (strcmp(input, "board") == 0) { // board
+        else if (strcmp(input, "board") == 0) { // board
             ShowBoard(*LB, *TK);
             printf("\n");
         }
+
         if (strcmp(input, "sell") == 0){
             scanf("%s", input);
             if (strcmp(input, "bank") == 0){
@@ -123,4 +172,9 @@ void menu(ListBoard *LB, TabKota *TK)
             Load(LB,TK,input);
         }
     } while (strcmp(input, "exit") != 0);
+}
+
+void pesanKesalahan()
+{
+    printf("  Input salah.\n\n");
 }
