@@ -3,11 +3,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "string.h"
+#include <string.h>
 #include "boolean.h"
-#include "other.h"
 #include "board.h"
+<<<<<<< HEAD
 #include "command.h"
+=======
+//#include "command.h"
+#include "chance.h"
+>>>>>>> 3a7394bef4830ce89d80cdafb138042604ebd429
 
 // KONSTANTA
 #define Nil NULL
@@ -57,6 +61,7 @@ typedef struct {
 ListPlayer Turn;
 AddressPl PTurn;
 boolean rolled;
+boolean turnAwal;
 int jumlahPemain;
 int idWorldCup[4+1];
 
@@ -84,11 +89,11 @@ AddressPl SearchPl(char id);
 
 boolean isPlayerOwnKota(ListBoard LB, TabKota TK);
 
-void hostnama(Kata *NKota, ListBoard LB, TabKota TK);
+void hostnama(Kata *NamaKota);
 
-void travelnama(Kata *NamaKota, ListBoard LB, TabKota TK);
+void travelnama(Kata *NamaKota);
 
-void boardWorldCup(ListBoard LB, TabKota *TK);
+void boardWorldCup(ListBoard LB, TabKota TK);
 /* efek yang didapatkan player ketika sampai di board World Cup */
 
 void boardWorldTravel(ListBoard LB, TabKota TK);
@@ -107,5 +112,9 @@ void DeleteAllOwnedBuildings(TabKota *TK,Player P);
 //void returnCards(Player P,card *C);
 
 void removeOffered(TabKota *TK,Player P);
+
+boolean isWinTour(TabKota Kota);
+
+boolean isWinBlock(TabKota Kota);
 
 #endif
