@@ -96,7 +96,6 @@ void DeleteAllPlayer ()
     }
 }
 
-
 void InitNumPlayer(int n)
 {
 	AddressPl Prec, P;
@@ -193,7 +192,7 @@ void travelnama(Kata *NKota) {
     char input[20], namakota[10];
 
 	printf("  Kamu dapat pergi ke petak tujuan yang kamu inginkan pada saat giliran selanjutnya tanpa harus me-roll dadu.\n");
-    printf("  Ketik \"travel <nama kota>\".\n");
+    printf("  Ketik \"travel <nama kota>\".\n\n");
   INPUT:
 	printf("> ");
     scanf("%s", input);
@@ -225,19 +224,54 @@ void travelnama(Kata *NKota) {
 	}
 }
 
+boolean isPlayerOwnKota(ListBoard LB, TabKota TK) {
+	Address P;
+	boolean ownKota;
+	
+	ownKota = false;
+	P = First(LB);
+	while(Next(P) != First(LB) && !ownKota) {
+		if(Owner(TK, Id(P)) == PlayerId(PTurn))
+			ownKota = true;
+		P = Next(P);
+	}
+	return ownKota;
+}
+
 void boardWorldCup(ListBoard LB, TabKota TK) {
     Address P;
     Kata NKota;
+    boolean ismine;
 
-    hostnama(&NKota);
-    P = First(LB);
-    while (!IsKataSama(NamaKota(TK, Id(P)), NKota)) {
-        P = Next(P);
-    }
-    isWorldCup(TK, Id(P)) = true;
-    whoWorldCup(TK, Id(P)) = PlayerId(PTurn);
-    idWorldCup = Id(P);
-    printf("  %s menjadi host World Cup.\n", NKota);
+	ismine = false;
+	if(isPlayerOwnKota(LB, TK)) {
+		do {
+			hostnama(&NKota);
+			P = First(LB);
+			while (!IsKataSama(NamaKota(TK, Id(P)), NKota)) {
+				P = Next(P);
+			}
+			if(Owner(TK, Id(P)) == PlayerId(PTurn)) {
+				isWorldCup(TK, Id(P)) = true;
+				whoWorldCup(TK, Id(P)) = PlayerId(PTurn);
+				if(PlayerId(PTurn) == 'A')
+					idWorldCup[1] = Id(P);
+				else if(PlayerId(PTurn) == 'B')
+					idWorldCup[2] = Id(P);
+				else if(PlayerId(PTurn) == 'C')
+					idWorldCup[3] = Id(P);
+				else if(PlayerId(PTurn) == 'D')
+					idWorldCup[4] = Id(P);
+				ismine = true;
+			}
+			else {
+				printf("  Kota %s bukan milikmu. Pilihlah kota milikmu.", NKota);
+			}
+			printf("  %s menjadi host World Cup.\n", NKota);
+		} while(!ismine);
+	}
+	else
+		printf("  Sayang sekali kamu belum memiliki satu petak pun. Kamu tidak dapat memilih host World Cup.\n\n");
 }
 
 void boardWorldTravel(ListBoard LB, TabKota TK) {
@@ -253,6 +287,7 @@ void boardWorldTravel(ListBoard LB, TabKota TK) {
     if(MovWorldTravel(PTurn) < 0)
 		MovWorldTravel(PTurn) += 32;
     rolled = false;
+    printf("  Kamu akan sampai di %s pada giliran selanjutnya setelah ketik perintah \"roll dice\"", NKota);
 }
 
 boolean IsPlayerOnBoard(AddressPl P, int pos) {

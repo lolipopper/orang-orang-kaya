@@ -59,7 +59,7 @@ ListPlayer Turn;
 AddressPl PTurn;
 boolean rolled;
 int jumlahPemain;
-int idWorldCup;
+int idWorldCup[4+1];
 
 AddressPl AlokasiPl (Player X);
 /* melakukan alokasi player */
@@ -82,6 +82,8 @@ void DeleteAllPlayer ();
 
 AddressPl SearchPl(char id);
 /* melakukan search di List Turn Player dengan playerId = id */
+
+boolean isPlayerOwnKota(ListBoard LB, TabKota TK);
 
 void hostnama(Kata *NamaKota);
 
