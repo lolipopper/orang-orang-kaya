@@ -79,8 +79,6 @@ void InitNPlayer();
 AddressPl SearchPl(char id);
 /* melakukan search di List Turn Player dengan playerId = id */
 
-<<<<<<< HEAD
-=======
 void boardTax();
 /* efek yang didapatkan player ketika sampai di board Tax */
 
@@ -103,7 +101,6 @@ void boardWorldCup();
 void boardWorldTravel();
 /* efek yang didapatkan player ketika sampai di board World Travel */
 
->>>>>>> origin/master
 boolean IsPlayerOnBoard(AddressPl P, int pos);
 
 int PlayersOnBoard(int pos);

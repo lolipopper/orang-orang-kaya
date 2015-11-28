@@ -94,8 +94,6 @@ AddressPl SearchPl (char id)
 	}
 }
 
-<<<<<<< HEAD
-=======
 void boardTax()
 {
     boolean inputBenar;
@@ -293,7 +291,6 @@ void boardWorldTravel(ListBoard LB, TabKota TK) {
     rolled = false;
 }
 
->>>>>>> origin/master
 boolean IsPlayerOnBoard(AddressPl P, int pos) {
     if(Position(P) == pos) return true;
     else return false;
