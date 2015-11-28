@@ -386,12 +386,12 @@ void sellbank(Kata K, TabKota *TK)
             Kekayaan(PTurn) -= priceCity(City(*TK,id));
             Owner(*TK,id) = '0';
             printf("  Kota dijual ke bank seharga %d\n",hargajualbank);
-            printf("  Uangmu sekarang %d\n",Money(PTurn));
+            printf("  Uangmu sekarang %d\n\n",Money(PTurn));
         }else{
-            printf("  Kota ini bukan milikmu!\n");
+            printf("  Kota ini bukan milikmu!\n\n");
         }
     }else{
-        printf("  Tidak ada kota dengan nama itu!\n");
+        printf("  Tidak ada kota dengan nama itu!\n\n");
     }
 }
 
@@ -565,7 +565,7 @@ void Save (ListBoard LB, TabKota TK, SKata K)
 
     fclose(fosave);
 
-    printf("File telah disave dalam file %s\n",SaveFName);
+    printf("File telah disave dalam file %s\n\n",SaveFName);
 }
 
 boolean Load (ListBoard *LB,TabKota *TK, SKata K)

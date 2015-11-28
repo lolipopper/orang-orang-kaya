@@ -188,7 +188,7 @@ void menu(ListBoard *LB, TabKota *TK)
         }
         else if (strcmp(input, "load") == 0){
             scanf("%s", input);
-            printf("Mulai Load\n");
+            printf("Loading...\n");
             Load(LB,TK,input);
         }
         else if (strcmp(input, "exit") == 0)
