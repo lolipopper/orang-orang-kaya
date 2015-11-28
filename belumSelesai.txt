@@ -1,8 +1,4 @@
-alson :
-alson - kota dengan dua kata banyak error
-alson - show offered kalo kosong
 
-micky :
 micky - lightoff lewat start kembali ke semula
 buy dan upgrade di awal
 
@@ -14,7 +10,6 @@ playernya kalah
 player hilang dari list
 smua kota yang dia miliki jadi gak ada pemilik
 kartu yang dia pegang balik ke deck
-di show offered hilang yang dia offered
 
 (SEMUA DIKERJAKAN DENGAN RAPI !!!)
 (KALO KERJANYA LAMA BAKAL LANGSUNG DIGANTIKAN ORANG LAIN

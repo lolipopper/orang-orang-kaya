@@ -3,7 +3,6 @@
 
 #include "kota.h"
 #include "player.h"
-#include "board.h"
 
 boolean buyupgrade;
 
@@ -51,5 +50,9 @@ void showOffered(TabKota TK);
 
 void buyoffered (Kata K, TabKota *TK);
 /* membeli kota yang ada di list offered */
+
+void Save (ListBoard LB, TabKota TK, SKata K);
+
+boolean Load (ListBoard *LB,TabKota *TK, SKata K);
 
 #endif

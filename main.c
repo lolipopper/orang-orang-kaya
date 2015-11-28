@@ -1,4 +1,5 @@
-#include "string.h"
+#include <string.h>
+//#include "save.h"
 #include "boolean.h"
 #include "kota.h"
 #include "command.h"
@@ -6,7 +7,6 @@
 #include "player.h"
 #include "other.h"
 #include "chance.h"
-#include "save.h"
 
 void menu();
 void pesanKesalahan();
@@ -25,7 +25,8 @@ int main ()
 
 void menu(ListBoard *LB, TabKota *TK, card *C)
 {
-    char input[100];
+    boolean Win;
+    SKata input;
     Kata K;
     int i, length;
     boolean inputBenar;
@@ -46,7 +47,7 @@ void menu(ListBoard *LB, TabKota *TK, card *C)
         }
         else if (strcmp(input, "load") == 0){
             scanf("%s", input);
-            printf("Mulai Load\n");
+            printf("Loading...\n");
             boolean valid;
             valid = Load(LB,TK,input);
             if (valid)
@@ -80,19 +81,9 @@ void menu(ListBoard *LB, TabKota *TK, card *C)
             }
         }
         else if (strcmp(input, "info") == 0) { // info kota
-            scanf("%s", input);
-            if ((strcmp(input, "New") == 0) || (strcmp(input, "Sao") == 0)) {
-                scanf("%s", input);
-                if ((strcmp(input, "York") == 0)) {
-                    strcpy(input, "New York");
-                }
-                else if ((strcmp(input, "Delhi") == 0)) {
-                    strcpy(input, "New Delhi");
-                }
-                else if ((strcmp(input, "Paulo") == 0)) {
-                    strcpy(input, "Sao Paulo");
-                }
-            }
+            char dum;
+            scanf("%c",&dum);
+            gets(input);
             length = 0; i = 0;
             while (input[i] != '\0') {
                 K.TabKata[i] = input[i];
@@ -109,7 +100,9 @@ void menu(ListBoard *LB, TabKota *TK, card *C)
             buy(TK, LB);
         }
         else if (strcmp(input, "buyoffered") == 0) {
-            scanf("%s", input);
+            char dum;
+            scanf("%c",&dum);
+            gets(input);
             length = 0; i = 0;
             while (input[i] != '\0') {
                 K.TabKata[i] = input[i];
@@ -234,7 +227,7 @@ void menu(ListBoard *LB, TabKota *TK, card *C)
         }
         else if (strcmp(input, "load") == 0){ // load
             scanf("%s", input);
-            printf("Mulai Load\n");
+            printf("Loading...\n");
             Load(LB,TK,input);
         }
         else if (strcmp(input, "pay") == 0){ // kasus khusus di penjara
@@ -284,7 +277,11 @@ void menu(ListBoard *LB, TabKota *TK, card *C)
         else {
             pesanKesalahan();
         }
-    } while (strcmp(input, "exit") != 0);
+
+        //CEK TOUR MONOPOLI
+        Win = isWinTour(*TK);
+        Win = isWinBlock(*TK);
+    } while ((strcmp(input, "exit") != 0) && (Win == false));
 }
 
 void pesanKesalahan()

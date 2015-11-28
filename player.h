@@ -3,11 +3,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "string.h"
+#include <string.h>
 #include "boolean.h"
-#include "other.h"
 #include "board.h"
-#include "command.h"
+//#include "command.h"
 #include "chance.h"
 
 // KONSTANTA
@@ -86,11 +85,11 @@ AddressPl SearchPl(char id);
 
 boolean isPlayerOwnKota(ListBoard LB, TabKota TK);
 
-void hostnama(Kata *NKota, ListBoard LB, TabKota TK);
+void hostnama(Kata *NamaKota);
 
-void travelnama(Kata *NamaKota, ListBoard LB, TabKota TK);
+void travelnama(Kata *NamaKota);
 
-void boardWorldCup(ListBoard LB, TabKota *TK);
+void boardWorldCup(ListBoard LB, TabKota TK);
 /* efek yang didapatkan player ketika sampai di board World Cup */
 
 void boardWorldTravel(ListBoard LB, TabKota TK);
@@ -103,5 +102,9 @@ int PlayersOnBoard(int pos);
 void ShowBoard(ListBoard LB, TabKota TK);
 
 void deletePlayer(ListPlayer *L,Player P);
+
+boolean isWinTour(TabKota Kota);
+
+boolean isWinBlock(TabKota Kota);
 
 #endif

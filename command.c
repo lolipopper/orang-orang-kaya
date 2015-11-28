@@ -21,11 +21,12 @@ void MovPlayer(TabKota *TK, ListBoard *LB)
                 if (!reroll()) {
                     rolled = true;
                 }
+
             }
         }
-        else {
-            printf("  Maaf, kamu sedang dipenjara.\n\n");
-        }
+    }
+    else {
+        printf("  Maaf, kamu sedang dipenjara.\n\n");
     }
 }
 
@@ -90,7 +91,7 @@ void MoveNPetak(TabKota *TK, ListBoard *LB, int N)
 		boardDesertedIsland(&C);
 	}
 	if (Type(P) == 6) {
-        boardWorldCup(*LB, TK);
+        boardWorldCup(*LB, *TK);
 	}
 	if (Type(P) == 7) {
         boardWorldTravel(*LB, *TK);
@@ -110,7 +111,7 @@ void EndTurn()
 		turnAwal = true;
 	}
 	else {
-		printf("  Kamu harus melakukan 'roll dice'\n\n");
+		printf("  Kamu harus melakukan 'rolldice'\n\n");
 	}
 }
 
@@ -223,6 +224,14 @@ void buy(TabKota *Kota, ListBoard *LB)
                             printf("\n");
                             buyupgrade = true;
                         }
+<<<<<<< HEAD
+=======
+                        isOffered(*Kota,pos) = false;
+                        printf("  Selamat, kota ini menjadi milikmu!\n");
+                        printf("  Level bangunan %d\n", Level(*Kota,pos));
+                        ShowMoney();
+                        printf("\n");
+>>>>>>> origin/master
                     }
                 }
             }
@@ -293,11 +302,14 @@ void payRent(ListBoard *LB, TabKota *Kota)
     int pos;
     long long sewa;
     AddressPl Pl;
-
     pos = Position(PTurn);
     Pl = First(Turn);
+<<<<<<< HEAD
 
     if (Owner(*Kota,pos) != '0') {
+=======
+    if ( (Owner(*Kota,pos) != '0') && (PlayerId(Pl) != PlayerId(PTurn)) ) {
+>>>>>>> origin/master
         while (PlayerId(Pl) != Owner(*Kota,pos)) {
             Pl = Next(Pl);
         }
@@ -398,13 +410,13 @@ void sell(Kata K, TabKota *TK)
     if (id <= 32){
         if (Owner(*TK,id) == PlayerId(PTurn)){
             isOffered(*TK,id) = true;
-            printf("Kota anda telah ditambahkan ke dalam List Offered\n");
-            printf("Kepemilikan kota ini akan berpindah setelah ada player yang membeli kotamu\n");
+            printf("  Kota anda telah ditambahkan ke dalam List Offered\n");
+            printf("  Kepemilikan kota ini akan berpindah setelah ada player yang membeli kotamu\n\n");
         }else{
-            printf("  Kota ini bukan milikmu!\n");
+            printf("  Kota ini bukan milikmu!\n\n");
         }
     }else{
-        printf("  Tidak ada kota dengan nama itu!\n");
+        printf("  Tidak ada kota dengan nama itu!\n\n");
     }
 }
 
@@ -419,33 +431,45 @@ void sellbank(Kata K, TabKota *TK)
             Money(PTurn) += hargajualbank;
             Kekayaan(PTurn) -= priceCity(City(*TK,id));
             Owner(*TK,id) = '0';
+            isOffered(*TK,id) = false;
             printf("  Kota dijual ke bank seharga %d\n",hargajualbank);
-            printf("  Uangmu sekarang %d\n",Money(PTurn));
+            printf("  Uangmu sekarang %d\n\n",Money(PTurn));
         }else{
-            printf("  Kota ini bukan milikmu!\n");
+            printf("  Kota ini bukan milikmu!\n\n");
         }
     }else{
-        printf("  Tidak ada kota dengan nama itu!\n");
+        printf("  Tidak ada kota dengan nama itu!\n\n");
     }
 }
 
 void showOffered (TabKota TK)
 {
-    int i;
-
-    printf("  Kota-kota yang ada dalam List Offered:\n");
-
-    for (i=1; i<=32; i++)
+    int i,cnt;
+    cnt = 0;
+    for (i=1;i<=32;i++)
     {
         if (isOffered(TK,i) == true){
-            PrintInfoKota(TK,i);
+            cnt ++;
         }
+    }
+
+    if (cnt > 0){
+        printf("  Kota-kota yang ada dalam List Offered:\n\n");
+        for (i=1; i<=32; i++)
+        {
+            if (isOffered(TK,i) == true){
+                PrintInfoKota(TK,i);
+            }
+        }
+    }else{
+        printf("  Tidak ada kota dalam List Offered\n\n");
     }
 }
 
 void buyoffered (Kata K, TabKota *TK)
 {
-    int id,hargabeli;
+    int id;
+    long long hargabeli;
     AddressPl Plyr;
 
     id = SearchKota(K,*TK);
@@ -463,7 +487,7 @@ void buyoffered (Kata K, TabKota *TK)
                 Kekayaan(Plyr) -= priceCity(City(*TK,id));
                 Owner(*TK,id) = PlayerId(PTurn);
                 isOffered(*TK,id) = false;
-                printf("  Kota ini anda beli dengan harga %d\n",PlayerId(PTurn),hargabeli);
+                printf("  Kota ini anda beli dengan harga %lld\n",hargabeli);
                 printf("  Uangmu sekarang %d\n\n",Money(PTurn));
             }else{
                 printf("  Uangmu tidak cukup!\n\n");
@@ -510,4 +534,171 @@ void quicksort(long long x[3], char y[3], int first, int last)
          quicksort(x, y, first, j-1);
          quicksort(x, y, j+1, last);
     }
+}
+
+void Save (ListBoard LB, TabKota TK, SKata K)
+{
+    FILE *fosave;
+    Address p = First(LB);
+    SKata SaveFName;
+    strcpy(SaveFName,K);
+    strcat(SaveFName,".txt");
+    //strcat("SaveFiles/",SaveFName);
+    fosave = fopen(SaveFName,"w");
+    int i;
+
+    //SAVE BOARD
+    while (p != Last(LB))
+    {
+        fprintf(fosave, "%d\n",Type(p));
+        if (Type(p) == 1){
+            fprintf(fosave,"%s",NamaKota(TK,Id(p)));
+            fprintf(fosave,"%d\n",Price(TK,Id(p)));
+            fprintf(fosave,"%d\n",isRekreasi(TK,Id(p)));
+            fprintf(fosave,"%d\n",Block(TK,Id(p)));
+            fprintf(fosave,"%d\n",Level(TK,Id(p)));
+            fprintf(fosave,"%c\n",Owner(TK,Id(p)));
+            fprintf(fosave,"%d\n",isOffered(TK,Id(p)));
+            fprintf(fosave,"%d\n",NamaKota(TK,Id(p)).Length);
+        }
+        fprintf(fosave,"\n");
+        p = Next(p);
+    }
+    fprintf(fosave, "%d\n",Type(p));
+    if (Type(p) == 1){
+        fprintf(fosave,"%s",NamaKota(TK,Id(p)));
+        fprintf(fosave,"%d\n",Price(TK,Id(p)));
+        fprintf(fosave,"%d\n",isRekreasi(TK,Id(p)));
+        fprintf(fosave,"%d\n",Block(TK,Id(p)));
+        fprintf(fosave,"%d\n",Level(TK,Id(p)));
+        fprintf(fosave,"%c\n",Owner(TK,Id(p)));
+        fprintf(fosave,"%d\n",isOffered(TK,Id(p)));
+        fprintf(fosave,"%d\n",NamaKota(TK,Id(p)).Length);
+    }
+    fprintf(fosave,"\n");
+    fprintf(fosave, "%d\n",ValUndef);
+    fprintf(fosave,"\n");
+
+    //SAVE PEMAIN
+    fprintf(fosave, "%d\n",jumlahPemain);
+    fprintf(fosave,"\n");
+    AddressPl plyr;
+    plyr = First(Turn);
+    for (i=1; i<=jumlahPemain; i++)
+    {
+        fprintf(fosave,"%d\n",Position(plyr));
+        fprintf(fosave,"%lld\n",Money(plyr));
+        fprintf(fosave,"%lld\n",Kekayaan(plyr));
+        fprintf(fosave,"%d\n",CardFreePrison(plyr));
+        fprintf(fosave,"%d\n",CardFreeTax(plyr));
+        fprintf(fosave,"%d\n",CardProtect(plyr));
+        fprintf(fosave,"%d\n",CardOff(plyr));
+        fprintf(fosave,"%c\n",PlayerId(plyr));
+        fprintf(fosave,"%d\n",Jail(plyr));
+        fprintf(fosave,"%d\n",MovWorldTravel(plyr));
+        fprintf(fosave,"\n");
+        plyr = Next(plyr);
+    }
+
+    //SAVE TURN
+    fprintf(fosave,"%c\n",PlayerId(PTurn));
+    fprintf(fosave,"\n");
+
+    //SAVE CHANCE
+    for (i=0;i<=4;i++)
+    {
+        fprintf(fosave,"%d\n",C.el[i]);
+    }
+
+    fclose(fosave);
+
+    printf("File telah disave dalam file %s\n\n",SaveFName);
+}
+
+boolean Load (ListBoard *LB,TabKota *TK, SKata K)
+{
+    FILE *fisave;
+    Address p;
+    int i;
+	Petak ipt;
+	int dummy;
+    SKata LoadFName;
+
+    jumRek = 0;
+    strcpy(LoadFName,K);
+    strcat(LoadFName,".txt");
+    //strcat("SaveFiles/",LoadFName);
+	i=1;
+    p = First(*LB);
+	fisave = fopen(LoadFName,"r");
+	if (fisave){
+        fscanf(fisave,"%d\n", &ipt.type);
+        CreateList(LB);
+        //LOAD BOARD
+        while (ipt.type != ValUndef)
+        {
+            ipt.id = i;
+            InsVLast(LB,ipt);
+            if (ipt.type == 1){
+                fgets(TK->TK[i].name.TabKata, NMax, fisave);
+                fscanf(fisave,"%d\n",&(Price(*TK,i)));
+                fscanf(fisave,"%d\n",&(isRekreasi(*TK,i)));
+                fscanf(fisave,"%d\n",&(Block(*TK,i)));
+                fscanf(fisave,"%d\n",&(Level(*TK,i)));
+                fscanf(fisave,"%c\n",&(Owner(*TK,i)));
+                fscanf(fisave,"%d\n",&(isOffered(*TK,i)));
+                fscanf(fisave,"%d\n",&(TK->TK[i].name.Length));
+                if (isRekreasi(*TK,i) == true){
+                    jumRek++;
+                }
+            }
+            i++;
+            fscanf(fisave,"\n");
+            fscanf(fisave,"%d\n", &ipt.type);
+        }
+
+        //LOAD PLAYER
+        AddressPl plyr;
+        fscanf(fisave,"%d\n",&jumlahPemain);
+        DeleteAllPlayer();
+        InitNumPlayer(jumlahPemain);
+
+        plyr = First(Turn);
+        for (i=1;i<=jumlahPemain;i++)
+        {
+            fscanf(fisave,"%d\n",&Position(plyr));
+            fscanf(fisave,"%d\n",&Money(plyr));
+            fscanf(fisave,"%d\n",&Kekayaan(plyr));
+            fscanf(fisave,"%d\n",&CardFreePrison(plyr));
+            fscanf(fisave,"%d\n",&CardFreeTax(plyr));
+            fscanf(fisave,"%d\n",&CardProtect(plyr));
+            fscanf(fisave,"%d\n",&CardOff(plyr));
+            fscanf(fisave,"%c\n",&PlayerId(plyr));
+            fscanf(fisave,"%d\n",&Jail(plyr));
+            fscanf(fisave,"%d\n",&MovWorldTravel(plyr));
+            plyr = Next(plyr);
+        }
+
+        //LOAD TURN
+        char CTurn;
+        fscanf(fisave,"%c\n",&CTurn);
+        PTurn = First(Turn);
+        while (CTurn != PlayerId(PTurn))
+        {
+            PTurn = Next(PTurn);
+        }
+
+        //LOAD CHANCE
+        for (i=0;i<=4;i++)
+        {
+            fscanf(fisave,"%d\n",&C.el[i]);
+        }
+
+        printf("File %s telah diload\n",LoadFName);
+        return true;
+	}else{
+        printf("Nama file tidak ditemukan!\n");
+        return false;
+	}
+	fclose(fisave);
 }
