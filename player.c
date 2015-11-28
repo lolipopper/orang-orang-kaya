@@ -768,7 +768,7 @@ void ShowBoard(ListBoard LB, TabKota TK) {
     printf("() menandakan sedang terjadi World Cup pada kota tersebut.\n");
 }
 
-void bangkrut(ListPlayer *L,Player P)
+void deletePlayer(ListPlayer *L,Player P)
 {
     AddressPl temp=First(L);
     while (Info(temp)!=P)

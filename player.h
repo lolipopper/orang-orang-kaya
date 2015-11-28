@@ -99,6 +99,6 @@ int PlayersOnBoard(int pos);
 
 void ShowBoard(ListBoard LB, TabKota TK);
 
-void bangkrut(ListPlayer *L,Player P);
+void deletePlayer(ListPlayer *L,Player P);
 
 #endif
