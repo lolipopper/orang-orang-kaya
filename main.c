@@ -175,6 +175,14 @@ void menu(ListBoard *LB, TabKota *TK)
             printf("Mulai Load\n");
             Load(LB,TK,input);
         }
+        else if (strcmp(input, "exit") == 0)
+        {
+            printf("Thanks for playing\n");
+        }
+        else
+        {
+            pesanKesalahan();
+        }
     } while (strcmp(input, "exit") != 0);
 }
 
