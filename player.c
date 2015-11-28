@@ -857,12 +857,57 @@ void ShowBoard(ListBoard LB, TabKota TK) {
 
 void deletePlayer(ListPlayer *L,Player P)
 {
-   /* AddressPl temp=First(*L);
-    while (Info(temp) != P)
+    boolean found=false;
+    AddressPl temp=Next(First(*L));
+    AddressPl prev=First(*L);
+
+    while(!found)
     {
-        temp=Next(temp);
+        if (PlayerId(temp)==P.playerId)
+        {
+            found=true;
+        }
+        else
+        {
+            prev=temp;
+            temp = Next(temp);
+        }
     }
-    next(prev)=next(temp);
+
+    if (temp==First(*L))
+    {
+        First(*L) = Next(temp);
+    }
+    Next(prev) = Next(temp);
     DealokasiPl(&temp);
-    */
 }
+
+void DeleteAllOwnedBuildings(TabKota *TK,Player P)
+{
+    int id;
+    for (id=1;id<=32;id++)
+    {
+        if (Owner(*TK,id)==P.playerId)
+        {
+            Owner(*TK,id)='0';
+        }
+    }
+}
+
+void removeOffered(TabKota *TK,Player P)
+{
+    int id;
+    for (id=1;id<=32;id++) {
+        if (isOffered(*TK,id) && Owner(*TK,id)==P.playerId){
+            isOffered(*TK,id) = false;
+        }
+    }
+}
+
+// void returnCards(Player P,card *C)
+// {
+//     (*C).el[1]+=nFreePrison(P);
+//     (*C).el[2]+=nFreeTax(P);
+//     (*C).el[3]+=nProtect(P);
+//     (*C).el[4]+=nOffLight(P);
+// }

@@ -411,48 +411,48 @@ void PecahList (ListBoard *L1, ListBoard *L2, ListBoard L)
     Address p,temp;
     int i,lengthL;
     boolean valid;
-if (IsListEmpty(L) == false){
-    lengthL = NbElmt(L);
-    p = First(L);
-    i = 1;
-    valid = true;
-    CreateList(L1);
-    CreateList(L2);
-    while((i<=lengthL/2) && (valid == true))
-    {
-        temp = Alokasi(Info(p));
-        if (temp == Nil){
-            DeleteAll(L1);
-            valid = false;
-        }else{
-            InsertLast(L1,temp);
-            p = Next(p);
-            i++;
+    if (IsListEmpty(L) == false){
+        lengthL = NbElmt(L);
+        p = First(L);
+        i = 1;
+        valid = true;
+        CreateList(L1);
+        CreateList(L2);
+        while((i<=lengthL/2) && (valid == true))
+        {
+            temp = Alokasi(Info(p));
+            if (temp == Nil){
+                DeleteAll(L1);
+                valid = false;
+            }else{
+                InsertLast(L1,temp);
+                p = Next(p);
+                i++;
+            }
         }
-    }
 
-    valid = true;
-    while ((p != Last(L)) && (valid == true))
-    {
-        temp = Alokasi(Info(p));
-        if (temp == Nil){
-            DeleteAll(L2);
-            valid = false;
-        }else{
-            InsertLast(L2,temp);
-            p = Next(p);
+        valid = true;
+        while ((p != Last(L)) && (valid == true))
+        {
+            temp = Alokasi(Info(p));
+            if (temp == Nil){
+                DeleteAll(L2);
+                valid = false;
+            }else{
+                InsertLast(L2,temp);
+                p = Next(p);
+            }
+        }
+        if (valid == true)
+        {
+            temp = Alokasi(Info(p));
+            if (temp == Nil){
+                DeleteAll(L2);
+                valid = false;
+            }else{
+                InsertLast(L2,temp);
+                p = Next(p);
+            }
         }
     }
-    if (valid == true)
-    {
-        temp = Alokasi(Info(p));
-        if (temp == Nil){
-            DeleteAll(L2);
-            valid = false;
-        }else{
-            InsertLast(L2,temp);
-            p = Next(p);
-        }
-    }
-}
 }

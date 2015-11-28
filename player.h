@@ -8,7 +8,6 @@
 #include "other.h"
 #include "board.h"
 #include "command.h"
-#include "chance.h"
 
 // KONSTANTA
 #define Nil NULL
@@ -102,5 +101,11 @@ int PlayersOnBoard(int pos);
 void ShowBoard(ListBoard LB, TabKota TK);
 
 void deletePlayer(ListPlayer *L,Player P);
+
+void DeleteAllOwnedBuildings(TabKota *TK,Player P);
+
+//void returnCards(Player P,card *C);
+
+void removeOffered(TabKota *TK,Player P);
 
 #endif
