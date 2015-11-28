@@ -39,7 +39,16 @@ void protect(Kata K, TabKota *TK, card *C);
 void off(Kata K, TabKota *TK, card *C);
 /* prosedur untuk menggunakan kartu off light */
 
+void boardTax(card *C);
+/* efek yang didapatkan player ketika sampai di board Tax */
+
+void boardDesertedIsland(card *C);
+/* efek yang didapatkan player ketika sampai di board Deserted Island */
+
 void boardChance();
 /* efek yang didapatkan player ketika sampai di board Chance */
+
+void boardBonus();
+/* efek yang didapatkan player ketika sampai di board Bonus */
 
 #endif

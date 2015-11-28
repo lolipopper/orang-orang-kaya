@@ -79,18 +79,6 @@ void InitNPlayer();
 AddressPl SearchPl(char id);
 /* melakukan search di List Turn Player dengan playerId = id */
 
-void boardTax();
-/* efek yang didapatkan player ketika sampai di board Tax */
-
-void boardBonus();
-/* efek yang didapatkan player ketika sampai di board Bonus */
-
-void boardDesertedIsland();
-/* efek yang didapatkan player ketika sampai di board Deserted Island */
-
-void boardChance();
-/* efek yang didapatkan player ketika sampai di board Chance */
-
 void hostnama(Kata *NamaKota);
 
 void travelnama(Kata *NamaKota);
