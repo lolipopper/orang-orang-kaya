@@ -17,3 +17,9 @@ alson - save turn, card, offered
 kak mustawa belum di debug
 
 SEMUA DIKERJAKAN DENGAN RAPI !!!
+
+playernya kalah
+player hilang dari list
+smua kota yang dia miliki jadi gak ada pemilik
+kartu yang dia pegang balik ke deck
+di show offered hilang yang dia offered

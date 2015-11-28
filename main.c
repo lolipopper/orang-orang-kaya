@@ -6,7 +6,6 @@
 #include "player.h"
 #include "other.h"
 #include "chance.h"
-#include "save.h"
 
 void menu();
 void pesanKesalahan();
