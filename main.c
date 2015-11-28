@@ -123,6 +123,9 @@ void menu(ListBoard *LB, TabKota *TK)
             if (strcmp(input, "money") == 0) {
                 ShowMoney();
             }
+            else if (strcmp(input,"offered") == 0){
+                showOffered(*TK);
+            }
             else {
                 pesanKesalahan();
             }
@@ -140,8 +143,7 @@ void menu(ListBoard *LB, TabKota *TK)
             ShowBoard(*LB, *TK);
             printf("\n");
         }
-
-        if (strcmp(input, "sell") == 0){
+        else if (strcmp(input, "sell") == 0){
             scanf("%s", input);
             if (strcmp(input, "bank") == 0){
                 scanf("%s", input);
@@ -164,18 +166,13 @@ void menu(ListBoard *LB, TabKota *TK)
                 sell(K,TK);
             }
         }
-        if (strcmp(input, "show") == 0){
-            scanf("%s",input);
-            if (strcmp(input,"offered") == 0){
-                showOffered(*TK);
-            }
-        }
-        if (strcmp(input, "save") == 0){
+        else if (strcmp(input, "save") == 0){
             scanf("%s", input);
             Save(*LB,*TK,input);
         }
-        if (strcmp(input, "load") == 0){
+        else if (strcmp(input, "load") == 0){
             scanf("%s", input);
+            printf("Mulai Load\n");
             Load(LB,TK,input);
         }
     } while (strcmp(input, "exit") != 0);
