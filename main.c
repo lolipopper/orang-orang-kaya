@@ -55,7 +55,7 @@ void menu(ListBoard *LB, TabKota *TK)
             inputBenar = false;
         }
     } while (!inputBenar);
-    
+
     do {
         printf("> ");
         scanf("%s", input);
