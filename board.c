@@ -2,12 +2,14 @@
 
 void PrintInfoKota(TabKota TK, int id)
 {
-    printf("Nama     : %s",NamaKota(TK,id));
-    printf("Price    : %d\n",Price(TK,id));
-    printf("Rekreasi : %d\n",isRekreasi(TK,id));
-    printf("Block    : %d\n",Block(TK,id));
-    printf("Level    : %d\n",Level(TK,id));
-    printf("Owner    : %c\n",Owner(TK,id));
+    printf("  Nama     : %s",NamaKota(TK,id));
+    printf("  Price    : %lld\n",Price(TK,id));
+    printf("  SellPrice: %lld\n",priceSell(City(TK,id)));
+    printf("  Rekreasi : %d\n",isRekreasi(TK,id));
+    printf("  Block    : %d\n",Block(TK,id));
+    printf("  Level    : %d\n",Level(TK,id));
+    printf("  Owner    : %c\n",Owner(TK,id));
+    printf("\n");
 }
 
 void PrintInfoAdr(Address p, TabKota TK)

@@ -101,6 +101,6 @@ void ShowBoard(ListBoard LB, TabKota TK);
 
 void Save (ListBoard LB, TabKota TK, SKata K);
 
-void Load (ListBoard *LB,TabKota *TK, SKata K);
+boolean Load (ListBoard *LB,TabKota *TK, SKata K);
 
 #endif

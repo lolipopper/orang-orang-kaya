@@ -55,7 +55,7 @@ void menu(ListBoard *LB, TabKota *TK)
             inputBenar = false;
         }
     } while (!inputBenar);
-    
+
     do {
         printf("> ");
         scanf("%s", input);
@@ -84,6 +84,17 @@ void menu(ListBoard *LB, TabKota *TK)
         }
         else if (strcmp(input, "buy") == 0) { // buy
             buy(TK, LB);
+        }
+        else if (strcmp(input, "buyoffered") == 0) {
+            scanf("%s", input);
+            length = 0; i = 0;
+            while (input[i] != '\0') {
+                K.TabKata[i] = input[i];
+                length++;
+                i++;
+            }
+            K.Length = length;
+            buyoffered(K, TK);
         }
         else if (strcmp(input, "upgrade") == 0) { // upgrade
             upgrade(TK,LB);

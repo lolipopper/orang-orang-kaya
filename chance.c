@@ -240,7 +240,7 @@ void boardBonus()
     long long int randomNum;
 
     randomNum = (rand() % 300) + 100;
-    printf("  Selamat, kamu mendapatkan %lld.\n\n", randomNum);
+    printf("  Selamat, kamu mendapatkan %lld.\n", randomNum);
     Money(PTurn) += randomNum;
     ShowMoney();
 }
