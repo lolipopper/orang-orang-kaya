@@ -70,7 +70,9 @@ void menu(ListBoard *LB, TabKota *TK)
             }
         }
         else if (strcmp(input, "info") == 0) { // info kota
-            scanf("%s", input);
+            char dum;
+            scanf("%c",&dum);
+            gets(input);
             length = 0; i = 0;
             while (input[i] != '\0') {
                 K.TabKata[i] = input[i];
@@ -87,7 +89,9 @@ void menu(ListBoard *LB, TabKota *TK)
             buy(TK, LB);
         }
         else if (strcmp(input, "buyoffered") == 0) {
-            scanf("%s", input);
+            char dum;
+            scanf("%c",&dum);
+            gets(input);
             length = 0; i = 0;
             while (input[i] != '\0') {
                 K.TabKata[i] = input[i];
