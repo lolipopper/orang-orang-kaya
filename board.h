@@ -54,10 +54,6 @@ void PrintNamaPetak(TabKota TK, Address P, int baris, int *length);
 
 int SearchKota(Kata K,TabKota TK);
 
-void Save (ListBoard LB, TabKota TK, SKata K);
-
-void Load (ListBoard *LB,TabKota *TK, SKata K);
-
 Address Last(ListBoard L);
 /*	I.S. sembarang
 	F.S. Mengirim address terakhir dari ListBoard. Jika ListBoard kosong, kembalikan Nil.
