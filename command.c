@@ -399,15 +399,25 @@ void sellbank(Kata K, TabKota *TK)
 
 void showOffered (TabKota TK)
 {
-    int i;
+    int i,cnt;
 
-    printf("  Kota-kota yang ada dalam List Offered:\n");
-
-    for (i=1; i<=32; i++)
+    for (i=1;i<=32;i++)
     {
-        if (isOffered(TK,i) == true){
-            PrintInfoKota(TK,i);
+        if (isOffered(TK,i)){
+            cnt ++;
         }
+    }
+
+    if (cnt > 0){
+        printf("  Kota-kota yang ada dalam List Offered:\n");
+        for (i=1; i<=32; i++)
+        {
+            if (isOffered(TK,i) == true){
+                PrintInfoKota(TK,i);
+            }
+        }
+    }else{
+        printf("  Tidak ada kota dalam List Offered\n\n");
     }
 }
 

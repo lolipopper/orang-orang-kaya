@@ -35,11 +35,13 @@ void Save (ListBoard LB, TabKota TK, SKata K)
         fprintf(fosave,"%d\n",Block(TK,Id(p)));
         fprintf(fosave,"%d\n",Level(TK,Id(p)));
         fprintf(fosave,"%d\n",Owner(TK,Id(p)));
+        fprintf(fosave,"%d\n",isOffered(TK,Id(p)));
         fprintf(fosave,"%d\n",NamaKota(TK,Id(p)).Length);
     }
     fprintf(fosave,"\n");
     fprintf(fosave, "%d\n",ValUndef);
     fprintf(fosave,"\n");
+
     //SAVE PEMAIN
     fprintf(fosave, "%d\n",jumlahPemain);
     fprintf(fosave,"\n");
@@ -59,6 +61,16 @@ void Save (ListBoard LB, TabKota TK, SKata K)
         fprintf(fosave,"%d\n",MovWorldTravel(plyr));
         fprintf(fosave,"\n");
         plyr = Next(plyr);
+    }
+
+    //SAVE TURN
+    fprintf(fosave,"%c\n",PlayerId(PTurn));
+    fprintf(fosave,"\n");
+
+    //SAVE CHANCE
+    for (i=1,i<=5,i++)
+    {
+        fprintf(fosave,"%d\n",C.el[i]);
     }
 
     fclose(fosave);
@@ -108,6 +120,7 @@ boolean Load (ListBoard *LB,TabKota *TK, SKata K)
                 //printf("level: %d\n",Level(*TK,i));
                 fscanf(fisave,"%d\n",&(Owner(*TK,i)));
                 //printf("owner: %d\n",Owner(*TK,i));
+                fscanf(fisave,"%d\n",&(isOffered(*TK,i)));
                 fscanf(fisave,"%d\n",&(TK->TK[i].name.Length));
             }
             //fscanf(fisave,"\n");

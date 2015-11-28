@@ -10,7 +10,7 @@ micky - batas"" yang dilakukan pemain di petak tertentu (help )
 micky - Kalo abis dipenjara stay sekali turn berikut ga bisa ngapa2in, game berhenti, mau end turn juga ga bisa.
 micky - roll dice kalo gak bisa reroll pesan kesalahan
 alson - kota dengan dua kata banyak error
-alson - show offered kalo kosong
+alson - show offered kalo kosong V
 nathan - player mati, hilang dari list, kota juga juga smua ada pemilik
 alson - save turn, card, offered
 
