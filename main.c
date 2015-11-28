@@ -33,6 +33,7 @@ void menu(ListBoard *LB, TabKota *TK)
     printf("---------------LET'S GET WEALTHY---------------\n");
     printf("-----------------------------------------------\n");
     printf("Ketik new untuk memulai permainan baru.\n");
+    printf("Ketik load untuk memulai dari file save.\n");
     do {
         printf("> ");
         scanf("%s", input);
@@ -45,6 +46,7 @@ void menu(ListBoard *LB, TabKota *TK)
             inputBenar = false;
         }
     } while (!inputBenar);
+    
     do {
         printf("> ");
         scanf("%s", input);
