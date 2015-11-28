@@ -176,21 +176,22 @@ void menu(ListBoard *LB, TabKota *TK, card *C)
             printf("\n");
         }
         else if (strcmp(input, "sell") == 0){
-            scanf("%s", input);
-            if (strcmp(input, "bank") == 0){
-                scanf("%c",&dum);
-                gets(input);
-                length = 0; i = 0;
+            SKata input2;
+            scanf("%c",&dum);
+            gets(input);
+            length = 0; i = 0;
+            memcpy(input2,&input,4);
+            input2[4] = '\0';
+            if (strcmp(input2, "bank") == 0){
+                length = 0; i = 5;
                 while (input[i] != '\0') {
-                    K.TabKata[i] = input[i];
+                    K.TabKata[i-5] = input[i];
                     length++;
                     i++;
                 }
                 K.Length = length;
                 sellbank(K,TK);
             }else{
-                scanf("%c",&dum);
-                gets(input);
                 length = 0; i = 0;
                 while (input[i] != '\0') {
                     K.TabKata[i] = input[i];
