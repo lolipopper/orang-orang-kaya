@@ -30,6 +30,7 @@ void menu(ListBoard *LB, TabKota *TK, card *C)
     Kata K;
     int i, length;
     boolean inputBenar;
+    char dum;
 
     printf("-----------------------------------------------\n");
     printf("---------------LET'S GET WEALTHY---------------\n");
@@ -81,7 +82,6 @@ void menu(ListBoard *LB, TabKota *TK, card *C)
             }
         }
         else if (strcmp(input, "info") == 0) { // info kota
-            char dum;
             scanf("%c",&dum);
             gets(input);
             length = 0; i = 0;
@@ -100,7 +100,6 @@ void menu(ListBoard *LB, TabKota *TK, card *C)
             buy(TK, LB);
         }
         else if (strcmp(input, "buyoffered") == 0) {
-            char dum;
             scanf("%c",&dum);
             gets(input);
             length = 0; i = 0;
@@ -128,19 +127,8 @@ void menu(ListBoard *LB, TabKota *TK, card *C)
             }
         }
         else if (strcmp(input, "protect") == 0) { // print card
-            scanf("%s", input);
-            if ((strcmp(input, "New") == 0) || (strcmp(input, "Sao") == 0)) {
-                scanf("%s", input);
-                if ((strcmp(input, "York") == 0)) {
-                    strcpy(input, "New York");
-                }
-                else if ((strcmp(input, "Delhi") == 0)) {
-                    strcpy(input, "New Delhi");
-                }
-                else if ((strcmp(input, "Paulo") == 0)) {
-                    strcpy(input, "Sao Paulo");
-                }
-            }
+            scanf("%c",&dum);
+            gets(input);
             length = 0; i = 0;
             while (input[i] != '\0') {
                 K.TabKata[i] = input[i];
@@ -151,19 +139,8 @@ void menu(ListBoard *LB, TabKota *TK, card *C)
             protect(K, TK, C);
         }
         else if (strcmp(input, "off") == 0) { // print card
-            scanf("%s", input);
-            if ((strcmp(input, "New") == 0) || (strcmp(input, "Sao") == 0)) {
-                scanf("%s", input);
-                if ((strcmp(input, "York") == 0)) {
-                    strcpy(input, "New York");
-                }
-                else if ((strcmp(input, "Delhi") == 0)) {
-                    strcpy(input, "New Delhi");
-                }
-                else if ((strcmp(input, "Paulo") == 0)) {
-                    strcpy(input, "Sao Paulo");
-                }
-            }
+            scanf("%c",&dum);
+            gets(input);
             length = 0; i = 0;
             while (input[i] != '\0') {
                 K.TabKata[i] = input[i];
@@ -201,7 +178,8 @@ void menu(ListBoard *LB, TabKota *TK, card *C)
         else if (strcmp(input, "sell") == 0){
             scanf("%s", input);
             if (strcmp(input, "bank") == 0){
-                scanf("%s", input);
+                scanf("%c",&dum);
+                gets(input);
                 length = 0; i = 0;
                 while (input[i] != '\0') {
                     K.TabKata[i] = input[i];
@@ -211,6 +189,8 @@ void menu(ListBoard *LB, TabKota *TK, card *C)
                 K.Length = length;
                 sellbank(K,TK);
             }else{
+                scanf("%c",&dum);
+                gets(input);
                 length = 0; i = 0;
                 while (input[i] != '\0') {
                     K.TabKata[i] = input[i];
