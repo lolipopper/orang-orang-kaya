@@ -65,7 +65,7 @@ void Save (ListBoard LB, TabKota TK, SKata K)
     printf("File telah disave dalam file %s\n",SaveFName);
 }
 
-void Load (ListBoard *LB,TabKota *TK, SKata K)
+boolean Load (ListBoard *LB,TabKota *TK, SKata K)
 {
     FILE *fisave;
     Address p;
@@ -138,8 +138,10 @@ void Load (ListBoard *LB,TabKota *TK, SKata K)
             plyr = Next(plyr);
         }
         printf("File %s telah diload\n",LoadFName);
+        return true;
 	}else{
         printf("Nama file tidak ditemukan!\n");
+        return false;
 	}
 	fclose(fisave);
 }

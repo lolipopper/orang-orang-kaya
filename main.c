@@ -44,8 +44,12 @@ void menu(ListBoard *LB, TabKota *TK)
         else if (strcmp(input, "load") == 0){
             scanf("%s", input);
             printf("Mulai Load\n");
-            Load(LB,TK,input);
-            inputBenar = true;
+            boolean valid;
+            valid = Load(LB,TK,input);
+            if (valid)
+                inputBenar = true;
+            else
+                inputBenar = false;
         }else{
             pesanKesalahan();
             inputBenar = false;
