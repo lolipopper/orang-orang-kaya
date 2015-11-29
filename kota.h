@@ -56,4 +56,6 @@ long long priceSell (Kota K);
 void infoCity(Kata K, TabKota TK);
 /* prosedur untuk menampilkan info dari kota tertentu */
 
+void DeleteAllOwnedBuildings(TabKota *TK,Player P);	//ke board/kota
+
 #endif

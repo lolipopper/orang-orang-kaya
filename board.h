@@ -3,6 +3,7 @@
 #include "other.h"
 #include "kota.h"
 #include "player.h"
+#include "chance.h"
 #include "boolean.h"
 #include <stdio.h>
 #include <stdlib.h>

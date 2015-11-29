@@ -691,3 +691,67 @@ boolean Load (ListBoard *LB,TabKota *TK, SKata K)
 	}
 	fclose(fisave);
 }
+
+void removeOffered(TabKota *TK,Player P)
+{
+    int id;
+    for (id=1;id<=32;id++) {
+        if (isOffered(*TK,id) && Owner(*TK,id)==P.playerId){
+            isOffered(*TK,id) = false;
+        }
+    }
+}
+
+boolean isWinTour(TabKota Kota)
+{
+    boolean valid = false;
+    int jumRekPl,j,i;
+    AddressPl Plyr;
+    Plyr = First(Turn);
+    i=1;
+    while ((i<=jumlahPemain) && (valid == false))
+    {
+        jumRekPl = 0;
+        for (j=1; j<=jumPetak; j++){
+            if ((isRekreasi(Kota,j) == true) && (Owner(Kota,j) == PlayerId(Plyr))){
+                jumRekPl ++;
+            }
+        }
+        if (jumRekPl == jumRek){
+            valid = true;
+            printf("  Player %c memenangkan game karena Tour\n",PlayerId(Plyr));
+        }
+        Plyr = Next(Plyr);
+        i++;
+    }
+    return valid;
+}
+
+boolean isWinBlock(TabKota Kota)
+{
+    boolean valid = false;
+    int jumBlockPl,k,j,i,temp;
+    AddressPl Plyr = First(Turn);
+    i = 1;
+    while ((i <= 1) && (valid == false))
+    {
+        jumBlockPl = 0;
+        for (j=1; j<=3; j++){
+            temp = 0;
+            for (k=1; k<=jumPetak; k++){
+                if ((Block(Kota,k) == j) && (Owner(Kota,k) == PlayerId(Plyr))){
+                    temp ++;
+                }
+            }
+            temp /= 3;
+            jumBlockPl += temp;
+        }
+        if (jumBlockPl >= 3){
+            valid = true;
+            printf("  Player %c memenangkan game karena Triple Monopoly\n",PlayerId(Plyr));
+        }
+        i++;
+        Plyr = Next(Plyr);
+    }
+    return valid;
+}
