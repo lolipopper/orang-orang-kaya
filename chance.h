@@ -3,7 +3,7 @@
 
 #include "boolean.h"
 #include "kota.h"
-//#include "player.h"
+#include "player.h"
 #include "command.h"
 #include <time.h>
 

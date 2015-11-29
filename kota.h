@@ -2,6 +2,7 @@
 #define KOTA_H
 
 #include "other.h"
+#include "player.h"
 
 // KONSTANTA
 #define IdxMax 32

@@ -1,5 +1,4 @@
 #include <string.h>
-//#include "save.h"
 #include "boolean.h"
 #include "kota.h"
 #include "command.h"

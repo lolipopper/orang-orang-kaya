@@ -2,6 +2,7 @@
 #define BOARD_H
 #include "other.h"
 #include "kota.h"
+#include "player.h"
 #include "boolean.h"
 #include <stdio.h>
 #include <stdlib.h>

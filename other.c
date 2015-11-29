@@ -50,7 +50,7 @@ void help()
     printf("  sell <nama petak>      : menempatkan aset ke list penjualan\n");
     printf("  sell bank <nama petak> : menjual aset ke bank\n");
     printf("  show offered           : menampilkan list penjualan\n");
-    printf("  buyoffered            : membeli aset yang ada pada list penjualan\n");
+    printf("  buyoffered             : membeli aset yang ada pada list penjualan\n");
     printf("  leaderboard            : menampilkan peringkat total kekayaan semua pemain\n");
     printf("  print kekayaan         : menampilkan informasi uang dan aset semua pemain\n");
     printf("  print card             : menampilkan informasi jumlah kartu pada deck\n");

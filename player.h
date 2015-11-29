@@ -5,13 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "boolean.h"
-#include "board.h"
-<<<<<<< HEAD
-#include "command.h"
-=======
-//#include "command.h"
-#include "chance.h"
->>>>>>> 3a7394bef4830ce89d80cdafb138042604ebd429
 
 // KONSTANTA
 #define Nil NULL
@@ -87,34 +80,34 @@ void DeleteAllPlayer ();
 AddressPl SearchPl(char id);
 /* melakukan search di List Turn Player dengan playerId = id */
 
-boolean isPlayerOwnKota(ListBoard LB, TabKota TK);
+boolean isPlayerOwnKota(ListBoard LB, TabKota TK);  //Ke board
 
-void hostnama(Kata *NamaKota);
+void hostnama(Kata *NamaKota);						//Ke board
 
-void travelnama(Kata *NamaKota);
+void travelnama(Kata *NamaKota);					//Ke board
 
-void boardWorldCup(ListBoard LB, TabKota TK);
+void boardWorldCup(ListBoard LB, TabKota TK);		//ke board
 /* efek yang didapatkan player ketika sampai di board World Cup */
 
-void boardWorldTravel(ListBoard LB, TabKota TK);
+void boardWorldTravel(ListBoard LB, TabKota TK);	//ke board
 /* efek yang didapatkan player ketika sampai di board World Travel */
 
-boolean IsPlayerOnBoard(AddressPl P, int pos);
+boolean IsPlayerOnBoard(AddressPl P, int pos);		//ke board
 
-int PlayersOnBoard(int pos);
+int PlayersOnBoard(int pos);						//ke board
 
-void ShowBoard(ListBoard LB, TabKota TK);
+void ShowBoard(ListBoard LB, TabKota TK);			//ke board
 
 void deletePlayer(ListPlayer *L,Player P);
 
-void DeleteAllOwnedBuildings(TabKota *TK,Player P);
+void DeleteAllOwnedBuildings(TabKota *TK,Player P);	//ke board/kota
 
-//void returnCards(Player P,card *C);
+//void returnCards(Player P,card *C);				//ke chance
 
-void removeOffered(TabKota *TK,Player P);
+void removeOffered(TabKota *TK,Player P);			//ke command
 
-boolean isWinTour(TabKota Kota);
+boolean isWinTour(TabKota Kota);					//command?
 
-boolean isWinBlock(TabKota Kota);
+boolean isWinBlock(TabKota Kota);					//command?
 
 #endif

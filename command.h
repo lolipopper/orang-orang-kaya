@@ -2,6 +2,7 @@
 #define COMMAND_H
 
 #include "kota.h"
+#include "board.h"
 #include "player.h"
 
 boolean buyupgrade;
