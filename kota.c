@@ -49,9 +49,22 @@ void infoCity(Kata K, TabKota TK)
             printf("%c, ", Owner(TK,i));
         }
         printf("bangunan level %d\n", Level(TK,i));
-        printf("  Biaya sewa : %lld\n", priceCity(TK.TK[i]));
-        printf("  Biaya ambil alih : %lld\n", priceCity(TK.TK[i]));
-        printf("  Biaya upgrade bangunan : %lld\n", priceUpgrade(TK.TK[i]));
+        printf("  Biaya sewa : ");
+		if(isWorldCup(TK, i))
+			printf("%lldK\n", 2*priceCity(TK.TK[i]));
+		else
+			printf("%lldK\n", priceCity(TK.TK[i]));
+        printf("  Biaya ambil alih : %lldK\n", priceCity(TK.TK[i]));
+        printf("  Biaya upgrade bangunan : %lldK\n", priceUpgrade(TK.TK[i]));
+        printf("  Status:\n");
+		if(isWorldCup(TK, i) || LightOff(TK, i)) {
+			if(isWorldCup(TK, i))
+				printf("  - Host World Cup\n");
+			if(LightOff(TK, i))
+				printf("  - Light Off\n");
+		}
+		else
+			printf("  -\n");
         printf("\n");
     }
     else {
