@@ -233,8 +233,8 @@ void boardBonus()
 
 void returnCards(Player P,card *C)
 {
-    (*C).el[1]+=nFreePrison(P);
-    (*C).el[2]+=nFreeTax(P);
-    (*C).el[3]+=nProtect(P);
-    (*C).el[4]+=nOffLight(P);
+    (*C).el[1]+=(P).nFreePrison;
+    (*C).el[2]+=(P).nFreeTax;
+    (*C).el[3]+=(P).nProtect;
+    (*C).el[4]+=(P).nOffLight;
 }
