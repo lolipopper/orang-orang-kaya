@@ -131,4 +131,22 @@ void PecahList (ListBoard *L1, ListBoard *L2, ListBoard L);
 	Jila alokasi gagal, semua elemen yang sudah dialokasikan harus di-dealokasi (bisa L1, L2 atau keduanya)
 */
 
+boolean isPlayerOwnKota(ListBoard LB, TabKota TK);  //Ke board
+
+void hostnama(Kata *NamaKota);						//Ke board
+
+void travelnama(Kata *NamaKota);					//Ke board
+
+void boardWorldCup(ListBoard LB, TabKota TK);		//ke board
+/* efek yang didapatkan player ketika sampai di board World Cup */
+
+void boardWorldTravel(ListBoard LB, TabKota TK);	//ke board
+/* efek yang didapatkan player ketika sampai di board World Travel */
+
+boolean IsPlayerOnBoard(AddressPl P, int pos);		//ke board
+
+int PlayersOnBoard(int pos);						//ke board
+
+void ShowBoard(ListBoard LB, TabKota TK);			//ke board
+
 #endif

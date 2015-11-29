@@ -44,7 +44,7 @@ void help()
     printf("  roll dice              : mengocok dadu\n");
     printf("  board                  : menampilkan board\n");
     printf("  end turn               : mengakhiri giliran\n");
-    printf("  info <nama petak>      : menampilakn informasi kota / tempat rekreasi\n");
+    printf("  info <nama petak>      : menampilkan informasi kota / tempat rekreasi\n");
     printf("  buy                    : membeli kota tempat player berada sekarang\n");
     printf("  upgrade                : melakukan upgrade pada kota milik sendiri\n");
     printf("  sell <nama petak>      : menempatkan aset ke list penjualan\n");

@@ -80,29 +80,9 @@ void DeleteAllPlayer ();
 AddressPl SearchPl(char id);
 /* melakukan search di List Turn Player dengan playerId = id */
 
-boolean isPlayerOwnKota(ListBoard LB, TabKota TK);  //Ke board
-
-void hostnama(Kata *NamaKota);						//Ke board
-
-void travelnama(Kata *NamaKota);					//Ke board
-
-void boardWorldCup(ListBoard LB, TabKota TK);		//ke board
-/* efek yang didapatkan player ketika sampai di board World Cup */
-
-void boardWorldTravel(ListBoard LB, TabKota TK);	//ke board
-/* efek yang didapatkan player ketika sampai di board World Travel */
-
-boolean IsPlayerOnBoard(AddressPl P, int pos);		//ke board
-
-int PlayersOnBoard(int pos);						//ke board
-
-void ShowBoard(ListBoard LB, TabKota TK);			//ke board
-
 void deletePlayer(ListPlayer *L,Player P);
 
 void DeleteAllOwnedBuildings(TabKota *TK,Player P);	//ke board/kota
-
-//void returnCards(Player P,card *C);				//ke chance
 
 void removeOffered(TabKota *TK,Player P);			//ke command
 

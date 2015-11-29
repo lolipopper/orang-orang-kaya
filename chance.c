@@ -230,3 +230,11 @@ void boardBonus()
     Money(PTurn) += randomNum;
     ShowMoney();
 }
+
+void returnCards(Player P,card *C)
+{
+    (*C).el[1]+=nFreePrison(P);
+    (*C).el[2]+=nFreeTax(P);
+    (*C).el[3]+=nProtect(P);
+    (*C).el[4]+=nOffLight(P);
+}
