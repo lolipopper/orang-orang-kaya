@@ -91,7 +91,7 @@ void MoveNPetak(TabKota *TK, ListBoard *LB, int N)
 		boardDesertedIsland(&C);
 	}
 	if (Type(P) == 6) {
-        boardWorldCup(*LB, *TK);
+		boardWorldCup(*LB, TK);
 	}
 	if (Type(P) == 7) {
         boardWorldTravel(*LB, *TK);
@@ -328,7 +328,7 @@ void payRent(ListBoard *LB, TabKota *Kota)
                     sewa = priceCity((*Kota).TK[pos]);
                 }
             }
-            printf("  Kamu harus membayar sewa ke pemilik kota ini sebanyak %d\n", sewa);
+            printf("  Kamu harus membayar sewa ke pemilik kota ini sebanyak %dK\n", sewa);
             Money(PTurn) -= sewa;
             Money(Pl) += sewa;
             ShowMoney();

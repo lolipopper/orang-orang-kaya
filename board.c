@@ -464,98 +464,120 @@ boolean isPlayerOwnKota(ListBoard LB, TabKota TK) {
     return ownKota;
 }
 
-void hostnama(Kata *NKota) {
+void hostnama(Kata *NamaKota, ListBoard LB, TabKota TK) {
     char input[20], namakota[10];
     int i, length;
+    boolean found = false, wrong = true;
+    Address P;
 
     printf("  Ketik \"host <nama kota>\".\n");
     printf("  Nama kota yang terpilih akan mendapatkan harga sewa 2x lipat sampai pemain melewati start.\n\n");
 
-  INPUT:
-    printf("> ");
-    scanf("%s", input);
-    if (strcmp(input, "host") == 0) {
-        scanf("%s", input);
-        if(strcmp(input, "New") == 0 || strcmp(input, "Sao") == 0) {
-            scanf("%s", input);
-            if(strcmp(input, "York") == 0)
-                strcpy(namakota, "New York\0");
-            else if(strcmp(input, "Delhi") == 0)
-                strcpy(namakota, "New Delhi\0");
-            else if(strcmp(input, "Paolo") == 0)
-                strcpy(namakota, "Sao Paolo\0");
-        }
-        else
-            strcpy(namakota, input);
-        i = 0;
-        length = 0;
-        while(namakota[i] != '\0') {
-            NKota->TabKata[i] = namakota[i];
-            length++;
-            i++;
-        }
-        NKota->Length = length;
-    }
-    else {
-        printf("  Masukkan salah, ketik \"host <nama kota>\"\n\n");
-        goto INPUT;
-    }
+	do {
+		printf("> ");
+		scanf("%s", input);
+		if (strcmp(input, "host") == 0) {
+			scanf("%s", input);
+			if(strcmp(input, "New") == 0 || strcmp(input, "Sao") == 0) {
+				scanf("%s", input);
+				if(strcmp(input, "York") == 0)
+					strcpy(namakota, "New York\0");
+				else if(strcmp(input, "Delhi") == 0)
+					strcpy(namakota, "New Delhi\0");
+				else if(strcmp(input, "Paulo") == 0)
+					strcpy(namakota, "Sao Paulo\0");
+			}
+			else
+				strcpy(namakota, input);
+			i = 0;
+			length = 0;
+			while(namakota[i] != '\0') {
+				NamaKota->TabKata[i] = namakota[i];
+				length++;
+				i++;
+			}
+			NamaKota->Length = length;
+			P = First(LB);
+			do {
+				if(IsKataSama(NamaKota(TK, Id(P)), *NamaKota))
+					found = true;
+				P = Next(P);
+			} while (P != First(LB) && !found);
+			if(!found)
+				printf("  Nama Kota salah, masukkan nama kota yang valid.\n\n");
+			else
+				wrong = false;
+		}
+		else
+			printf("  Masukkan salah, ketik \"host <nama kota>\"\n\n");
+	}while(wrong);
 }
 
-void travelnama(Kata *NKota) {
-    int i, length;
-    char input[20], namakota[10];
+void travelnama(Kata *NamaKota, ListBoard LB, TabKota TK) {
+	int i, length;
+	char input[20], namakota[10];
+	boolean found = false, wronginput = true;
+	Address P;
 
-    printf("  Kamu dapat pergi ke petak tujuan yang kamu inginkan pada saat giliran selanjutnya tanpa harus me-roll dadu.\n");
-    printf("  Ketik \"travel <nama kota>\".\n\n");
-  INPUT:
-    printf("> ");
-    scanf("%s", input);
-    if (strcmp(input, "travel") == 0) {
-        scanf("%s", input);
-        if(strcmp(input, "New") == 0 || strcmp(input, "Sao") == 0) {
-            scanf("%s", input);
-            if(strcmp(input, "York") == 0)
-                strcpy(namakota, "New York\0");
-            else if(strcmp(input, "Delhi") == 0)
-                strcpy(namakota, "New Delhi\0");
-            else if(strcmp(input, "Paolo") == 0)
-                strcpy(namakota, "Sao Paolo\0");
-        }
-        else
-            strcpy(namakota, input);
-        i = 0;
-        length = 0;
-        while(namakota[i] != '\0') {
-            NKota->TabKata[i] = namakota[i];
-            length++;
-            i++;
-        }
-        NKota->Length = length;
-    }
-    else {
-        printf("  Masukkan salah, ketik \"travel <nama kota>\"\n\n");
-        goto INPUT;
-    }
+	printf("  Kamu dapat pergi ke petak tujuan yang kamu inginkan pada saat giliran selanjutnya tanpa harus me-roll dadu.\n");
+	printf("  Ketik \"travel <nama kota>\".\n\n");
+	do {
+		printf("> ");
+		scanf("%s", input);
+		if (strcmp(input, "travel") == 0) {
+			scanf("%s", input);
+			if(strcmp(input, "New") == 0 || strcmp(input, "Sao") == 0) {
+				scanf("%s", input);
+				if(strcmp(input, "York") == 0)
+					strcpy(namakota, "New York\0");
+				else if(strcmp(input, "Delhi") == 0)
+					strcpy(namakota, "New Delhi\0");
+				else if(strcmp(input, "Paulo") == 0)
+					strcpy(namakota, "Sao Paulo\0");
+			}
+			else
+				strcpy(namakota, input);
+			i = 0;
+			length = 0;
+			while(namakota[i] != '\0') {
+				NamaKota->TabKata[i] = namakota[i];
+				length++;
+				i++;
+			}
+			NamaKota->Length = length;
+			P = First(LB);
+			do {
+				if(IsKataSama(NamaKota(TK, Id(P)), *NamaKota))
+					found = true;
+				P = Next(P);
+			} while (P != First(LB) && !found);
+			if(!found)
+				printf("  Nama Kota salah, masukkan nama kota yang valid.\n\n");
+			else
+				wronginput = false;
+		}
+		else
+			printf("  Masukkan salah, ketik \"travel <nama kota>\"\n\n");
+	} while(wronginput);
 }
 
-void boardWorldCup(ListBoard LB, TabKota TK) {
+void boardWorldCup(ListBoard LB, TabKota *TK) {
     Address P;
     Kata NKota;
 	int i;
     boolean ismine;
 
     ismine = false;
-    if(isPlayerOwnKota(LB, TK)) {
+    if(isPlayerOwnKota(LB, *TK)) {
         do {
-            hostnama(&NKota);
+            hostnama(&NKota, LB, *TK);
             P = First(LB);
-            while (!IsKataSama(NamaKota(TK, Id(P)), NKota)) {
+            while (!IsKataSama(NamaKota(*TK, Id(P)), NKota)) {
                 P = Next(P);
             }
-            if(Owner(TK, Id(P)) == PlayerId(PTurn)) {
-                isWorldCup(TK, Id(P)) = true;
-                whoWorldCup(TK, Id(P)) = PlayerId(PTurn);
+            if(Owner(*TK, Id(P)) == PlayerId(PTurn)) {
+                isWorldCup(*TK, Id(P)) = true;
+                whoWorldCup(*TK, Id(P)) = PlayerId(PTurn);
                 if(PlayerId(PTurn) == 'A')
                     idWorldCup[1] = Id(P);
                 else if(PlayerId(PTurn) == 'B')
@@ -591,19 +613,26 @@ void boardWorldCup(ListBoard LB, TabKota TK) {
 }
 
 void boardWorldTravel(ListBoard LB, TabKota TK) {
-    Kata NKota;
-    Address P;
+	Kata NKota;
+	Address P;
+	int i;
 
-    travelnama(&NKota);
-    P = First(LB);
-    while (!IsKataSama(NamaKota(TK, Id(P)), NKota)) {
-        P = Next(P);
-    }
-    MovWorldTravel(PTurn) = Id(P) - Position(PTurn);
-    if(MovWorldTravel(PTurn) < 0)
-        MovWorldTravel(PTurn) += 32;
-    rolled = false;
-    printf("  Kamu akan sampai di %s pada giliran selanjutnya setelah ketik perintah \"roll dice\"", NKota);
+	travelnama(&NKota, LB, TK);
+	P = First(LB);
+	while (!IsKataSama(NamaKota(TK, Id(P)), NKota)) {
+		P = Next(P);
+	}
+	MovWorldTravel(PTurn) = Id(P) - Position(PTurn);
+	if(MovWorldTravel(PTurn) < 0)
+		MovWorldTravel(PTurn) += 32;
+	rolled = true;
+	printf("  Kamu akan sampai di ");
+	i = 0;
+	while(i < NKota.Length) {
+		printf("%c", NKota.TabKata[i]);
+		i++;
+	}
+	printf(" pada giliran selanjutnya setelah ketik perintah \"roll dice\"\n\n");
 }
 
 boolean IsPlayerOnBoard(AddressPl P, int pos) {

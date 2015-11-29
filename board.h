@@ -134,11 +134,11 @@ void PecahList (ListBoard *L1, ListBoard *L2, ListBoard L);
 
 boolean isPlayerOwnKota(ListBoard LB, TabKota TK);  //Ke board
 
-void hostnama(Kata *NamaKota);						//Ke board
+void hostnama(Kata *NamaKota, ListBoard LB, TabKota TK);						//Ke board
 
-void travelnama(Kata *NamaKota);					//Ke board
+void travelnama(Kata *NamaKota, ListBoard LB, TabKota TK);					//Ke board
 
-void boardWorldCup(ListBoard LB, TabKota TK);		//ke board
+void boardWorldCup(ListBoard LB, TabKota *TK);		//ke board
 /* efek yang didapatkan player ketika sampai di board World Cup */
 
 void boardWorldTravel(ListBoard LB, TabKota TK);	//ke board
