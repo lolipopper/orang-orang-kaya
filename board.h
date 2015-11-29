@@ -3,6 +3,7 @@
 #include "other.h"
 #include "kota.h"
 #include "player.h"
+//#include "chance.h"
 #include "boolean.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -146,6 +147,14 @@ void boardWorldTravel(ListBoard LB, TabKota TK);	//ke board
 boolean IsPlayerOnBoard(AddressPl P, int pos);		//ke board
 
 int PlayersOnBoard(int pos);						//ke board
+
+void PrintNameOnBoard(Address P, TabKota TK, int x);
+
+void PrintPriceOnBoard(Address P, TabKota TK, int x);
+
+void PrintOwnerOnBoard(Address P, TabKota TK, int x);
+
+void PrintPlayersOnBoard(Address P, int x);
 
 void ShowBoard(ListBoard LB, TabKota TK);			//ke board
 

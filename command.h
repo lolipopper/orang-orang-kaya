@@ -4,6 +4,7 @@
 #include "kota.h"
 #include "board.h"
 #include "player.h"
+#include "chance.h"
 
 boolean buyupgrade;
 
@@ -55,5 +56,11 @@ void buyoffered (Kata K, TabKota *TK);
 void Save (ListBoard LB, TabKota TK, SKata K);
 
 boolean Load (ListBoard *LB,TabKota *TK, SKata K);
+
+void removeOffered(TabKota *TK,Player P);			//ke command
+
+boolean isWinTour(TabKota Kota);					//command?
+
+boolean isWinBlock(TabKota Kota);					//command?
 
 #endif

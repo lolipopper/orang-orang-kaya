@@ -542,6 +542,7 @@ void travelnama(Kata *NKota) {
 void boardWorldCup(ListBoard LB, TabKota TK) {
     Address P;
     Kata NKota;
+	int i;
     boolean ismine;
 
     ismine = false;
@@ -566,9 +567,23 @@ void boardWorldCup(ListBoard LB, TabKota TK) {
                 ismine = true;
             }
             else {
-                printf("  Kota %s bukan milikmu. Pilihlah kota milikmu.", NKota);
+				printf("  Kota ");
+				i = 0;
+				while(i < NKota.Length) {
+					printf("%c", NKota.TabKata[i]);
+					i++;
+				}
+				printf(" bukan milikmu. Pilihlah kota milikmu.\n\n");
             }
-            printf("  %s menjadi host World Cup.\n", NKota);
+            if(ismine) {
+				printf("  ");
+				i = 0;
+				while(i < NKota.Length) {
+					printf("%c", NKota.TabKata[i]);
+					i++;
+				}
+				printf(" menjadi host World Cup.\n");
+			}
         } while(!ismine);
     }
     else
@@ -614,493 +629,302 @@ int PlayersOnBoard(int pos) {
     return counts;
 }
 
-void ShowBoard(ListBoard LB, TabKota TK) {
-    /*KAMUS*/
-    Address PF, PL, Pt;
-    AddressPl Play;
-    int i, j, m, n, k, l;
-    int npetak, x, y, M, N;
-    int length, harga, posnama, players;
-    ListBoard L1, L2;
-
-/*ALGORITMA*/
-    /*INISIALISASI*/
-    npetak = 9;//Jumlah Petak
-    x = 12 + 1; //Ukuran Petak
-    y = 6;     //Ukuran Petak
-    M = x*npetak; //Panjang Board
-    N = y*npetak; //Lebar Board
-    posnama = 1; //posisi baris nama dalam petak
-    k = 0;
-
-    CreateList(&L1);
-    CreateList(&L2);
-    PecahList(&L1, &L2, LB);
-    InversList(&L2);
-    PF = First(L1);
-    PL = First(L2);
-
-    for(i = 0; i <= N; i++){ //Perulangan Baris
-        j = 0;
-        while (j <= M) { //Perulangan Kolom
-            if(i == 0) printf("_");
-            else if(i == y || i == N) {
-                if((j%x)== 0) printf("|");
-                else printf("_");
-            }
-            else if(i%y == 0 && i != 0 && i != y && i != (N-y) && i != N) {
-                if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
-                else if((j > 0 && j < x) || (j > (M-x) && j < M)) printf("_");
-                else printf(" ");
-            }
-            else if(i > 0 && i < y) {
-                if(i == posnama) { //Posisi Nama Petak
-                    if((j%x) == 0) printf("|");
-                    else if((j%x) != 0){
-                        printf(" ");
-                        if(isWorldCup(TK, Id(PF))) printf("(");
-                        PrintNamaPetak(TK, PF, 1, &length);
-                        if(isWorldCup(TK, Id(PF))) printf(")");
-                        if(Type(PF) == 1) {
-                            if(LightOff(TK, Id(PF))) {
-                                printf("*");
-                                if(isWorldCup(TK, Id(PF)))
-                                    for(m = 0; m < (x-(length+5)); m++) printf(" ");
-                                else
-                                    for(m = 0; m < (x-(length+3)); m++) printf(" ");
-                            }
-                            else {
-                                if(isWorldCup(TK, Id(PF)))
-                                    for(m = 0; m < (x-(length+4)); m++) printf(" ");
-                                else
-                                    for(m = 0; m < (x-(length+2)); m++) printf(" ");
-                            }
-                        }
-                        else {
-                            if(isWorldCup(TK, Id(PF)))
-                                for(m = 0; m < (x-(length+4)); m++) printf(" ");
-                            else
-                                for(m = 0; m < (x-(length+2)); m++) printf(" ");
-                        }
-                        j += x-2;
-                        PF = Next(PF);
-                    }
-                }
-                else if(i == posnama+1) { //Posisi Harga
-                    if((j%x)== 0) printf("|");
-                    else {
-                        if(j > 0 && j < (M-x)) {
-                            if(Type(PF) == 1) {
-                                for(m = 0; m < 3; m++) printf(" ");
-                                harga = Price(TK, Id(PF));
-                                printf("%dK", harga);
-                                if(harga < 10)
-                                    for(m = 0; m < x-2-4; m++) printf(" ");
-                                else if(harga >= 10 && harga < 100)
-                                    for(m = 0; m < x-3-4; m++) printf(" ");
-                                else
-                                    for(m = 0; m < x-4-4; m++) printf(" ");
-                            }
-                            else {
-                                for(m = 1; m < x; m++) printf(" ");
-                            }
-                        }
-                        else {
-                            for(m = 0; m < 2; m++) printf(" ");
-                            PrintNamaPetak(TK, PF, 2, &length);
-                            for(m = 0; m < (x-length-3); m++) printf(" ");
-                        }
-                        j += x-2;
-                        PF = Next(PF);
-                    }
-                }
-                else if(i == posnama+2) { //Posisi Kepemilikan
-                    if((j%x)== 0) printf("|");
-                    else {
-                        if(j > 0 && j < (M-x)) {
-                            if(Type(PF) == 1) {
-                                if(Owner(TK, Id(PF)) != '0') {
-                                    for(m = 0; m < 4; m++) printf(" ");
-                                    printf("%c", Owner(TK, Id(PF)));
-                                    if(Level(TK, Id(PF)) > 0) {
-                                        printf("%d", Level(TK, Id(PF)));
-                                        for(m = 0; m < x-5-2; m++) printf(" ");
-                                    }
-                                    else
-                                        for(m = 0; m < x-4-2; m++) printf(" ");
-                                }
-                                else
-                                    for(m = 1; m < x; m++) printf(" ");
-                            }
-                            else {
-                                for(m = 1; m < x; m++) printf(" ");
-                            }
-                        }
-                        else {
-                            for(m = 1; m < x; m++) printf(" ");
-                        }
-                        j += x-2;
-                        PF = Next(PF);
-                    }
-                }
-                else if(i == posnama+3) { //Posisi Players
-                    if((j%x) == 0) printf("|");
-                    else if((j%x) != 0){
-                        players = PlayersOnBoard(Id(PF));
-                        if(players != 0) {
-                            if(players == 1) printf("    ");
-                            else if(players == 2) printf("  ");
-                            else if(players == 3) printf(" ");
-                            else if(players == 4) printf(" ");
-                            Play = First(Turn);
-                            if(IsPlayerOnBoard(Play, Id(PF))) {
-                                printf("%c ", PlayerId(Play));
-                            }
-                            while(Next(Play) != First(Turn)) {
-                                Play = Next(Play);
-                                if(IsPlayerOnBoard(Play, Id(PF))) {
-                                    printf("%c ", PlayerId(Play));
-                                }
-                            }
-                            if(players == 1) for(m = 0; m < x-5-2; m++) printf(" ");
-                            else if(players == 2) for(m = 0; m < x-3-4; m++) printf(" ");
-                            else if(players == 3) for(m = 0; m < x-2-6; m++) printf(" ");
-                            else if(players == 4) for(m = 0; m < x-2-8; m++) printf(" ");
-                        }
-                        else for(m = 1; m < x; m++) printf(" ");
-                        j += x-2;
-                        PF = Next(PF);
-                    }
-                }
-                else {
-                    if((j%x)== 0) printf("|");
-                    else printf(" ");
-                }
-            }
-            else if(i > y && i < (N-y) && (i%y) != 0) {
-                if((i%y) == posnama) { //Posisi Nama
-                    if(j > 0 && j < x) {
-                        for(m = 0; m < 1; m++) printf(" ");
-                        if(isWorldCup(TK, Id(PF))) printf("(");
-                        PrintNamaPetak(TK, PL, 1, &length);
-                        if(isWorldCup(TK, Id(PF))) printf(")");
-                        if(Type(PL) == 1) {
-                            if(LightOff(TK, Id(PL))) {
-                                printf("*");
-                                if(isWorldCup(TK, Id(PF)))
-                                    for(m = 0; m < (x-(length+5)); m++) printf(" ");
-                                else
-                                    for(m = 0; m < (x-(length+3)); m++) printf(" ");
-                            }
-                            else {
-                                if(isWorldCup(TK, Id(PF)))
-                                    for(m = 0; m < (x-(length+4)); m++) printf(" ");
-                                else
-                                    for(m = 0; m < (x-(length+2)); m++) printf(" ");
-                            }
-                        }
-                        else {
-                            if(isWorldCup(TK, Id(PF)))
-                                for(m = 0; m < (x-(length+4)); m++) printf(" ");
-                            else
-                                for(m = 0; m < (x-(length+2)); m++) printf(" ");
-                        }
-                        j += x-2;
-                    }
-                    else if(j > (M-x) && j < M) {
-                        for(m = 0; m < 1; m++) printf(" ");
-                        if(isWorldCup(TK, Id(PF))) printf("(");
-                        PrintNamaPetak(TK, PF, 1, &length);
-                        if(isWorldCup(TK, Id(PF))) printf("(");
-                        if(LightOff(TK, Id(PF))) {
-                            printf("*");
-                            if(isWorldCup(TK, Id(PF)))
-                                for(m = 0; m < (x-(length+5)); m++) printf(" ");
-                            else
-                                for(m = 0; m < (x-(length+3)); m++) printf(" ");
-                        }
-                        else {
-                            if(isWorldCup(TK, Id(PF)))
-                                for(m = 0; m < (x-(length+4)); m++) printf(" ");
-                            else
-                                for(m = 0; m < (x-(length+2)); m++) printf(" ");
-                        }
-                        j += x-2;
-                    }
-                    else if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
-                    else printf(" ");
-                }
-                else if((i%y) == posnama+1) { //Posisi Harga
-                    if(j > 0 && j < x) {
-                        if(Type(PL) == 1) {
-                            for(m = 0; m < 3; m++) printf(" ");
-                            harga = Price(TK, Id(PL));
-                            printf("%dK", harga);
-                            if(harga < 10)
-                                for(m = 0; m < x-2-4; m++) printf(" ");
-                            else if(harga >= 10 && harga < 100)
-                                for(m = 0; m < x-3-4; m++) printf(" ");
-                            else
-                                for(m = 0; m < x-4-4; m++) printf(" ");
-                        }
-                        else {
-                            for(m = 1; m < x; m++) printf(" ");
-                        }
-                        j += x-2;
-                    }
-                    else if(j > (M-x) && j < M) {
-                        if(Type(PF) == 1) {
-                            for(m = 0; m < 3; m++) printf(" ");
-                            harga = Price(TK, Id(PF));
-                            printf("%dK", harga);
-                            if(harga < 10)
-                                for(m = 0; m < x-2-4; m++) printf(" ");
-                            else if(harga >= 10 && harga < 100)
-                                for(m = 0; m < x-3-4; m++) printf(" ");
-                            else
-                                for(m = 0; m < x-4-4; m++) printf(" ");
-                        }
-                        else {
-                            for(m = 1; m < x; m++) printf(" ");
-                        }
-                        j += x-2;
-                    }
-                    else if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
-                    else printf(" ");
-                }
-                else if((i%y) == posnama+2) { //Posisi Milik
-                    if(j > 0 && j < x) {
-                        if(Type(PL) == 1) {
-                            if(Owner(TK, Id(PL)) != '0') {
-                                for(m = 0; m < 4; m++) printf(" ");
-                                printf("%c", Owner(TK, Id(PL)));
-                                if(Level(TK, Id(PL)) > 0) {
-                                    printf("%d", Level(TK, Id(PL)));
-                                    for(m = 0; m < x-5-2; m++) printf(" ");
-                                }
-                                else
-                                    for(m = 0; m < x-4-2; m++) printf(" ");
-                            }
-                            else
-                                for(m = 1; m < x; m++) printf(" ");
-                        }
-                        else {
-                            for(m = 1; m < x; m++) printf(" ");
-                        }
-                        j += x-2;
-                    }
-                    else if(j > (M-x) && j < M) {
-                        if(Type(PF) == 1) {
-                            if(Owner(TK, Id(PF)) != '0') {
-                                for(m = 0; m < 4; m++) printf(" ");
-                                printf("%c", Owner(TK, Id(PF)));
-                                if(Level(TK, Id(PF)) > 0) {
-                                    printf("%d", Level(TK, Id(PF)));
-                                    for(m = 0; m < x-5-2; m++) printf(" ");
-                                }
-                                else
-                                    for(m = 0; m < x-4-2; m++) printf(" ");
-                            }
-                            else
-                                for(m = 1; m < x; m++) printf(" ");
-                        }
-                        else {
-                            for(m = 1; m < x; m++) printf(" ");
-                        }
-                        j += x-2;
-                    }
-                    else if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
-                    else printf(" ");
-                }
-                else if((i%y) == posnama+3) { //Posisi Players
-                    if(j > 0 && j < x) {
-                        players = PlayersOnBoard(Id(PL));
-                        if(players != 0) {
-                            if(players == 1) printf("    ");
-                            else if(players == 2) printf("  ");
-                            else if(players == 3) printf(" ");
-                            else if(players == 4) printf(" ");
-                            Play = First(Turn);
-                            if(IsPlayerOnBoard(Play, Id(PL))) {
-                                printf("%c ", PlayerId(Play));
-                            }
-                            while(Next(Play) != First(Turn)) {
-                                Play = Next(Play);
-                                if(IsPlayerOnBoard(Play, Id(PL))) {
-                                    printf("%c ", PlayerId(Play));
-                                }
-                            }
-                            if(players == 1) for(m = 0; m < x-5-2; m++) printf(" ");
-                            else if(players == 2) for(m = 0; m < x-3-4; m++) printf(" ");
-                            else if(players == 3) for(m = 0; m < x-2-6; m++) printf(" ");
-                            else if(players == 4) for(m = 0; m < x-2-8; m++) printf(" ");
-                        }
-                        else for(m = 1; m < x; m++) printf(" ");
-                        j += x-2;
-                        PL = Next(PL);
-                    }
-                    else if(j > (M-x) && j < M) {
-                        players = PlayersOnBoard(Id(PF));
-                        if(players != 0) {
-                            if(players == 1) printf("    ");
-                            else if(players == 2) printf("  ");
-                            else if(players == 3) printf(" ");
-                            else if(players == 4) printf(" ");
-                            Play = First(Turn);
-                            if(IsPlayerOnBoard(Play, Id(PF))) {
-                                printf("%c ", PlayerId(Play));
-                            }
-                            while(Next(Play) != First(Turn)) {
-                                Play = Next(Play);
-                                if(IsPlayerOnBoard(Play, Id(PF))) {
-                                    printf("%c ", PlayerId(Play));
-                                }
-                            }
-                            if(players == 1) for(m = 0; m < x-5-2; m++) printf(" ");
-                            else if(players == 2) for(m = 0; m < x-3-4; m++) printf(" ");
-                            else if(players == 3) for(m = 0; m < x-2-6; m++) printf(" ");
-                            else if(players == 4) for(m = 0; m < x-2-8; m++) printf(" ");
-                        }
-                        else for(m = 1; m < x; m++) printf(" ");
-                        j += x-2;
-                        PF = Next(PF);
-                    }
-                    else if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
-                    else printf(" ");
-                }
-                else {
-                    if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
-                    else printf(" ");
-                }
-            }
-            else if(i == (N-y)) {
-                Pt = PL;
-                if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
-                else printf("_");
-            }
-            else if(i > (N-y) && i < N) {
-                if(i == (N-y)+posnama) { //Posisi Nama Petak
-                    if((j%x)== 0) printf("|");
-                    else {
-                        printf("  ");
-                        if(isWorldCup(TK, Id(PF))) printf("(");
-                        PrintNamaPetak(TK, PL, 1, &length);
-                        if(isWorldCup(TK, Id(PF))) printf(")");
-                        if(LightOff(TK, Id(PL))) {
-                            printf("*");
-                            if(isWorldCup(TK, Id(PF)))
-                                for(m = 0; m < (x-(length+6)); m++) printf(" ");
-                            else
-                                for(m = 0; m < (x-(length+4)); m++) printf(" ");
-                        }
-                        else {
-                            if(isWorldCup(TK, Id(PF)))
-                                for(m = 0; m < (x-(length+5)); m++) printf(" ");
-                            else
-                                for(m = 0; m < (x-(length+3)); m++) printf(" ");
-                        }
-                        j += x-2;
-                        PL = Next(PL);
-                    }
-                }
-                else if(i == (N-y)+posnama+1) { //Posisi Harga
-                    if((j%x)== 0) printf("|");
-                    else {
-                        if(j > x && j < (M-x)) {
-                            if(Type(PL) == 1) {
-                                for(m = 0; m < 3; m++) printf(" ");
-                                harga = Price(TK, Id(PL));
-                                printf("%dK", harga);
-                                if(harga < 10)
-                                    for(m = 0; m < x-2-4; m++) printf(" ");
-                                else if(harga >= 10 && harga < 100)
-                                    for(m = 0; m < x-3-4; m++) printf(" ");
-                                else
-                                    for(m = 0; m < x-4-4; m++) printf(" ");
-                            }
-                            else {
-                                for(m = 1; m < x; m++) printf(" ");
-                            }
-                        }
-                        else {
-                            for(m = 0; m < 2; m++) printf(" ");
-                            PrintNamaPetak(TK, PL, 2, &length);
-                            for(m = 1; m < (x-length-2); m++) printf(" ");
-                        }
-                        j += x-2;
-                        PL = Next(PL);
-                    }
-                }
-                else if(i == (N-y)+posnama+2) { //Posisi Milik
-                    if((j%x)== 0) printf("|");
-                    else {
-                        if(j > x && j < (M-x)) {
-                            if(Type(PL) == 1) {
-                                if(Owner(TK, Id(PL)) != '0') {
-                                    for(m = 0; m < 4; m++) printf(" ");
-                                    printf("%c", Owner(TK, Id(PL)));
-                                    if(Level(TK, Id(PL)) > 0) {
-                                        printf("%d", Level(TK, Id(PL)));
-                                        for(m = 0; m < x-5-2; m++) printf(" ");
-                                    }
-                                    else
-                                        for(m = 0; m < x-4-2; m++) printf(" ");
-                                }
-                                else
-                                    for(m = 1; m < x; m++) printf(" ");
-                            }
-                            else {
-                                for(m = 1; m < x; m++) printf(" ");
-                            }
-                        }
-                        else {
-                            for(m = 1; m < x; m++) printf(" ");
-                        }
-                        j += x-2;
-                        PL = Next(PL);
-                    }
-                }
-                else if(i == (N-y)+posnama+3) { //Posisi Players
-                    if((j%x)== 0) printf("|");
-                    else {
-                        players = PlayersOnBoard(Id(PL));
-                        if(players != 0) {
-                            if(players == 1) printf("    ");
-                            else if(players == 2) printf("  ");
-                            else if(players == 3) printf(" ");
-                            else if(players == 4) printf(" ");
-                            Play = First(Turn);
-                            if(IsPlayerOnBoard(Play, Id(PL))) {
-                                printf("%c ", PlayerId(Play));
-                            }
-                            while(Next(Play) != First(Turn)) {
-                                Play = Next(Play);
-                                if(IsPlayerOnBoard(Play, Id(PL))) {
-                                    printf("%c ", PlayerId(Play));
-                                }
-                            }
-                            if(players == 1) for(m = 0; m < x-5-2; m++) printf(" ");
-                            else if(players == 2) for(m = 0; m < x-3-4; m++) printf(" ");
-                            else if(players == 3) for(m = 0; m < x-2-6; m++) printf(" ");
-                            else if(players == 4) for(m = 0; m < x-2-8; m++) printf(" ");
-                        }
-                        else for(m = 1; m < x; m++) printf(" ");
-                        j += x-2;
-                        PL = Next(PL);
-                    }
-                }
-                else {
-                    if((j%x)== 0) printf("|");
-                    else printf(" ");
-                }
-            }
-            j++;
-        }
-        printf("\n");
-        if(i == posnama || i == posnama+1 || i == posnama+2) PF = First(L1);
-        if(i == (N-y)+posnama || i == (N-y)+posnama+1 || i == (N-y)+posnama+2) PL = Pt;
-    }
-    printf("* menandakan kota sedang mati lampu.\n");
-    printf("() menandakan sedang terjadi World Cup pada kota tersebut.\n");
+void PrintNameOnBoard(Address P, TabKota TK, int x) {
+	int length, m;
+	
+	printf(" ");
+	if(Type(P) == 1) {
+		if(isWorldCup(TK, Id(P))) printf("(");
+		PrintNamaPetak(TK, P, 1, &length);
+		if(isWorldCup(TK, Id(P))) printf(")");
+		if(LightOff(TK, Id(P))) {
+			printf("*");
+			if(isWorldCup(TK, Id(P)))
+				for(m = 0; m < (x-(length+5)); m++) printf(" ");
+			else
+				for(m = 0; m < (x-(length+3)); m++) printf(" ");
+		}
+		else {
+			if(isWorldCup(TK, Id(P)))
+				for(m = 0; m < (x-(length+4)); m++) printf(" ");
+			else
+				for(m = 0; m < (x-(length+2)); m++) printf(" ");
+		}
+	}
+	else {
+		PrintNamaPetak(TK, P, 1, &length);
+		for(m = 0; m < (x-(length+2)); m++) printf(" ");
+	}
 }
 
+void PrintPriceOnBoard(Address P, TabKota TK, int x) {
+	int m;
+	long long harga;
+	
+	if(Type(P) == 1) {
+		for(m = 0; m < 3; m++) printf(" ");
+		harga = priceCity(TK.TK[Id(P)]);
+		printf("%dK", harga);
+		if(harga < 10)
+			for(m = 0; m < x-2-4; m++) printf(" ");
+		else if(harga >= 10 && harga < 100)
+			for(m = 0; m < x-3-4; m++) printf(" ");
+		else
+			for(m = 0; m < x-4-4; m++) printf(" ");
+	}
+	else
+		for(m = 1; m < x; m++) printf(" ");
+}
+
+void PrintOwnerOnBoard(Address P, TabKota TK, int x) {
+	int m;
+	
+	if(Type(P) == 1) {
+		if(Owner(TK, Id(P)) != '0') {
+			for(m = 0; m < 4; m++) printf(" ");
+			printf("%c", Owner(TK, Id(P)));
+			if(Level(TK, Id(P)) > 0) {
+				printf("%d", Level(TK, Id(P)));
+				for(m = 0; m < x-5-2; m++) printf(" ");
+			}
+			else
+				for(m = 0; m < x-4-2; m++) printf(" ");
+		}
+		else
+			for(m = 1; m < x; m++) printf(" ");
+	}
+	else {
+		for(m = 1; m < x; m++) printf(" ");
+	}
+}
+
+void PrintPlayersOnBoard(Address P, int x) {
+	AddressPl Play;
+	int players, m;
+	
+	players = PlayersOnBoard(Id(P));
+	if(players != 0) {
+		if(players == 1) printf("    ");
+		else if(players == 2) printf("  ");
+		else if(players == 3) printf(" ");
+		else if(players == 4) printf(" ");
+		Play = First(Turn);
+		if(IsPlayerOnBoard(Play, Id(P)))
+			printf("%c ", PlayerId(Play));
+		while(Next(Play) != First(Turn)) {
+			Play = Next(Play);
+			if(IsPlayerOnBoard(Play, Id(P))) {
+				printf("%c ", PlayerId(Play));
+			}
+		}
+		if(players == 1) for(m = 0; m < x-5-2; m++) printf(" ");
+		else if(players == 2) for(m = 0; m < x-3-4; m++) printf(" ");
+		else if(players == 3) for(m = 0; m < x-2-6; m++) printf(" ");
+		else if(players == 4) for(m = 0; m < x-2-8; m++) printf(" ");
+	}
+	else for(m = 1; m < x; m++) printf(" ");
+}
+
+void ShowBoard(ListBoard LB, TabKota TK) {
+/*KAMUS*/
+	Address PF, PL, Pt;
+	int i, j, m, n, k, l;
+	int npetak, x, y, M, N;
+	int length, posnama;
+	ListBoard L1, L2;
+
+/*ALGORITMA*/
+	/*INISIALISASI*/
+	npetak = 9;//Jumlah Petak
+	x = 12 + 1; //Ukuran Petak
+	y = 6;     //Ukuran Petak
+	M = x*npetak; //Panjang Board
+	N = y*npetak; //Lebar Board
+	posnama = 1; //posisi baris nama dalam petak
+	k = 0;
+
+	CreateList(&L1);
+	CreateList(&L2);
+	PecahList(&L1, &L2, LB);
+	InversList(&L2);
+	PF = First(L1);
+	PL = First(L2);
+
+	for(i = 0; i <= N; i++){ //Perulangan Baris
+		j = 0;
+		while (j <= M) { //Perulangan Kolom
+			if(i == 0) printf("_");
+			else if(i == y || i == N) {
+				if((j%x)== 0) printf("|");
+				else printf("_");
+			}
+			else if(i%y == 0 && i != 0 && i != y && i != (N-y) && i != N) {
+				if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
+				else if((j > 0 && j < x) || (j > (M-x) && j < M)) printf("_");
+				else printf(" ");
+			}
+			else if(i > 0 && i < y) {
+				if(i == posnama) { //Posisi Nama Petak
+					if((j%x) == 0) printf("|");
+					else if((j%x) != 0){
+						PrintNameOnBoard(PF, TK, x);
+						j += x-2;
+						PF = Next(PF);
+					}
+				}
+				else if(i == posnama+1) { //Posisi Harga
+					if((j%x)== 0) printf("|");
+					else {
+						if(j > 0 && j < (M-x)) {
+							PrintPriceOnBoard(PF, TK, x);
+						}
+						else {
+							for(m = 0; m < 2; m++) printf(" ");
+							PrintNamaPetak(TK, PF, 2, &length);
+							for(m = 0; m < (x-length-3); m++) printf(" ");
+						}
+						j += x-2;
+						PF = Next(PF);
+					}
+				}
+				else if(i == posnama+2) { //Posisi Kepemilikan
+					if((j%x)== 0) printf("|");
+					else {
+						if(j > 0 && j < (M-x))
+							PrintOwnerOnBoard(PF, TK, x);
+						else
+							for(m = 1; m < x; m++) printf(" ");
+						j += x-2;
+						PF = Next(PF);
+					}
+				}
+				else if(i == posnama+3) { //Posisi Players
+					if((j%x) == 0) printf("|");
+					else if((j%x) != 0){
+						PrintPlayersOnBoard(PF, x);
+						j += x-2;
+						PF = Next(PF);
+					}
+				}
+				else {
+					if((j%x)== 0) printf("|");
+					else printf(" ");
+				}
+			}
+			else if(i > y && i < (N-y) && (i%y) != 0) {
+				if((i%y) == posnama) { //Posisi Nama
+					if(j > 0 && j < x) {
+						PrintNameOnBoard(PL, TK, x);
+						j += x-2;
+					}
+					else if(j > (M-x) && j < M) {
+						PrintNameOnBoard(PF, TK, x);
+						j += x-2;
+					}
+					else if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
+					else printf(" ");
+				}
+				else if((i%y) == posnama+1) { //Posisi Harga
+					if(j > 0 && j < x) {
+						PrintPriceOnBoard(PL, TK, x);
+						j += x-2;
+					}
+					else if(j > (M-x) && j < M) {
+						PrintPriceOnBoard(PF, TK, x);
+						j += x-2;
+					}
+					else if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
+					else printf(" ");
+				}
+				else if((i%y) == posnama+2) { //Posisi Milik
+					if(j > 0 && j < x) {
+						PrintOwnerOnBoard(PL, TK, x);
+						j += x-2;
+					}
+					else if(j > (M-x) && j < M) {
+						PrintOwnerOnBoard(PF, TK, x);
+						j += x-2;
+					}
+					else if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
+					else printf(" ");
+				}
+				else if((i%y) == posnama+3) { //Posisi Players
+					if(j > 0 && j < x) {
+						PrintPlayersOnBoard(PL, x);
+						j += x-2;
+						PL = Next(PL);
+					}
+					else if(j > (M-x) && j < M) {
+						PrintPlayersOnBoard(PF, x);
+						j += x-2;
+						PF = Next(PF);
+					}
+					else if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
+					else printf(" ");
+				}
+				else {
+					if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
+					else printf(" ");
+				}
+			}
+			else if(i == (N-y)) {
+				Pt = PL;
+				if(j == 0 || j == x || j == (M-x) || j == M) printf("|");
+				else printf("_");
+			}
+			else if(i > (N-y) && i < N) {
+				if(i == (N-y)+posnama) { //Posisi Nama Petak
+					if((j%x)== 0) printf("|");
+					else {
+						PrintNameOnBoard(PL, TK, x);
+						j += x-2;
+						PL = Next(PL);
+					}
+				}
+				else if(i == (N-y)+posnama+1) { //Posisi Harga
+					if((j%x)== 0) printf("|");
+					else {
+						if(j > x && j < (M-x))
+							PrintPriceOnBoard(PL, TK, x);
+						else {
+							for(m = 0; m < 2; m++) printf(" ");
+							PrintNamaPetak(TK, PL, 2, &length);
+							for(m = 1; m < (x-length-2); m++) printf(" ");
+						}
+						j += x-2;
+						PL = Next(PL);
+					}
+				}
+				else if(i == (N-y)+posnama+2) { //Posisi Milik
+					if((j%x)== 0) printf("|");
+					else {
+						if(j > x && j < (M-x))
+							PrintOwnerOnBoard(PL, TK, x);
+						else
+							for(m = 1; m < x; m++) printf(" ");
+						j += x-2;
+						PL = Next(PL);
+					}
+				}
+				else if(i == (N-y)+posnama+3) { //Posisi Players
+					if((j%x)== 0) printf("|");
+					else {
+						PrintPlayersOnBoard(PL, x);
+						j += x-2;
+						PL = Next(PL);
+					}
+				}
+				else {
+					if((j%x)== 0) printf("|");
+					else printf(" ");
+				}
+			}
+			j++;
+		}
+		printf("\n");
+		if(i == posnama || i == posnama+1 || i == posnama+2) PF = First(L1);
+		if(i == (N-y)+posnama || i == (N-y)+posnama+1 || i == (N-y)+posnama+2) PL = Pt;
+	}
+	printf("* menandakan kota sedang mati lampu.\n");
+	printf("() menandakan sedang terjadi World Cup pada kota tersebut.\n");
+}
