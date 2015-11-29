@@ -58,15 +58,3 @@ void infoCity(Kata K, TabKota TK)
         printf("  Tidak ada kota dengan nama tersebut.\n\n");
     }
 }
-
-void DeleteAllOwnedBuildings(TabKota *TK,Player P)
-{
-    int id;
-    for (id=1;id<=32;id++)
-    {
-        if (Owner(*TK,id)==P.playerId)
-        {
-            Owner(*TK,id)='0';
-        }
-    }
-}

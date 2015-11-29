@@ -82,4 +82,12 @@ AddressPl SearchPl(char id);
 
 void deletePlayer(ListPlayer *L,Player P);
 
+void DeleteAllOwnedBuildings(TabKota *TK,Player P);	//ke board/kota
+
+void removeOffered(TabKota *TK,Player P);			//ke command
+
+boolean isWinTour(TabKota Kota);					//command?
+
+boolean isWinBlock(TabKota Kota);					//command?
+
 #endif
