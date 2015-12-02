@@ -37,3 +37,5 @@
 # others
 main
 lala.txt
+*.c~
+*.h~
